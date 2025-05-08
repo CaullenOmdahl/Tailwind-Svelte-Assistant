@@ -1,0 +1,16 @@
+{
+  "name": "tailwind-svelte-assistant-mcp-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "generate-tailwind-data": "node ./scripts/generate-tailwind-data.mjs",
+    "build": "npm run generate-tailwind-data && tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\""
+  },
+  "dependencies": {
+    "marked": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/marked": "^12.0.0"
+  }
+}

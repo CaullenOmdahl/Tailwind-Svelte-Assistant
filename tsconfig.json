@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "es2022",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "outDir": "./build",
+    "rootDir": "./src"
+  },
+  "include": ["src"],
+  "exclude": ["../docs"]
+}
