@@ -5,46 +5,46 @@
  * @param validClassesData - The valid Tailwind CSS class data (from valid_tailwind_classes.json).
  * @returns ValidationOutput containing results for each class and a summary.
  */
-export function validateTailwindClasses(classesString, validClassesData) {
+export function validateTailwindClasses(classesString, validClassesData // Accepts the full JSON structure
+) {
     const classes = classesString.split(/\s+/);
     const results = [];
-    let invalidCount = 0;
-    // Convert valid classes to a Set for fast lookup
-    const validClassesSet = new Set(validClassesData.exactClasses);
-    // Inline comment: Loop through each class and validate
+    // Prepare sets for fast lookup
+    const classNamesSet = new Set(validClassesData.classNames || []);
+    const utilitiesSet = new Set(Object.keys(validClassesData.utilities || {}));
+    const componentsSet = new Set(Object.keys(validClassesData.components || {}));
+    const variantsSet = new Set(validClassesData.variants || []);
     for (const className of classes) {
         let isValid = false;
-        const notes = [];
-        const suggestions = [];
-        // Remove common responsive and state prefixes for validation
-        const classWithoutPrefix = className.replace(/^(sm:|md:|lg:|xl:|2xl:|hover:|focus:|dark:)/, "");
-        // Check for exact match in valid classes
-        if (validClassesSet.has(classWithoutPrefix)) {
+        let variant = null;
+        let baseClass = className;
+        // Check for variant prefix (e.g., hover:text-blue-500)
+        const idx = className.indexOf(":");
+        if (idx > 0) {
+            variant = className.slice(0, idx);
+            baseClass = className.slice(idx + 1);
+        }
+        // Validate variant if present
+        if (variant) {
+            if (!variantsSet.has(variant)) {
+                results.push({ class: className, isValid: false });
+                continue;
+            }
+        }
+        // Validate base class
+        if (classNamesSet.has(baseClass) ||
+            utilitiesSet.has(baseClass) ||
+            componentsSet.has(baseClass)) {
             isValid = true;
         }
-        else if (
-        // Check for arbitrary value usage (e.g., text-[12px])
-        /^\w+-\[[^\]]+\]$/.test(classWithoutPrefix)) {
+        else if (/^\w+-\[[^\]]+\]$/.test(baseClass)) {
+            // Allow arbitrary value usage (e.g., text-[12px])
             isValid = true;
-            notes.push("Arbitrary value used.");
         }
         else {
             isValid = false;
-            invalidCount++;
-            notes.push("Unknown utility or typo.");
-            // TODO: Add typo suggestions in the future
         }
-        // Inline comment: Warn if multiple padding utilities are applied
-        if (className === "p-4") {
-            for (let i = 0; i < results.length; i++) {
-                if (results[i].class === "p-2") {
-                    notes.push("Multiple padding utilities applied. The last one usually takes precedence.");
-                    break;
-                }
-            }
-        }
-        results.push({ class: className, isValid, notes, suggestions });
+        results.push({ class: className, isValid });
     }
-    const allValid = invalidCount === 0;
-    return { results, summary: { allValid, invalidCount } };
+    return { results };
 }

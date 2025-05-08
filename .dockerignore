@@ -1,0 +1,18 @@
+# Exclude files and directories from Docker build context
+
+.git
+.vscode
+node_modules
+npm-debug.log
+Dockerfile
+smithery.yaml
+*.md
+*.ts
+*.tsx
+*.mjs
+*.cjs
+*.test.*
+src/
+scripts/
+docs/ui/
+docs/svelte/
