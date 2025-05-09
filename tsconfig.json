@@ -4,7 +4,7 @@
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "target": "es2022",
-    "outDir": "./build",
+    "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,

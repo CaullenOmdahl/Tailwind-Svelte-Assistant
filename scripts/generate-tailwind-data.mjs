@@ -174,8 +174,8 @@ async function main() {
   // Path to docs relative to this script
   // Updated to resolve from project root (process.cwd())
   const docsDir = path.resolve(process.cwd(), './docs/tailwindcss.com/src/docs/');
-  const buildDir = path.resolve(process.cwd(), './build');
-  const outputFile = path.join(buildDir, 'valid_tailwind_classes.json');
+  const distDir = path.resolve(process.cwd(), './dist');
+  const outputFile = path.join(distDir, 'valid_tailwind_classes.json');
 
   let allFiles;
   try {
@@ -221,11 +221,11 @@ async function main() {
     colorShades: Array.from(colorShades).sort()
   };
 
-  // Ensure build directory exists
+  // Ensure dist directory exists
   try {
-    await fs.mkdir(buildDir, { recursive: true });
+    await fs.mkdir(distDir, { recursive: true });
   } catch (err) {
-    console.error('Could not create build directory:', err.message);
+    console.error('Could not create dist directory:', err.message);
     process.exit(1);
   }
 
