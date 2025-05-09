@@ -10,7 +10,7 @@ export default tseslint.config(
       "node_modules/",
       "dist/",
       "docs/",
-      // Optional: "eslint.config.js", // Good practice to ignore the ESLint config file itself
+      "eslint.config.js", // Good practice to ignore the ESLint config file itself
     ],
   },
 
