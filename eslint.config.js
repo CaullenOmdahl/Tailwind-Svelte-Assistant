@@ -15,16 +15,19 @@ export default tseslint.config(
   },
 
   // 2. ESLint's recommended built-in rules
+  // These will apply to .js, .mjs, .cjs files by default
   js.configs.recommended,
 
   // 3. TypeScript-specific linting rules.
   // `recommendedTypeChecked` is used because your original config specifies `project` for type-aware linting.
   // This spread includes configurations for the parser, plugin, and recommended TypeScript rules.
+  // tseslint.config automatically scopes these to TS/TSX files.
   ...tseslint.configs.recommendedTypeChecked,
 
-  // 4. Customizations for your project
-  // This object is merged by `tseslint.config()` and applies to TypeScript files.
+  // 4. Customizations for your project, specifically for TypeScript files
+  // This object is merged by `tseslint.config()` and is now explicitly scoped to TypeScript files.
   {
+    files: ["**/*.ts", "**/*.tsx"], // Ensures this block only applies to TypeScript files
     languageOptions: {
       // `ecmaVersion` and `sourceType` from your original `parserOptions`
       ecmaVersion: "latest",
@@ -47,6 +50,14 @@ export default tseslint.config(
     rules: {
       // Your custom rule from the original configuration
       "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+      // Add any other TypeScript-specific rule overrides here
     },
   }
+  // If you have JS-specific customizations (e.g., for .js or .mjs files) that are not covered by js.configs.recommended,
+  // you can add another configuration object here, optionally with a `files` property like:
+  // {
+  //   files: ["**/*.js", "**/*.mjs"],
+  //   languageOptions: { ... },
+  //   rules: { ... }
+  // }
 );
