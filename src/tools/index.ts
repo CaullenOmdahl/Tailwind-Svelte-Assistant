@@ -22,6 +22,13 @@ import {
   handler as getShadcnUiSvelteComponentHandler
 } from './get_shadcn_ui_svelte_component/handler.js';
 
+import {
+  GetHeroiconToolSchema as getHeroiconToolSchema
+} from './get_heroicon/schema.js';
+import {
+  handler as getHeroiconHandler
+} from './get_heroicon/handler.js';
+
 export const tools = {
   get_sveltekit_tailwind_setup_guide: {
     schema: getSveltekitTailwindSetupGuideToolSchema,
@@ -35,6 +42,10 @@ export const tools = {
     schema: getShadcnUiSvelteComponentToolSchema,
     handler: getShadcnUiSvelteComponentHandler,
   },
+  get_heroicon: {
+    schema: getHeroiconToolSchema,
+    handler: getHeroiconHandler,
+  },
   // ... other tools would go here
 };
 
@@ -42,5 +53,6 @@ export const toolDefinitions = [
   getSveltekitTailwindSetupGuideToolSchema,
   getHeadlessUiSvelteComponentToolSchema,
   getShadcnUiSvelteComponentToolSchema,
+  getHeroiconToolSchema,
   // ... other tool definitions ...
 ];
