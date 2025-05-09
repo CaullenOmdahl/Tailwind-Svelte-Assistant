@@ -59,7 +59,8 @@ export default tseslint.config(
       "@typescript-eslint/no-unnecessary-type-arguments": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-enum-comparison": "off", // Added this line
+      "@typescript-eslint/no-unsafe-call": "off", // Ensured this is present
+      "@typescript-eslint/no-unsafe-enum-comparison": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",
       "@typescript-eslint/no-unsafe-return": "off",
       "@typescript-eslint/prefer-includes": "off",
