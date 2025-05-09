@@ -41,7 +41,7 @@ export default tseslint.config(
     },
   },
 
-  // 5. Override for JS/MJS files: disable type-aware rules (COMPREHENSIVE LIST)
+  // 5. Override for JS/MJS files: disable type-aware rules (COMPREHENSIVE LIST - NOW INCLUDES THE TARGET RULE)
   {
     files: ["**/*.js", "**/*.mjs"],
     rules: {
@@ -50,6 +50,7 @@ export default tseslint.config(
       '@typescript-eslint/no-array-delete': 'off',
       '@typescript-eslint/no-base-to-string': 'off',
       '@typescript-eslint/no-confusing-void-expression': 'off',
+      '@typescript-eslint/no-duplicate-type-constituents': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/no-for-in-array': 'off',
       '@typescript-eslint/no-implied-eval': 'off',
