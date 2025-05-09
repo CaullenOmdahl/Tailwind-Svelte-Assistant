@@ -47,7 +47,8 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/no-array-delete": "off",
-      "@typescript-eslint/no-base-to-string": "off", // Added this line
+      "@typescript-eslint/no-base-to-string": "off",
+      "@typescript-eslint/no-duplicate-type-constituents": "off", // Added this line
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-for-in-array": "off",
       "@typescript-eslint/no-implied-eval": "off",
