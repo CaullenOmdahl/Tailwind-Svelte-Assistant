@@ -17,11 +17,12 @@ export function handleValidateTailwindClasses(
   }
   try {
     return validateTailwindClasses(args.classes_string, validTailwindClassesData);
-  } catch (err: any) {
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
       error: {
         code: "InternalError",
-        message: "Validation failed: " + (err.message || String(err)),
+        message: "Validation failed: " + msg,
       },
     };
   }

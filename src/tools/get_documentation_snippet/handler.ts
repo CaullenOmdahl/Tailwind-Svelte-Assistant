@@ -1,6 +1,6 @@
 // Handler for get_documentation_snippet tool
 
-import { findMarkdownFiles, readFileContent, extractSnippet, searchDocs } from "../../utils/index.js";
+import { findMarkdownFiles, searchDocs } from "../../utils/index.js";
 import { sveltekitDocsDir, tailwindcssDocsDir } from "../../config/index.js";
 
 export function handleGetDocumentationSnippet(args: {
@@ -25,11 +25,12 @@ export function handleGetDocumentationSnippet(args: {
         ...findMarkdownFiles(tailwindcssDocsDir),
       ];
     }
-  } catch (err: any) {
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
       error: {
         code: "FileSystemError",
-        message: "Failed to read documentation files: " + (err.message || String(err)),
+        message: "Failed to read documentation files: " + msg,
       },
     };
   }
@@ -44,11 +45,12 @@ export function handleGetDocumentationSnippet(args: {
   try {
     const results = searchDocs(files, args.search_query, maxResults);
     return { results };
-  } catch (err: any) {
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
     return {
       error: {
         code: "SearchError",
-        message: "Failed to search documentation: " + (err.message || String(err)),
+        message: "Failed to search documentation: " + msg,
       },
     };
   }

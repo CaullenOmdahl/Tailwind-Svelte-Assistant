@@ -325,7 +325,6 @@ const server = (0, http_1.createServer)(async (req, res) => {
 });
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
-    // eslint-disable-next-line no-console
     console.log(`Tailwind Svelte Assistant MCP server running on port ${PORT}` +
         (validTailwindClassesLoadError
             ? ` (WARNING: ${validTailwindClassesLoadError})`

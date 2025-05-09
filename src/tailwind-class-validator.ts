@@ -40,16 +40,17 @@ export interface ValidTailwindClassesData {
  */
 export function validateTailwindClasses(
   classesString: string,
-  validClassesData: any // Accepts the full JSON structure
+  validClassesData: import("./tailwind-class-validator.js").ValidTailwindClassesData
 ): { results: { class: string; isValid: boolean }[] } {
   const classes = classesString.split(/\s+/);
   const results: { class: string; isValid: boolean }[] = [];
 
   // Prepare sets for fast lookup
-  const classNamesSet = new Set(validClassesData.classNames || []);
-  const utilitiesSet = new Set(Object.keys(validClassesData.utilities || {}));
-  const componentsSet = new Set(Object.keys(validClassesData.components || {}));
-  const variantsSet = new Set(validClassesData.variants || []);
+  const classNamesSet = new Set(validClassesData.exactClasses ?? []);
+  // The following sets are placeholders for future expansion or stricter validation:
+  const utilitiesSet = new Set<string>();
+  const componentsSet = new Set<string>();
+  const variantsSet = new Set<string>();
 
   for (const className of classes) {
     let isValid = false;

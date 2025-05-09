@@ -3,6 +3,7 @@
 import { findMarkdownFiles, readFileContent } from "../../utils/index.js";
 import { sveltekitDocsDir, tailwindcssDocsDir } from "../../config/index.js";
 import { lexer } from "marked";
+import path from "node:path";
 
 export function handleExplainDevelopmentConcept(args: {
   topic: string;
@@ -35,7 +36,7 @@ export function handleExplainDevelopmentConcept(args: {
   // Try to find files with topic in filename or headings
   const topicWords = normalizedTopic.split(/\s+/).filter(Boolean);
   const topicRegex = new RegExp(topicWords.join(".*"), "i");
-  let matchedFiles = files.filter(f => topicRegex.test(require("path").basename(f)));
+  let matchedFiles = files.filter(f => topicRegex.test(path.basename(f)));
   // If not enough matches, search headings in files
   if (matchedFiles.length < 2) {
     for (const file of files) {
@@ -76,7 +77,7 @@ export function handleExplainDevelopmentConcept(args: {
     if (!content) continue;
     usedFiles.push(file);
     // Parse Markdown/MDX: fallback to regex for MDX
-    let tokens: any[] = [];
+    let tokens = [];
     if (file.endsWith(".md")) {
       tokens = lexer(content);
     } else {
@@ -88,9 +89,9 @@ export function handleExplainDevelopmentConcept(args: {
     let inSection = false;
     let section: string[] = [];
     for (const token of tokens) {
-      if (token.type === "heading" && token.text.toLowerCase().includes(normalizedTopic)) {
+      if (token.type === "heading" && typeof token.text === "string" && token.text.toLowerCase().includes(normalizedTopic)) {
         inSection = true;
-        section = [token.text];
+        section = [token.text ?? ""];
         continue;
       }
       if (inSection && token.type === "heading") {
@@ -99,13 +100,13 @@ export function handleExplainDevelopmentConcept(args: {
       }
       if (inSection) {
         if (token.type === "paragraph" || token.type === "text") {
-          section.push(token.text);
+          section.push(token.text ?? "");
         }
         if (token.type === "code") {
           section.push("```" + token.lang + "\n" + token.text + "\n```");
         }
         if (token.type === "list") {
-          section.push(token.items.map((i: any) => "- " + i.text).join("\n"));
+          section.push((token.items ?? []).map((i: { text: string }) => "- " + i.text).join("\n"));
         }
       }
     }
@@ -115,8 +116,8 @@ export function handleExplainDevelopmentConcept(args: {
     } else {
       // Fallback: find first paragraph mentioning topic
       for (const token of tokens) {
-        if ((token.type === "paragraph" || token.type === "text") && token.text.toLowerCase().includes(normalizedTopic)) {
-          explanationParts.push(token.text);
+        if ((token.type === "paragraph" || token.type === "text") && typeof token.text === "string" && token.text.toLowerCase().includes(normalizedTopic)) {
+          explanationParts.push(token.text ?? "");
           found = true;
           break;
         }
@@ -124,17 +125,17 @@ export function handleExplainDevelopmentConcept(args: {
     }
     // Best practices: look for headings or paragraphs with "best practice"
     for (const token of tokens) {
-      if (token.type === "heading" && /best practice/i.test(token.text)) {
-        bestPracticeParts.push(token.text);
+      if (token.type === "heading" && typeof token.text === "string" && /best practice/i.test(token.text)) {
+        bestPracticeParts.push(token.text ?? "");
       }
-      if ((token.type === "paragraph" || token.type === "text") && /best practice/i.test(token.text)) {
-        bestPracticeParts.push(token.text);
+      if ((token.type === "paragraph" || token.type === "text") && typeof token.text === "string" && /best practice/i.test(token.text)) {
+        bestPracticeParts.push(token.text ?? "");
       }
     }
     // Examples: look for code blocks or headings with "example"
     for (const token of tokens) {
-      if (token.type === "heading" && /example/i.test(token.text)) {
-        exampleParts.push(token.text);
+      if (token.type === "heading" && typeof token.text === "string" && /example/i.test(token.text)) {
+        exampleParts.push(token.text ?? "");
       }
       if (token.type === "code") {
         exampleParts.push("```" + (token.lang || "") + "\n" + token.text + "\n```");

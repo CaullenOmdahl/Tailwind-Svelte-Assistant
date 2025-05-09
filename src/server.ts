@@ -28,8 +28,9 @@ for (const candidate of candidatePaths) {
       validTailwindClassesData = JSON.parse(raw) as ValidTailwindClassesData;
       break;
     }
-  } catch (err: any) {
-    validTailwindClassesLoadError = `Failed to load valid Tailwind classes from ${candidate}: ${err.message}`;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    validTailwindClassesLoadError = `Failed to load valid Tailwind classes from ${candidate}: ${msg}`;
   }
 }
 if (!validTailwindClassesData && !validTailwindClassesLoadError) {
@@ -38,7 +39,7 @@ if (!validTailwindClassesData && !validTailwindClassesLoadError) {
 
 // Minimal MCP server implementation
 export function startServer() {
-  const server = createServer(async (req, res) => {
+  const server = createServer((req, res) => {
     if (req.method === "GET" && req.url === "/list-tools") {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ tools: TOOLS }));
@@ -52,7 +53,7 @@ export function startServer() {
           let parsed: unknown;
           try {
             parsed = JSON.parse(body);
-          } catch (err) {
+          } catch {
             res.writeHead(400, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ error: "Invalid JSON" }));
             return;
@@ -86,16 +87,14 @@ export function startServer() {
           }
 
           const result = handleToolCall(tool as ToolName, args, {
-            validTailwindClassesData: validTailwindClassesData ?? {},
+            validTailwindClassesData: validTailwindClassesData ?? { exactClasses: [], arbitraryValueStems: [], responsivePrefixes: [], statePrefixes: [], colorNames: [], colorShades: [] },
             validTailwindClassesLoadError: validTailwindClassesLoadError ?? "",
           });
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ result }));
         } catch (err) {
           const errorMsg =
-            err && typeof err === "object" && "message" in err
-              ? (err as { message: string }).message
-              : String(err);
+            err instanceof Error ? err.message : String(err);
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: errorMsg }));
         }

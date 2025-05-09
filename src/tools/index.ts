@@ -19,8 +19,8 @@ import { handleExplainDevelopmentConcept } from "./explain_development_concept/h
 type ToolDef = {
   name: string;
   description: string;
-  inputSchema: any;
-  outputSchema?: any;
+  inputSchema: unknown;
+  outputSchema?: unknown;
 };
 
 export const TOOLS: ToolDef[] = [
@@ -58,16 +58,16 @@ export function handleToolCall(
   tool: ToolName,
   args: unknown,
   context: {
-    validTailwindClassesData?: any;
+    validTailwindClassesData?: import("../tailwind-class-validator.js").ValidTailwindClassesData;
     validTailwindClassesLoadError?: string;
   } = {}
-): any {
+): unknown {
   switch (tool) {
     case "validate_tailwind_classes":
       // Optionally validate args here
       return handleValidateTailwindClasses(
         args as { classes_string: string },
-        context.validTailwindClassesData ?? {},
+        context.validTailwindClassesData ?? { exactClasses: [], arbitraryValueStems: [], responsivePrefixes: [], statePrefixes: [], colorNames: [], colorShades: [] },
         context.validTailwindClassesLoadError ?? ""
       );
     case "get_documentation_snippet":
@@ -80,7 +80,7 @@ export function handleToolCall(
       return {
         error: {
           code: "UnknownTool",
-          message: `Unknown tool: ${tool}`,
+          message: `Unknown tool: ${String(tool)}`,
         },
       };
   }
