@@ -8,13 +8,16 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
-    "marked": "^12.0.0",
     "clsx": "^2.1.0",
+    "marked": "^12.0.0",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
     "@types/marked": "^6.0.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
+    "eslint": "^9.26.0",
     "typescript": "^5.0.0"
   }
 }
