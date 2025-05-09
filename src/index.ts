@@ -1,5 +1,8 @@
-// Main entry point for Tailwind Svelte Assistant MCP server
+// src/index.ts
 
-import { startServer } from "./server.js";
+import { getSvelteKitTailwindSetup } from './modules/setup-service.js';
 
-startServer();
+const setupData = getSvelteKitTailwindSetup();
+
+console.log("MCP Server Initialized. Svelte Version:", setupData.versions.svelte);
+console.log("Number of setup steps:", setupData.steps.length);
