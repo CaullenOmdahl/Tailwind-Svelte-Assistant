@@ -48,11 +48,12 @@ export default tseslint.config(
       "@typescript-eslint/await-thenable": "off",
       "@typescript-eslint/no-array-delete": "off",
       "@typescript-eslint/no-base-to-string": "off",
-      "@typescript-eslint/no-duplicate-type-constituents": "off", // Added this line
+      "@typescript-eslint/no-duplicate-type-constituents": "off",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-for-in-array": "off",
       "@typescript-eslint/no-implied-eval": "off",
       "@typescript-eslint/no-misused-promises": "off",
+      "@typescript-eslint/no-redundant-type-constituents": "off", // Added this line
       "@typescript-eslint/no-throw-literal": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "off",
       "@typescript-eslint/no-unnecessary-type-arguments": "off",
