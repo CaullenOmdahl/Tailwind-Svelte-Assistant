@@ -67,10 +67,10 @@ export function handleExplainDevelopmentConcept(args: {
   }
   // Use marked for Markdown parsing
   // Extract and synthesize content
-  let explanationParts: string[] = [];
-  let bestPracticeParts: string[] = [];
-  let exampleParts: string[] = [];
-  let usedFiles: string[] = [];
+  const explanationParts: string[] = [];
+  const bestPracticeParts: string[] = [];
+  const exampleParts: string[] = [];
+  const usedFiles: string[] = [];
   let found = false;
   for (const file of matchedFiles.slice(0, 4)) {
     const content = readFileContent(file);
