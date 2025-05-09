@@ -15,6 +15,13 @@ import {
   handler as getHeadlessUiSvelteComponentHandler
 } from './get_headlessui_svelte_component/handler.js';
 
+import {
+  GetShadcnUiSvelteComponentToolSchema as getShadcnUiSvelteComponentToolSchema
+} from './get_shadcn_ui_svelte_component/schema.js';
+import {
+  handler as getShadcnUiSvelteComponentHandler
+} from './get_shadcn_ui_svelte_component/handler.js';
+
 export const tools = {
   get_sveltekit_tailwind_setup_guide: {
     schema: getSveltekitTailwindSetupGuideToolSchema,
@@ -24,11 +31,16 @@ export const tools = {
     schema: getHeadlessUiSvelteComponentToolSchema,
     handler: getHeadlessUiSvelteComponentHandler,
   },
+  get_shadcn_ui_svelte_component: {
+    schema: getShadcnUiSvelteComponentToolSchema,
+    handler: getShadcnUiSvelteComponentHandler,
+  },
   // ... other tools would go here
 };
 
 export const toolDefinitions = [
   getSveltekitTailwindSetupGuideToolSchema,
   getHeadlessUiSvelteComponentToolSchema,
+  getShadcnUiSvelteComponentToolSchema,
   // ... other tool definitions ...
 ];
