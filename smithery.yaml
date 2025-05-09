@@ -5,6 +5,6 @@ mcp_server:
   author: "Roo & User"
   version: "0.1.0"
 startCommand:
-  command: node
-  args:
-    - build/index.js
+  type: "http"
+  commandFunction: ["node", "build/index.js"]
+  port: 3000
