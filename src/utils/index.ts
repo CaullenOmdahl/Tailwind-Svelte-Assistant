@@ -84,13 +84,30 @@ export function searchDocs(files: string[], query: string, maxResults: number) {
 }
 
 /**
+ * JSON Schema property definition for validation.
+ */
+interface JSONSchemaProperty {
+  type?: string;
+  enum?: unknown[];
+}
+
+/**
+ * Minimal JSON Schema interface for validation.
+ */
+interface JSONSchema {
+  required?: string[];
+  properties: Record<string, JSONSchemaProperty>;
+  additionalProperties?: boolean;
+}
+
+/**
  * Validates input arguments against a JSON schema.
  * Checks required fields, types, enums, and disallows extra properties.
  * @param schema - The JSON schema to validate against.
  * @param input - The input object to validate.
  * @throws Error if validation fails.
  */
-export function validateInputStrict(schema: any, input: any): void {
+export function validateInputStrict(schema: JSONSchema, input: Record<string, unknown>): void {
   if (typeof input !== "object" || input === null) {
     throw new Error("Input must be an object.");
   }
@@ -105,12 +122,16 @@ export function validateInputStrict(schema: any, input: any): void {
   // Check types and enums
   for (const key in schema.properties) {
     const prop = schema.properties[key];
-    const val = input[key];
+    const val = (input as Record<string, unknown>)[key];
     if (val === undefined) continue;
-    if (prop.type && typeof val !== prop.type && !(prop.type === "integer" && Number.isInteger(val))) {
+    if (
+      prop.type &&
+      typeof val !== prop.type &&
+      !(prop.type === "integer" && typeof val === "number" && Number.isInteger(val))
+    ) {
       throw new Error(`Field '${key}' must be of type ${prop.type}`);
     }
-    if (prop.enum && !prop.enum.includes(val)) {
+    if (prop.enum && Array.isArray(prop.enum) && !prop.enum.includes(val)) {
       throw new Error(`Field '${key}' must be one of: ${prop.enum.join(", ")}`);
     }
   }

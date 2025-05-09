@@ -81,7 +81,7 @@ function extractTailwindData(content) {
   // 1. Extract all class-like strings (e.g., text-red-500, font-bold, md:text-lg, hover:bg-blue-500)
   //    - Match words with dashes, possibly with colons for prefixes
   //    - Avoid matching markdown links, code blocks, etc. (best effort)
-  const classRegex = /(?:class(Name)?=|`|")([^`"\n]*?(?:[a-z][\w-:\/[\]#.%]+)[^`"\n]*?)(?:`|")/gi;
+  const classRegex = /(?:class(Name)?=|`|")([^`"\n]*?(?:[a-z][\w-:/[\]#.%]+)[^`"\n]*?)(?:`|")/gi;
 
   /** @type {Set<string>} */
   const exactClasses = new Set();
