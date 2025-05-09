@@ -17,5 +17,5 @@
     "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": ["../docs"]
+  "exclude": ["docs"]
 }

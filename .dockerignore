@@ -7,12 +7,9 @@ npm-debug.log
 Dockerfile
 smithery.yaml
 *.md
-*.ts
 *.tsx
-*.mjs
 *.cjs
 *.test.*
-src/
-scripts/
 docs/ui/
 docs/svelte/
+node_modules

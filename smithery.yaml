@@ -1,13 +1,7 @@
-# Smithery configuration for tailwind-svelte-assistant-mcp-server
-
 version: 1
-
 mcp_server:
   name: tailwind-svelte-assistant-mcp-server
-  author: Roo & User
-  description: |
-    A Model Context Protocol (MCP) server for Tailwind CSS and Svelte assistance, providing validation, documentation, and code generation tools.
-
-start:
-  command: ["node", "build/index.js"]
-  # port:  # Not needed for stdio-based servers
+  description: "Provides tools for Tailwind CSS and Svelte development, including class validation and documentation snippets."
+  author: "Roo & User"
+  version: "0.1.0"
+startCommand: ["node", "build/index.js"]
