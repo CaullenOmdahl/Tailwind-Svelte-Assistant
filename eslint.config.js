@@ -4,31 +4,27 @@ import tseslint from "typescript-eslint";
 import globals from "globals";
 
 export default tseslint.config(
-  // 1. Global ignores
+  // 1. Global ignores & base ESLint rules
   {
     ignores: [
       "node_modules/",
       "dist/",
       "docs/",
-      "eslint.config.js",
+      "eslint.config.js", // Ignoring itself
     ],
   },
-
-  // 2. ESLint's recommended built-in rules
   js.configs.recommended,
 
-  // 3. TypeScript-specific linting rules (scoped by tseslint.config)
-  ...tseslint.configs.recommendedTypeChecked,
-
-  // 4. Customizations for TypeScript files
+  // 2. TypeScript files configuration
   {
     files: ["**/*.ts", "**/*.tsx"],
+    extends: [
+      ...tseslint.configs.recommendedTypeChecked, // Apply type-checked rules
+    ],
     languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
       parserOptions: {
-        project: "./tsconfig.json",
-        // tsconfigRootDir: import.meta.dirname, // Uncomment if needed
+        project: true, // Use tsconfig.json in the root
+        tsconfigRootDir: import.meta.dirname, // Ensures correct tsconfig path resolution
       },
       globals: {
         ...globals.node,
@@ -37,14 +33,27 @@ export default tseslint.config(
     },
     rules: {
       "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
-      // Add other TypeScript-specific rule overrides here
+      // Add any other TS-specific custom rules here
     },
   },
 
-  // 5. Override for JS/MJS files: disable type-aware rules (COMPREHENSIVE LIST - NOW INCLUDES THE TARGET RULE)
+  // 3. JavaScript/MJS files configuration
   {
     files: ["**/*.js", "**/*.mjs"],
+    plugins: {
+      '@typescript-eslint': tseslint.plugin, // Make TS plugin available for rule overrides
+    },
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        ...globals.es2021,
+      },
+      // IMPORTANT: No parserOptions.project here for JS/MJS files
+    },
     rules: {
+      // Explicitly disable all type-aware rules for JS/MJS files
       '@typescript-eslint/await-thenable': 'off',
       '@typescript-eslint/dot-notation': 'off',
       '@typescript-eslint/no-array-delete': 'off',
@@ -82,6 +91,7 @@ export default tseslint.config(
       '@typescript-eslint/strict-boolean-expressions': 'off',
       '@typescript-eslint/switch-exhaustiveness-check': 'off',
       '@typescript-eslint/unbound-method': 'off',
+      // Add any other JS/MJS specific rules or overrides here
     },
   }
 );
