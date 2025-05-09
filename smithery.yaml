@@ -5,6 +5,15 @@ mcp_server:
   author: "Roo & User"
   version: "0.1.0"
 startCommand:
-  type: "http"
-  commandFunction: ["node", "build/index.js"]
-  port: 3000
+  type: "stdio"
+  configSchema:
+    {}
+  commandFunction: |-
+    (config) => ({
+      "command": "node",
+      "args": [
+        "build/index.js"
+      ],
+      "env": {
+      }
+    })
