@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "generate-tailwind-data": "node ./scripts/generate-tailwind-data.mjs",
-    "build": "npm run generate-tailwind-data && tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\""
+    "build": "npm run generate-tailwind-data && tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "marked": "^12.0.0",
