@@ -10,10 +10,11 @@ smithery.yaml
 *.tsx
 *.cjs
 *.test.*
-# Exclude scripts and most build output
+# Exclude scripts and most build/dist output
 scripts/
-build/*
-!build/valid_tailwind_classes.json
+# build/* was here, removing as output is in dist/
+dist/*
+!dist/valid_tailwind_classes.json
 
 # Handle docs: ignore all by default, then un-ignore specific paths needed by the app
 docs/*

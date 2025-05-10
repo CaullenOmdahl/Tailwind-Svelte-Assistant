@@ -25,7 +25,7 @@ RUN npm run build
 
 # The valid_tailwind_classes.json is loaded at runtime by src/server.ts.
 # If it's missing, the server logs a warning and the validation tool may not function fully.
-# This assumes build/valid_tailwind_classes.json is generated prior to docker build.
-COPY build/valid_tailwind_classes.json /app/dist/valid_tailwind_classes.json
+# This assumes dist/valid_tailwind_classes.json is generated prior to docker build.
+COPY dist/valid_tailwind_classes.json /app/dist/valid_tailwind_classes.json
 
 CMD ["node", "dist/index.js"]
