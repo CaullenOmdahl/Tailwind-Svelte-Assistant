@@ -10,9 +10,20 @@ smithery.yaml
 *.tsx
 *.cjs
 *.test.*
-# Exclude all docs, scripts, and most build output from context by default
-docs/
+# Exclude scripts and most build output
 scripts/
 build/*
 !build/valid_tailwind_classes.json
+
+# Handle docs: ignore all by default, then un-ignore specific paths needed by the app
+docs/*
+!docs/svelte/
+!docs/tailwindcss.com/
+# If the un-ignored doc folders are git submodules, their .git folders should also be ignored
+# to avoid including their full history and keep the context smaller.
+# Assuming 'docs/svelte' and 'docs/tailwindcss.com' are directories, not direct submodules at root of 'docs'.
+# If they are submodules, their .git folders would be at 'docs/svelte/.git' etc.
+docs/svelte/.git
+docs/tailwindcss.com/.git
+
 node_modules
