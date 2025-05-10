@@ -4,6 +4,9 @@ mcp_server:
   description: "Provides tools for Tailwind CSS and Svelte development, including class validation and documentation snippets."
   author: "Roo & User"
   version: "0.1.0"
+build:
+  context: tailwind-svelte-assistant-mcp-server
+  dockerfile: ../Dockerfile # Dockerfile is at repo root, one level up from context
 startCommand:
   type: "stdio"
   configSchema:
