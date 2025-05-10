@@ -1,23 +1,36 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20-slim
+# Builder stage
+FROM node:20-slim AS builder
 
-# Set the working directory in the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json (if available)
+# Copy package files for better layer caching
 COPY package*.json ./
 
-# Install production dependencies
-# Using npm ci is generally recommended for production builds if package-lock.json is present and reliable
-# Otherwise, npm install --omit=dev can be used.
-RUN npm ci --omit=dev
+# Install all dependencies (including devDependencies for the build process)
+RUN npm install
 
-# Copy the rest of the application code
-# This includes the 'build' directory with compiled JS, and the 'content' directory with data.
-COPY build ./build
-COPY content ./content
-# If scripts are needed at runtime by the server, copy them too.
-# COPY scripts ./scripts
+# Copy all source files (src, content, tsconfig.json, etc.)
+COPY . .
+
+# Build the application (runs tsc and creates the 'build' directory)
+RUN npm run build
+
+# --- Production stage ---
+FROM node:20-slim AS release
+
+WORKDIR /usr/src/app
+
+# Copy package files again for installing production dependencies
+COPY package*.json ./
+
+# Only install production dependencies
+RUN npm install --omit=dev
+
+# Copy the built application from the builder stage
+COPY --from=builder /usr/src/app/build ./build
+
+# Copy the 'content' directory from the builder stage as it's likely needed at runtime
+COPY --from=builder /usr/src/app/content ./content
 
 # The command to run when the container starts
 CMD ["node", "build/index.js"]
