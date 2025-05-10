@@ -1,5 +1,5 @@
 version: 1
-start:
+startCommand:
   command: ["node", "build/index.js"]
   # The port is often used for health checks by platforms like Smithery.
   # Even though this MCP server communicates via stdio, a port might be expected.
