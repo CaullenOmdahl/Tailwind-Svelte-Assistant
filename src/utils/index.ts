@@ -122,7 +122,7 @@ export function validateInputStrict(schema: JSONSchema, input: Record<string, un
   // Check types and enums
   for (const key in schema.properties) {
     const prop = schema.properties[key];
-    const val = (input as Record<string, unknown>)[key];
+    const val = input[key];
     if (val === undefined) continue;
     if (
       prop.type &&

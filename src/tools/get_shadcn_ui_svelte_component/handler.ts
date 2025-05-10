@@ -1,6 +1,6 @@
 // Handler for get_shadcn_ui_svelte_component MCP tool
 
-import { getShadcnUiSvelteComponentByName } from "../../../modules/component-service.js";
+import { getShadcnUiSvelteComponentByName } from "../../modules/component-service.js";
 import {
   GetShadcnUiSvelteComponentInputSchema,
   GetShadcnUiSvelteComponentOutput,

@@ -5,8 +5,8 @@ mcp_server:
   author: "Roo & User"
   version: "0.1.0"
 build:
-  context: tailwind-svelte-assistant-mcp-server
-  dockerfile: ../Dockerfile # Dockerfile is at repo root, one level up from context
+  context: . # Build context is the repository root
+  dockerfile: Dockerfile # Dockerfile is at repo root
 startCommand:
   type: "stdio"
   configSchema:

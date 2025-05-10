@@ -1,5 +1,5 @@
 // src/tools/get_heroicon/handler.ts
-import { getHeroicons } from "../../../modules/component-service.js";
+import { getHeroicons } from "../../modules/component-service.js";
 import { GetHeroiconInputSchema, GetHeroiconOutput } from "./schema.js";
 import { z } from "zod";
 

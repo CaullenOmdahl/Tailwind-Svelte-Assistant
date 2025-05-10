@@ -1,5 +1,5 @@
 // src/tools/get_sveltekit_tailwind_setup_guide/handler.ts
-import { getSvelteKitTailwindSetup } from "../../../modules/setup-service.js";
+import { getSvelteKitTailwindSetup } from "../../modules/setup-service.js";
 import {
   GetSveltekitTailwindSetupGuideInputSchema,
   type GetSveltekitTailwindSetupGuideOutput

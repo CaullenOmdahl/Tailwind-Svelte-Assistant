@@ -4,7 +4,7 @@ import { createServer } from "http";
 import path from "node:path";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
-import { TOOLS, handleToolCall } from "./tools/index.js";
+import { tools as toolRegistry, masterHandleToolCall, toolDefinitions, ToolContext } from "./tools/index.js"; // Updated imports
 import { VALID_CLASSES_FILENAME, buildDir } from "./config/index.js";
 import { ValidTailwindClassesData } from "./tailwind-class-validator.js";
 
@@ -39,16 +39,16 @@ if (!validTailwindClassesData && !validTailwindClassesLoadError) {
 
 // Minimal MCP server implementation
 export function startServer() {
-  const server = createServer((req, res) => {
+  const server = createServer(async (req, res) => { // Added async here
     if (req.method === "GET" && req.url === "/list-tools") {
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ tools: TOOLS }));
+      res.end(JSON.stringify({ tools: toolDefinitions })); // Use toolDefinitions
       return;
     }
     if (req.method === "POST" && req.url === "/call-tool") {
       let body = "";
       req.on("data", (chunk) => (body += chunk));
-      req.on("end", () => {
+      req.on("end", async () => { // Added async here
         try {
           let parsed: unknown;
           try {
@@ -71,30 +71,39 @@ export function startServer() {
           }
 
           const { tool, args } = parsed as { tool: string; args: unknown };
-          // Only allow known tool names
-          const validTools = [
-            "validate_tailwind_classes",
-            "get_documentation_snippet",
-            "get_svelte_component_template",
-            "explain_development_concept"
-          ] as const;
-          type ToolName = typeof validTools[number];
-
-          if (!validTools.includes(tool as ToolName)) {
+          
+          // Validate tool name against registered tools
+          if (!toolRegistry[tool as keyof typeof toolRegistry]) {
             res.writeHead(400, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Unknown tool" }));
+            res.end(JSON.stringify({ error: `Unknown tool: ${tool}` }));
             return;
           }
+          
+          const toolContext: ToolContext = {
+            validTailwindClassesData: validTailwindClassesData ?? { 
+              exactClasses: [], 
+              arbitraryValueStems: [], 
+              responsivePrefixes: [], 
+              statePrefixes: [], 
+              colorNames: [], 
+              colorShades: [] 
+            }, // Ensure default matches ValidTailwindClassesData structure (arrays)
+            validTailwindClassesLoadError: validTailwindClassesLoadError ?? "Default: Tailwind class data not loaded.",
+          };
 
-          const result = handleToolCall(tool as ToolName, args, {
-            validTailwindClassesData: validTailwindClassesData ?? { exactClasses: [], arbitraryValueStems: [], responsivePrefixes: [], statePrefixes: [], colorNames: [], colorShades: [] },
-            validTailwindClassesLoadError: validTailwindClassesLoadError ?? "",
-          });
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ result }));
-        } catch (err) {
-          const errorMsg =
-            err instanceof Error ? err.message : String(err);
+          try {
+            const result = await masterHandleToolCall(tool, args, toolContext); // Use masterHandleToolCall
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ result }));
+          } catch (err) {
+            const errorMsg = err instanceof Error ? err.message : String(err);
+            // Log server-side error for debugging
+            console.error(`Error calling tool ${tool}:`, err);
+            res.writeHead(500, { "Content-Type": "application/json" }); // Use 500 for server errors
+            res.end(JSON.stringify({ error: `Tool execution failed: ${errorMsg}` }));
+          }
+        } catch (err) { // This catch is for JSON.parse or body read errors
+          const errorMsg = err instanceof Error ? err.message : String(err);
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: errorMsg }));
         }

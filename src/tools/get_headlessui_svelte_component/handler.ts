@@ -1,4 +1,4 @@
-import { getHeadlessUiSvelteComponentByName } from "../../../modules/component-service.js";
+import { getHeadlessUiSvelteComponentByName } from "../../modules/component-service.js";
 import { GetHeadlessUiSvelteComponentInputSchema, GetHeadlessUiSvelteComponentOutput } from "./schema.js"; // Corrected type import
 import { z } from "zod"; // Added z import for type inference
 
