@@ -1,7 +1,9 @@
 version: 1
 startCommand:
-  command: ["node", "build/index.js"]
-  # The port is often used for health checks by platforms like Smithery.
-  # Even though this MCP server communicates via stdio, a port might be expected.
-  # If Smithery doesn't require a port for stdio-based MCP servers, this line might be optional or ignored.
-  port: 8000
+  type: stdio
+  commandFunction: |
+    (config) => ({
+      command: "node",
+      args: ["build/index.js"],
+      env: {}
+    })
