@@ -10,6 +10,9 @@ smithery.yaml
 *.tsx
 *.cjs
 *.test.*
-docs/ui/
-docs/svelte/
+# Exclude all docs, scripts, and most build output from context by default
+docs/
+scripts/
+build/*
+!build/valid_tailwind_classes.json
 node_modules
