@@ -7,7 +7,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install all dependencies (including devDependencies for the build process)
-RUN npm install
+# Ignore scripts here because tsconfig.json and src are not yet copied.
+# The actual build will happen later via "RUN npm run build".
+RUN npm install --ignore-scripts
 
 # Copy all source files (src, content, tsconfig.json, etc.)
 COPY . .
@@ -24,7 +26,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Only install production dependencies
-RUN npm install --omit=dev
+RUN npm install --omit=dev --ignore-scripts
 
 # Copy the built application from the builder stage
 COPY --from=builder /usr/src/app/build ./build
