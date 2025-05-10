@@ -1,0 +1,30 @@
+{
+  "sites": [
+    {
+      "siteName": "SvelteKit",
+      "baseURL": "https://kit.svelte.dev/docs/",
+      "contentSelector": "main",
+      "outputDir": "sveltekit",
+      "pages": [
+        "routing",
+        "hooks",
+        "load",
+        "form-actions"
+      ]
+    },
+    {
+      "siteName": "Tailwind CSS",
+      "baseURL": "https://tailwindcss.com/docs/",
+      "contentSelector": "div.prose[data-content='true']",
+      "outputDir": "tailwind",
+      "pages": [
+        "padding",
+        "flex",
+        "grid-template-columns",
+        "responsive-design",
+        "hover-focus-and-other-states",
+        "dark-mode"
+      ]
+    }
+  ]
+}
