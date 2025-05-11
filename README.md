@@ -97,9 +97,54 @@ The MCP server exposes the following tools:
     1.  Create a new `.svelte` file within an appropriate category subdirectory in `content/snippets/`. If the category doesn't exist, create the directory.
     2.  The server will automatically pick up new snippets based on the directory structure.
 
-## Future Enhancements
+## Future Enhancements (Ranked by Value for AAA Website Development)
 
--   Fuzzy search for documentation topics.
--   More comprehensive error handling in scraping script.
--   Metadata for snippets (description, props).
--   Automated testing.
+To further elevate this MCP server's capability to assist in building top-tier, professional websites, the following enhancements are planned, ranked by their potential impact:
+
+1.  **Advanced & Sophisticated Component Snippets:**
+    *   **Goal:** Provide a rich library of complex, interactive, and visually polished UI elements commonly found on enterprise-grade websites.
+    *   **Details:**
+        *   **New Categories:** Data visualizations (charts, graphs), interactive tables (sortable, filterable), mega menus, multi-step forms/wizards, advanced modals, notification systems/toasts, loading skeletons, pricing tables, testimonial carousels, timelines.
+        *   **Component Variants & Interactivity:** Offer multiple stylistic variants for components. Ensure all interactive elements have well-defined and professional-looking hover, focus, active, and disabled states. Include examples of subtle animations and transitions using Svelte's capabilities.
+
+2.  **Theming, Branding & Design System Support:**
+    *   **Goal:** Enable easy customization of snippets to align with strong, consistent visual identities, characteristic of professional branding.
+    *   **Details:**
+        *   **Themeable Snippets:** Design snippets using CSS custom properties and/or props for easy overriding of colors, typography, spacing, etc.
+        *   **Tailwind Configuration Guidance:** Provide tools or documentation on extending `tailwind.config.js` for robust design systems (e.g., defining color palettes, typography scales, spacing units). Include `tailwind.config.js` snippets showcasing best practices.
+        *   **Iconography:** Guidance and examples for integrating high-quality SVG icon sets (e.g., Heroicons, Feather Icons).
+
+3.  **Accessibility (A11y) Excellence:**
+    *   **Goal:** Ensure all provided resources contribute to building highly accessible websites, meeting WCAG standards and reflecting best practices.
+    *   **Details:**
+        *   **ARIA Best Practices:** All snippets built with proper ARIA attributes, semantic HTML, and keyboard navigation.
+        *   **Accessibility Notes:** Include notes with snippets on key accessibility considerations and testing.
+        *   **Focus Management Examples:** Snippets demonstrating robust focus management for interactive components.
+
+4.  **Enhanced Layout & Structural Patterns:**
+    *   **Goal:** Offer snippets for sophisticated page structures and responsive layouts that go beyond basic implementations.
+    *   **Details:**
+        *   **Complex Page Layouts:** Snippets for dashboard shells, multi-column layouts with sidebars, advanced landing page hero sections.
+        *   **Advanced Responsive Design:** Examples of complex responsive patterns (e.g., responsive tables, adaptive navigation).
+
+5.  **Content Presentation & Typography:**
+    *   **Goal:** Provide resources for displaying content in a visually appealing, readable, and professional manner.
+    *   **Details:**
+        *   **Rich Typography Snippets:** Examples of well-structured text blocks, headings, lists, and blockquotes using Tailwind's typography plugin or custom typographic scales.
+        *   **Image & Media Handling:** Snippets for responsive images, image galleries, video embeds with aspect ratio control.
+
+6.  **Enhanced Snippet Metadata & Discoverability:**
+    *   **Goal:** Make snippets easier to find, understand, and use effectively.
+    *   **Details:**
+        *   **Comprehensive Snippet Metadata:** Include descriptions, use cases, props (with types, defaults), emitted events, SvelteKit/Tailwind version requirements, accessibility notes, and theming guidance for each snippet.
+        *   **Fuzzy Search:** Implement fuzzy search for documentation topics and snippet metadata (e.g., "find a card with an image and primary button").
+
+7.  **Tooling for Professional Workflow (SvelteKit Best Practices):**
+    *   **Goal:** Provide code patterns and components that demonstrate best practices for developing robust SvelteKit applications.
+    *   **Details:** Snippets for advanced form handling, data loading patterns, custom Svelte store usage, or utility hook implementations.
+
+8.  **Project Robustness & Maintainability:**
+    *   **Goal:** Ensure the long-term stability and reliability of the MCP server itself.
+    *   **Details:**
+        *   More comprehensive error handling in the documentation scraping script.
+        *   Automated testing for the MCP server's tools and content.

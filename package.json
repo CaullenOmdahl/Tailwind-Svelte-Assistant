@@ -20,12 +20,13 @@
     "@modelcontextprotocol/sdk": "0.6.0",
     "axios": "^1.6.0",
     "cheerio": "^1.0.0-rc.12",
+    "clsx": "^2.1.1",
     "turndown": "^7.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.24",
-    "typescript": "^5.3.3",
     "@types/cheerio": "^0.22.35",
-    "@types/turndown": "^5.0.4"
+    "@types/node": "^20.11.24",
+    "@types/turndown": "^5.0.4",
+    "typescript": "^5.3.3"
   }
 }
