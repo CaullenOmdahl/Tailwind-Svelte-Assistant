@@ -1,20 +1,6 @@
 #!/usr/bin/env node
-console.log("stdout test");
-console.error("stderr test");
 
-// MCP DEBUG LOGGING
-console.error('[MCP DEBUG] Server starting');
-process.stdin.on('data', (chunk) => {
-  console.error('[MCP DEBUG] Received on stdin:', chunk.toString());
-});
-process.on('uncaughtException', (err) => {
-  console.error('[MCP DEBUG] Uncaught exception:', err);
-  process.exit(1);
-});
-process.on('exit', (code) => {
-  console.error('[MCP DEBUG] Process exiting with code', code);
-});
-
+// Debug logging removed for production MCP deployment
 const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
 const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
 const {
