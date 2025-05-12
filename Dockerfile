@@ -29,10 +29,10 @@ COPY package*.json ./
 RUN npm install --omit=dev --ignore-scripts
 
 # Copy the built application from the builder stage
-COPY --from=builder /usr/src/app/build ./build
+COPY --from=builder /usr/src/app/dist ./dist
 
 # Copy the 'content' directory from the builder stage as it's likely needed at runtime
 COPY --from=builder /usr/src/app/content ./content
 
 # The command to run when the container starts
-CMD ["node", "build/index.js"]
+CMD ["node", "dist/index.js"]
