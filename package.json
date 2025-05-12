@@ -4,16 +4,16 @@
   "description": "Provides SvelteKit and Tailwind CSS documentation and code snippets.",
   "private": true,
   "bin": {
-    "tailwind-svelte-assistant-mcp-server": "./build/index.js"
+    "tailwind-svelte-assistant-mcp-server": "./dist/index.js"
   },
   "files": [
-    "build"
+    "dist"
   ],
   "scripts": {
-    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
     "prepare": "npm run build",
     "watch": "tsc --watch",
-    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+    "inspector": "npx @modelcontextprotocol/inspector dist/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "0.6.0",
