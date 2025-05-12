@@ -4,6 +4,6 @@ startCommand:
   commandFunction: |
     (config) => ({
       command: "node",
-      args: ["build/index.js"],
+      args: ["dist/index.js"],
       env: {}
     })
