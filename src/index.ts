@@ -147,9 +147,12 @@ async function listDirectoryContents(dirPath: string, fileExtension?: string): P
     return { type: "text", text: contentList.join('\n') };
   } catch (error: any) {
     if (error.code === 'ENOENT') {
-      throw new McpError(ErrorCode.InvalidRequest, `Directory not found: ${dirPath}`);
+      // Return empty list if directory does not exist (prevents tool list failures)
+      return { type: "text", text: "" };
     }
-    throw new McpError(ErrorCode.InternalError, `Error listing directory ${dirPath}: ${error.message}`);
+    // Log and return empty list for other errors to avoid timeouts
+    console.error(`Error listing directory ${dirPath}:`, error);
+    return { type: "text", text: "" };
   }
 }
 
