@@ -1,21 +1,33 @@
 #!/usr/bin/env node
+console.log("stdout test");
+console.error("stderr test");
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
+// MCP DEBUG LOGGING
+console.error('[MCP DEBUG] Server starting');
+process.stdin.on('data', (chunk) => {
+  console.error('[MCP DEBUG] Received on stdin:', chunk.toString());
+});
+process.on('uncaughtException', (err) => {
+  console.error('[MCP DEBUG] Uncaught exception:', err);
+  process.exit(1);
+});
+process.on('exit', (code) => {
+  console.error('[MCP DEBUG] Process exiting with code', code);
+});
+
+const { Server } = require("@modelcontextprotocol/sdk/server/index.js");
+const { StdioServerTransport } = require("@modelcontextprotocol/sdk/server/stdio.js");
+const {
   CallToolRequestSchema,
   ListToolsRequestSchema,
   McpError,
   ErrorCode,
   TextContent,
-} from "@modelcontextprotocol/sdk/types.js";
-import { promises as fs } from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
+} = require("@modelcontextprotocol/sdk/types.js");
+const fs = require('fs').promises;
+const path = require('path');
 // Define base paths for content.
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+/* In CommonJS, __filename and __dirname are available by default */
 
 const CONTENT_BASE_PATH = path.join(__dirname, '..', 'content'); // Reverted to dynamic path
 const SVELTEKIT_DOCS_PATH = path.join(CONTENT_BASE_PATH, 'docs', 'sveltekit');
@@ -119,18 +131,18 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-async function listDirectoryContents(dirPath: string, fileExtension?: string): Promise<TextContent> {
+async function listDirectoryContents(dirPath: string, fileExtension?: string): Promise<any> {
   try {
     const files = await fs.readdir(dirPath, { withFileTypes: true });
     let contentList: string[];
     if (fileExtension) {
       contentList = files
-        .filter(dirent => dirent.isFile() && dirent.name.endsWith(fileExtension))
-        .map(dirent => dirent.name.replace(fileExtension, ''));
+        .filter((dirent: any) => dirent.isFile() && dirent.name.endsWith(fileExtension))
+        .map((dirent: any) => dirent.name.replace(fileExtension, ''));
     } else {
       contentList = files
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => dirent.name);
+        .filter((dirent: any) => dirent.isDirectory())
+        .map((dirent: any) => dirent.name);
     }
     return { type: "text", text: contentList.join('\n') };
   } catch (error: any) {
@@ -141,7 +153,7 @@ async function listDirectoryContents(dirPath: string, fileExtension?: string): P
   }
 }
 
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
+server.setRequestHandler(CallToolRequestSchema, async (request: any) => {
   const args = request.params.arguments;
   let filePath: string = ''; // Declare filePath here to be accessible in catch
 
@@ -209,7 +221,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 async function main() {
   const transport = new StdioServerTransport();
-  server.onerror = (error) => console.error('[MCP SERVER ERROR]', error);
+  server.onerror = (error: any) => console.error('[MCP SERVER ERROR]', error);
   process.on('SIGINT', async () => {
     console.log("tailwind-svelte-assistant-mcp-server shutting down...");
     await server.close();

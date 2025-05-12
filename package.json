@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Provides SvelteKit and Tailwind CSS documentation and code snippets.",
   "private": true,
-  "type": "module",
   "bin": {
     "tailwind-svelte-assistant-mcp-server": "./build/index.js"
   },
