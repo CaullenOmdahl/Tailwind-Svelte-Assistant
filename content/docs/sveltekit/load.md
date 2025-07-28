@@ -67,6 +67,7 @@
     *   [$app/server](/docs/kit/$app-server)
     *   [$app/state](/docs/kit/$app-state)
     *   [$app/stores](/docs/kit/$app-stores)
+    *   [$app/types](/docs/kit/$app-types)
     *   [$env/dynamic/private](/docs/kit/$env-dynamic-private)
     *   [$env/dynamic/public](/docs/kit/$env-dynamic-public)
     *   [$env/static/private](/docs/kit/$env-static-private)
@@ -394,7 +395,6 @@ src/routes/blog/\[slug\]/+page
 <script lang="ts">
 	import { page } from '$app/state';
 	import type { PageProps } from './$types';
-
 	let { data }: PageProps = $props();
 
 	// we can access `data.posts` because it's returned from
@@ -478,7 +478,7 @@ Universal `load` functions are called with a `LoadEvent`, which has a `data` pro
 
 A universal `load` function can return an object containing any values, including things like custom classes and component constructors.
 
-A server `load` function must return data that can be serialized with [devalue](https://github.com/rich-harris/devalue) — anything that can be represented as JSON plus things like `BigInt`, `Date`, `Map`, `Set` and `RegExp`, or repeated/cyclical references — so that it can be transported over the network. Your data can include [promises](#Streaming-with-promises), in which case it will be streamed to browsers.
+A server `load` function must return data that can be serialized with [devalue](https://github.com/rich-harris/devalue) — anything that can be represented as JSON plus things like `BigInt`, `Date`, `Map`, `Set` and `RegExp`, or repeated/cyclical references — so that it can be transported over the network. Your data can include [promises](#Streaming-with-promises), in which case it will be streamed to browsers. If you need to serialize/deserialize custom types, use [transport hooks](https://svelte.dev/docs/kit/hooks#Universal-hooks-transport).
 
 ### When to use which[](#Universal-vs-server-When-to-use-which)
 
@@ -571,7 +571,7 @@ The module exports two specific components:
 
 A Console class with methods such as console.log(), console.error() and console.warn() that can be used to write to any Node.js stream.
 A global console instance configured to write to process.stdout and
-process.stderr. The global console can be used without calling require('console').
+process.stderr. The global console can be used without importing the node:console module.
 
 Warning: The global console object’s methods are neither consistently
 synchronous like the browser APIs they resemble, nor are they consistently
@@ -637,7 +637,7 @@ The module exports two specific components:
 
 A Console class with methods such as console.log(), console.error() and console.warn() that can be used to write to any Node.js stream.
 A global console instance configured to write to process.stdout and
-process.stderr. The global console can be used without calling require('console').
+process.stderr. The global console can be used without importing the node:console module.
 
 Warning: The global console object’s methods are neither consistently
 synchronous like the browser APIs they resemble, nor are they consistently
@@ -1711,7 +1711,6 @@ src/routes/random-number/+page
 <script lang="ts">
 	import { invalidate, invalidateAll } from '$app/navigation';
 	import type { PageProps } from './$types';
-
 	let { data }: PageProps = $props();
 
 	function rerunLoadFunction() {
@@ -1778,14 +1777,14 @@ Most common status codes:
 
 See all redirect status codes
 @paramstatus The HTTP status code. Must be in the range 300-308.@paramlocation The location to redirect to.@throwsRedirect This error instructs SvelteKit to redirect to the specified location.@throwsError If the provided status is invalid.redirect } from '@sveltejs/kit';
-import { function getRequestEvent(): RequestEvent<Partial<Record<string, string>>, string | null>Returns the current RequestEvent. Can be used inside handle, load and actions (and functions called by them).
+import { function getRequestEvent(): RequestEvent<Partial<Record<string, string>>, string | null>Returns the current RequestEvent. Can be used inside server hooks, server load functions, actions, and endpoints (and functions called by them).
 In environments without AsyncLocalStorage, this must be called synchronously (i.e. not after an await).
 @since2.20.0getRequestEvent } from '$app/server';
 
 export function function requireLogin(): UserrequireLogin() {
 	const { const locals: App.LocalsContains custom data that was added to the request within the server handle hook.
 locals, const url: URLThe requested URL.
-url } = function getRequestEvent(): RequestEvent<Partial<Record<string, string>>, string | null>Returns the current RequestEvent. Can be used inside handle, load and actions (and functions called by them).
+url } = function getRequestEvent(): RequestEvent<Partial<Record<string, string>>, string | null>Returns the current RequestEvent. Can be used inside server hooks, server load functions, actions, and endpoints (and functions called by them).
 In environments without AsyncLocalStorage, this must be called synchronously (i.e. not after an await).
 @since2.20.0getRequestEvent();
 
@@ -1798,7 +1797,7 @@ pathname + const url: URLThe requested URL.
 url.URL.search: stringMDN Reference
 search;
 		const const params: URLSearchParamsparams = new var URLSearchParams: new (init?: string[][] | Record<string, string> | string | URLSearchParams) => URLSearchParamsMDN Reference
-URLSearchParams class is a global reference for require('url').URLSearchParams
+URLSearchParams class is a global reference for import { URLSearchParams } from 'node:url'
 https://nodejs.org/api/url.html#class-urlsearchparams
 @sincev10.0.0URLSearchParams({ redirectTo: stringredirectTo });
 

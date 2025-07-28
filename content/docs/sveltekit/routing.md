@@ -67,6 +67,7 @@
     *   [$app/server](/docs/kit/$app-server)
     *   [$app/state](/docs/kit/$app-state)
     *   [$app/stores](/docs/kit/$app-stores)
+    *   [$app/types](/docs/kit/$app-types)
     *   [$env/dynamic/private](/docs/kit/$env-dynamic-private)
     *   [$env/dynamic/public](/docs/kit/$env-dynamic-public)
     *   [$env/static/private](/docs/kit/$env-static-private)
@@ -565,7 +566,7 @@ Like `+layout.js`, `+layout.server.js` can export [page options](page-options) �
 
 ## +server[](#server)
 
-As well as pages, you can define routes with a `+server.js` file (sometimes referred to as an ‘API route’ or an ‘endpoint’), which gives you full control over the response. Your `+server.js` file exports functions corresponding to HTTP verbs like `GET`, `POST`, `PATCH`, `PUT`, `DELETE`, `OPTIONS`, and `HEAD` that take a `RequestEvent` argument and return a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
+As well as pages, you can define routes with a `+server.js` file (sometimes referred to as an ‘API route’ or an ‘endpoint’), which gives you full control over the response. Your `+server.js` file exports functions corresponding to HTTP verbs like `GET`, `POST`, `PATCH`, `PUT`, `DELETE`, `OPTIONS`, and `HEAD` that take a [`RequestEvent`](@sveltejs-kit#RequestEvent) argument and return a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
 
 For example we could create an `/api/random-number` route with a `GET` handler:
 
@@ -819,6 +820,7 @@ json();
 };
 
 // This handler will respond to PUT, PATCH, DELETE, etc.
+
 export const const fallback: RequestHandlerfallback: type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>
 type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>RequestHandler = async ({ request: RequestThe original request object.
 request }) => {

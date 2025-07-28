@@ -1,31 +1,34 @@
 {
   "name": "tailwind-svelte-assistant-mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides SvelteKit and Tailwind CSS documentation and code snippets.",
+  "type": "module",
   "private": true,
   "bin": {
     "tailwind-svelte-assistant-mcp-server": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "content"
   ],
   "scripts": {
-    "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
+    "build": "tsc && node -e \"import('fs').then(fs => fs.chmodSync('dist/index.js', '755'))\"",
     "prepare": "npm run build",
     "watch": "tsc --watch",
-    "inspector": "npx @modelcontextprotocol/inspector dist/index.js"
+    "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
+    "security-audit": "npm audit --audit-level=moderate",
+    "outdated-check": "npm outdated"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "0.6.0",
-    "axios": "^1.6.0",
-    "cheerio": "^1.0.0-rc.12",
-    "clsx": "^2.1.1",
-    "turndown": "^7.1.0"
+    "@modelcontextprotocol/sdk": "0.6.0"
   },
   "devDependencies": {
-    "@types/cheerio": "^0.22.35",
-    "@types/node": "^20.11.24",
-    "@types/turndown": "^5.0.4",
+    "@types/node": "^18.17.0",
     "typescript": "^5.3.3"
+  },
+  "optionalDependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "turndown": "^7.1.0"
   }
 }

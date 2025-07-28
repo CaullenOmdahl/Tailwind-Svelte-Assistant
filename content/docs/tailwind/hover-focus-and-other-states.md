@@ -965,9 +965,9 @@ UX/UI
 <div>  <h2>Categories<h2>  <ul class="*:rounded-full *:border *:border-sky-100 *:bg-sky-50 *:px-2 *:py-0.5 dark:text-sky-300 dark:*:border-sky-500/15 dark:*:bg-sky-500/10 ...">    <li>Sales</li>    <li>Marketing</li>    <li>SEO</li>    <!-- ... -->  </ul></div>
 ```
 
-It's important to note that overriding a style with a utility directly on the child itself won't work due to the specificity of the generated child selector:
+It's important to note that overriding a style with a utility directly on the child itself won't work since children rules are generated after the regular ones and they have the same specificity:
 
-Won't work, children can't override their own styling.
+Won't work, children can't override styles given to them by the parent.
 
 ```
 <ul class="*:bg-sky-50 ...">  <li class="bg-red-50 ...">Sales</li>  <li>Marketing</li>  <li>SEO</li>  <!-- ... --></ul>

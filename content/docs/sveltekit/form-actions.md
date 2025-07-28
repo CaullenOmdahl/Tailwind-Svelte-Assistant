@@ -67,6 +67,7 @@
     *   [$app/server](/docs/kit/$app-server)
     *   [$app/state](/docs/kit/$app-state)
     *   [$app/stores](/docs/kit/$app-stores)
+    *   [$app/types](/docs/kit/$app-types)
     *   [$env/dynamic/private](/docs/kit/$env-dynamic-private)
     *   [$env/dynamic/public](/docs/kit/$env-dynamic-public)
     *   [$env/static/private](/docs/kit/$env-static-private)
@@ -326,6 +327,7 @@ cookies.Cookies.get: (name: string, opts?: CookieParseOptions) => string | undef
 @paramname the name of the cookie@paramopts the options, passed directly to cookie.parse. See documentation hereget('sessionid'));
 	return { user: anyuser };
 };
+
 export const const actions: {
     login: ({ cookies, request }: RequestEvent<Record<string, any>, string | null>) => Promise<{
         success: boolean;
@@ -431,7 +433,7 @@ If the request couldn’t be processed because of invalid data, you can return v
 src/routes/login/+page.server
 
 ```
-import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object.
+import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.fail } from '@sveltejs/kit';
 import * as module "$lib/server/db"db from '$lib/server/db';
 
@@ -476,7 +478,7 @@ get('password');
 }): ActionFailure<{
     email: string | null;
     missing: boolean;
-}> (+1 overload)Create an ActionFailure object.
+}> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: string | nullemail, missing: booleanmissing: true });
 		}
 
@@ -492,7 +494,7 @@ get('password');
 }): ActionFailure<{
     email: FormDataEntryValue;
     incorrect: boolean;
-}> (+1 overload)Create an ActionFailure object.
+}> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: FormDataEntryValueemail, incorrect: booleanincorrect: true });
 		}
 
@@ -519,7 +521,7 @@ path: '/' });
 ```
 
 ```
-import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object.
+import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.fail } from '@sveltejs/kit';
 import * as module "$lib/server/db"db from '$lib/server/db';
 import type { type Actions = {
@@ -566,7 +568,7 @@ get('password');
 }): ActionFailure<{
     email: string | null;
     missing: boolean;
-}> (+1 overload)Create an ActionFailure object.
+}> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: string | nullemail, missing: booleanmissing: true });
 		}
 
@@ -582,7 +584,7 @@ get('password');
 }): ActionFailure<{
     email: FormDataEntryValue;
     incorrect: boolean;
-}> (+1 overload)Create an ActionFailure object.
+}> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: FormDataEntryValueemail, incorrect: booleanincorrect: true });
 		}
 
@@ -640,7 +642,7 @@ Redirects (and errors) work exactly the same as in [`load`](load#Redirects):
 src/routes/login/+page.server
 
 ```
-import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object.
+import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.fail, function redirect(status: 300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308 | ({} & number), location: string | URL): neverRedirect a request. When called during request handling, SvelteKit will return a redirect response.
 Make sure you’re not catching the thrown redirect, which would prevent SvelteKit from handling it.
 Most common status codes:
@@ -688,7 +690,7 @@ get('password');
 }>(status: number, data: {
     email: FormDataEntryValue | null;
     missing: boolean;
-}): ActionFailure<...> (+1 overload)Create an ActionFailure object.
+}): ActionFailure<...> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: FormDataEntryValue | nullemail, missing: booleanmissing: true });
 		}
 
@@ -699,7 +701,7 @@ get('password');
 }>(status: number, data: {
     email: FormDataEntryValue | null;
     incorrect: boolean;
-}): ActionFailure<...> (+1 overload)Create an ActionFailure object.
+}): ActionFailure<...> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: FormDataEntryValue | nullemail, incorrect: booleanincorrect: true });
 		}
 
@@ -743,7 +745,7 @@ See all redirect status codes
 ```
 
 ```
-import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object.
+import { function fail(status: number): ActionFailure<undefined> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.fail, function redirect(status: 300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308 | ({} & number), location: string | URL): neverRedirect a request. When called during request handling, SvelteKit will return a redirect response.
 Make sure you’re not catching the thrown redirect, which would prevent SvelteKit from handling it.
 Most common status codes:
@@ -793,7 +795,7 @@ get('password');
 }>(status: number, data: {
     email: FormDataEntryValue | null;
     missing: boolean;
-}): ActionFailure<...> (+1 overload)Create an ActionFailure object.
+}): ActionFailure<...> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: FormDataEntryValue | nullemail, missing: booleanmissing: true });
 		}
 
@@ -804,7 +806,7 @@ get('password');
 }>(status: number, data: {
     email: FormDataEntryValue | null;
     incorrect: boolean;
-}): ActionFailure<...> (+1 overload)Create an ActionFailure object.
+}): ActionFailure<...> (+1 overload)Create an ActionFailure object. Call when form submission fails.
 @paramstatus The HTTP status code. Must be in the range 400-599.@paramdata Data associated with the failure (e.g. validation errors)fail(400, { email: FormDataEntryValue | nullemail, incorrect: booleanincorrect: true });
 		}
 
@@ -960,6 +962,7 @@ locals.App.Locals.user: {
 } | nulluser
 	};
 };
+
 export const const actions: {
     logout: (event: RequestEvent<Record<string, any>, string | null>) => Promise<void>;
 }actions = {
@@ -1011,7 +1014,6 @@ src/routes/login/+page
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
-
 	let { form }: PageProps = $props();
 </script>
 
@@ -1033,7 +1035,7 @@ Without an argument, `use:enhance` will emulate the browser-native behaviour, ju
 
 ### Customising use:enhance[](#Progressive-enhancement-Customising-use:enhance)
 
-To customise the behaviour, you can provide a `SubmitFunction` that runs immediately before the form is submitted, and (optionally) returns a callback that runs with the `ActionResult`. Note that if you return a callback, the default behavior mentioned above is not triggered. To get it back, call `update`.
+To customise the behaviour, you can provide a `SubmitFunction` that runs immediately before the form is submitted, and (optionally) returns a callback that runs with the `ActionResult`.
 
 ```
 <form
@@ -1055,7 +1057,7 @@ To customise the behaviour, you can provide a `SubmitFunction` that runs immedia
 
 You can use these functions to show and hide loading UI, and so on.
 
-If you return a callback, you may need to reproduce part of the default `use:enhance` behaviour, but without invalidating all data on a successful response. You can do so with `applyAction`:
+If you return a callback, you override the default post-submission behavior. To get it back, call `update`, which accepts `invalidateAll` and `reset` parameters, or use `applyAction` on the result:
 
 src/routes/login/+page
 
@@ -1086,7 +1088,6 @@ src/routes/login/+page
 <script lang="ts">
 	import { enhance, applyAction } from '$app/forms';
 	import type { PageProps } from './$types';
-
 	let { form }: PageProps = $props();
 </script>
 
@@ -1160,8 +1161,8 @@ src/routes/login/+page
 	import { applyAction, deserialize } from '$app/forms';
 	import type { PageProps } from './$types';
 	import type { ActionResult } from '@sveltejs/kit';
-
 	let { form }: PageProps = $props();
+
 	async function handleSubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}) {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -1170,6 +1171,7 @@ src/routes/login/+page
 			method: 'POST',
 			body: data
 		});
+
 		const result: ActionResult = deserialize(await response.text());
 
 		if (result.type === 'success') {
