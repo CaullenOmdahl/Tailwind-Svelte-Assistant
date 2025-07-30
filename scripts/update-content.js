@@ -61,23 +61,70 @@ async function fetchContent(url) {
     const $ = cheerio.load(response.data);
     
     // Remove unwanted elements
-    $('script, style, nav, footer, .sidebar, .navigation, .breadcrumb').remove();
+    $('script, style, nav, footer, .sidebar, .navigation, .breadcrumb, .toc').remove();
+    $('.left-sidebar, .right-sidebar, .nav-links, .site-nav').remove();
     
-    // Extract main content area
-    let content = $('main, .main-content, .content, article').first().html();
+    let content;
     
-    // Fallback to body if no main content area found
+    // SvelteKit specific selectors
+    if (url.includes('kit.svelte.dev')) {
+      // Remove navigation and sidebar elements
+      $('.sidebar, .nav, [role="navigation"]').remove();
+      // Extract main content from SvelteKit docs
+      content = $('.content').first().html() || $('main').first().html();
+    }
+    
+    // Tailwind CSS specific selectors  
+    if (url.includes('tailwindcss.com')) {
+      // Remove Tailwind navigation
+      $('.sidebar, .nav-container, .navigation').remove();
+      // Extract main content from Tailwind docs
+      content = $('[data-docs-content], .docs-content, main').first().html();
+    }
+    
+    // Generic fallback
+    if (!content) {
+      content = $('main, .main-content, .content, article').first().html();
+    }
+    
+    // Final fallback to body if no main content area found
     if (!content) {
       content = $('body').html();
     }
 
+    if (!content) {
+      console.warn('No content found for', url);
+      return null;
+    }
+
+    // Clean up the content further
+    const $content = cheerio.load(content);
+    
+    // Remove any remaining navigation elements
+    $content('nav, .nav, .navigation, .breadcrumb, .toc, .table-of-contents').remove();
+    $content('[role="navigation"], [class*="sidebar"], [class*="nav-"]').remove();
+    
+    // Get clean HTML
+    const cleanContent = $content.html();
+
     // Convert HTML to Markdown
     const turndownService = new TurndownService({
       headingStyle: 'atx',
-      codeBlockStyle: 'fenced'
+      codeBlockStyle: 'fenced',
+      bulletListMarker: '-'
     });
     
-    const markdown = turndownService.turndown(content || '');
+    // Add custom rules to clean up conversion
+    turndownService.addRule('removeEmptyElements', {
+      filter: function (node) {
+        return node.textContent.trim() === '' && !['img', 'br', 'hr'].includes(node.nodeName.toLowerCase());
+      },
+      replacement: function () {
+        return '';
+      }
+    });
+    
+    const markdown = turndownService.turndown(cleanContent || '');
     
     return markdown;
   } catch (error) {
