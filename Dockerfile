@@ -7,14 +7,14 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install all dependencies (including devDependencies for the build process)
-# Ignore scripts here because tsconfig.json and src are not yet copied.
-# The actual build will happen later via "RUN npm run build".
-RUN npm install --ignore-scripts
+RUN npm ci --ignore-scripts
 
-# Copy all source files (src, content, tsconfig.json, etc.)
-COPY . .
+# Copy source files and build config
+COPY src ./src
+COPY tsconfig.json ./
+COPY content ./content
 
-# Build the application (runs tsc and creates the 'build' directory)
+# Build the application
 RUN npm run build
 
 # --- Production stage ---
