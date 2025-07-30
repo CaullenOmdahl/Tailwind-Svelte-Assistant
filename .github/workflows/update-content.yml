@@ -1,0 +1,114 @@
+name: Update Content
+
+on:
+  schedule:
+    # Run every 3.5 days (84 hours)
+    - cron: '0 0 */4 1,3,5 *'  # Every 4 days on Mon, Wed, Fri
+    - cron: '12 0 */3 2,4,6,7 *'  # Every 3 days on Tue, Thu, Sat, Sun (offset by 12 hours)
+  workflow_dispatch:  # Allow manual triggering
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run content update script
+        run: npm run update-content
+        env:
+          NODE_ENV: production
+      
+      - name: Check for changes
+        id: git-check
+        run: |
+          git add -A
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No content changes detected"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Content changes detected"
+          fi
+      
+      - name: Create Pull Request
+        if: steps.git-check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            feat: Update documentation and snippet content
+            
+            - Updated SvelteKit documentation
+            - Updated Tailwind CSS documentation  
+            - Updated component snippets
+            - Automated content refresh
+            
+            🤖 Generated with automated content update workflow
+          title: 'feat: Automated content update'
+          body: |
+            ## 📚 Automated Content Update
+            
+            This PR contains the latest updates to documentation and snippets:
+            
+            ### Changes
+            - 🔄 SvelteKit documentation refresh
+            - 🎨 Tailwind CSS documentation update
+            - 🧩 Component snippets update
+            - 📋 Content structure improvements
+            
+            ### Verification
+            - [ ] Review updated documentation for accuracy
+            - [ ] Test MCP server with new content
+            - [ ] Verify snippet functionality
+            
+            ---
+            *This PR was automatically created by the content update workflow.*
+            
+            🤖 Generated with automated content update workflow
+          branch: automated-content-update
+          delete-branch: true
+          draft: false
+      
+      - name: Enable auto-merge for content updates
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: |
+          # Wait for PR to be created
+          sleep 10
+          
+          # Get the PR number
+          PR_NUMBER=$(gh pr list --head automated-content-update --json number --jq '.[0].number')
+          
+          if [ -n "$PR_NUMBER" ]; then
+            echo "Enabling auto-merge for PR #$PR_NUMBER"
+            gh pr merge $PR_NUMBER --auto --squash
+          else
+            echo "Could not find PR to auto-merge"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Content update failed. Please check the workflow logs."
+          # You could add Slack/Discord notification here if needed

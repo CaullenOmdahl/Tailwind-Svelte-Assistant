@@ -17,7 +17,8 @@
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
     "security-audit": "npm audit --audit-level=moderate",
-    "outdated-check": "npm outdated"
+    "outdated-check": "npm outdated",
+    "update-content": "node scripts/update-content.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "0.6.0"

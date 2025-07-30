@@ -1,0 +1,29 @@
+{
+  "lastUpdated": "2025-07-30T10:46:03.696Z",
+  "sveltekit": {
+    "topics": 4,
+    "files": [
+      "form-actions.md",
+      "hooks.md",
+      "load.md",
+      "placeholder.md",
+      "routing.md"
+    ]
+  },
+  "tailwind": {
+    "topics": 6,
+    "files": [
+      "dark-mode.md",
+      "flex.md",
+      "grid-template-columns.md",
+      "hover-focus-and-other-states.md",
+      "padding.md",
+      "placeholder.md",
+      "responsive-design.md"
+    ]
+  },
+  "snippets": {
+    "categories": 17,
+    "totalSnippets": 43
+  }
+}
