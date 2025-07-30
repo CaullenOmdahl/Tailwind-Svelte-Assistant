@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.782Z -->
 <!--
 @description: A testimonial section featuring a company logo, a prominent quote, author details, and a background image. Based on Tailwind UI.
 @props:

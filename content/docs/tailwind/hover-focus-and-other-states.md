@@ -1,3 +1,21 @@
+# Hover Focus And Other States
+
+> Last updated: 2025-07-30T11:02:11.948Z
+> Source: https://tailwindcss.com/docs/hover-focus-and-other-states
+
+v4.1
+
+⌘KCtrl K[Docs](/docs)[Blog](/blog)[Showcase](/showcase)[Sponsor](/sponsor)[Plus](/plus?ref=top)
+
+1.  Core concepts
+2.  Hover, focus, and other states
+
+Core concepts
+
+# Hover, focus, and other states
+
+Using utilities to style elements on hover, focus, and more.
+
 Every utility class in Tailwind can be applied _conditionally_ by adding a variant to the beginning of the class name that describes the condition you want to target.
 
 For example, to apply the `bg-sky-700` class on hover, use the `hover:bg-sky-700` class:
@@ -34,11 +52,11 @@ This is what we mean when we say a utility class can be applied _conditionally_ 
 
 Tailwind includes variants for just about everything you'll ever need, including:
 
-*   [Pseudo-classes](#pseudo-classes), like `:hover`, `:focus`, `:first-child`, and `:required`
-*   [Pseudo-elements](#pseudo-elements), like `::before`, `::after`, `::placeholder`, and `::selection`
-*   [Media and feature queries](#media-and-feature-queries), like responsive breakpoints, dark mode, and `prefers-reduced-motion`
-*   [Attribute selectors](#attribute-selectors), like `[dir="rtl"]` and `[open]`
-*   [Child selectors](#child-selectors), like `& > *` and `& *`
+-   [Pseudo-classes](#pseudo-classes), like `:hover`, `:focus`, `:first-child`, and `:required`
+-   [Pseudo-elements](#pseudo-elements), like `::before`, `::after`, `::placeholder`, and `::selection`
+-   [Media and feature queries](#media-and-feature-queries), like responsive breakpoints, dark mode, and `prefers-reduced-motion`
+-   [Attribute selectors](#attribute-selectors), like `[dir="rtl"]` and `[open]`
+-   [Child selectors](#child-selectors), like `& > *` and `& *`
 
 These variants can even be stacked to target more specific situations, for example changing the background color in dark mode, at the medium breakpoint, on hover:
 
@@ -70,25 +88,25 @@ See the [pseudo-class reference](#pseudo-class-reference) for a complete list of
 
 Style an element when it is the first-child or last-child using the `first` and `last` variants:
 
-*   ![](https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
+-   ![](https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
     
     Kristen Ramos
     
     kristen.ramos@example.com
     
-*   ![](https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
+-   ![](https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
     
     Floyd Miles
     
     floyd.miles@example.com
     
-*   ![](https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
+-   ![](https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
     
     Courtney Henry
     
     courtney.henry@example.com
     
-*   ![](https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
+-   ![](https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
     
     Ted Fox
     
@@ -285,23 +303,17 @@ This pattern works with every pseudo-class variant, for example `group-focus`, `
 
 When nesting groups, you can style something based on the state of a _specific_ parent group by giving that parent a unique group name using a `group/{name}` class, and including that name in variants using classes like `group-hover/{name}`:
 
-*   ![](https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
-    
-    [Leslie Abbott](#)
+-   [Leslie Abbott](#)
     
     Co-Founder / CEO
     
     [Call](#)
-*   ![](https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
-    
-    [Hector Adams](#)
+-   [Hector Adams](#)
     
     VP, Marketing
     
     [Call](#)
-*   ![](https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
-    
-    [Blake Alexander](#)
+-   [Blake Alexander](#)
     
     Account Coordinator
     
@@ -455,8 +467,6 @@ Search
 
 Style the button in file inputs using the `file` variant:
 
-![Current profile photo](https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80)
-
 Choose profile photo
 
 ```
@@ -469,9 +479,9 @@ Style the counters or bullets in lists using the `marker` variant:
 
 ## [Ingredients](#ingredients)
 
-*   5 cups chopped Porcini mushrooms
-*   1/2 cup of olive oil
-*   3lb of celery
+-   5 cups chopped Porcini mushrooms
+-   1/2 cup of olive oil
+-   3lb of celery
 
 ```
 <ul role="list" class="list-disc marker:text-sky-400 ...">  <li>5 cups chopped Porcini mushrooms</li>  <li>1/2 cup of olive oil</li>  <li>3lb of celery</li></ul>
@@ -977,21 +987,15 @@ Won't work, children can't override styles given to them by the parent.
 
 Like `*`, the `**` variant can be used to style children of an element. The main difference is that `**` will apply styles to _all_ descendants, not just the direct children. This is especially useful when you combine it with another variant for narrowing the thing you're selecting:
 
-*   ![](https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
-    
-    [Leslie Abbott](#)
+-   [Leslie Abbott](#)
     
     Co-Founder / CEO
     
-*   ![](https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
-    
-    [Hector Adams](#)
+-   [Hector Adams](#)
     
     VP, Marketing
     
-*   ![](https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80)
-    
-    [Blake Alexander](#)
+-   [Blake Alexander](#)
     
     Account Coordinator
     
@@ -1881,3 +1885,6 @@ Style an input when it is read-only using the `read-only` variant:
 ```
 <input class="read-only:bg-gray-100 ..." />
 ```
+
+---
+*This documentation was automatically generated from Tailwind CSS official documentation.*

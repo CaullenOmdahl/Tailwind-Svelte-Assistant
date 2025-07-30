@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.771Z -->
 <!--
 @description: A 404 error page with a split layout: content on the left, and a full-height image on the right. Includes a header and footer. Based on Tailwind UI.
 @props:

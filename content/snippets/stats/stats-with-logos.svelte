@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.781Z -->
 <!--
 @description: A stats section with a title, description, key metrics, and a strip of company logos. Based on Tailwind UI.
 @props:

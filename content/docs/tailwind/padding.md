@@ -1,3 +1,21 @@
+# Padding
+
+> Last updated: 2025-07-30T11:02:12.392Z
+> Source: https://tailwindcss.com/docs/padding
+
+v4.1
+
+⌘KCtrl K[Docs](/docs)[Blog](/blog)[Showcase](/showcase)[Sponsor](/sponsor)[Plus](/plus?ref=top)
+
+1.  Spacing
+2.  padding
+
+Spacing
+
+# padding
+
+Utilities for controlling an element's padding.
+
 Class
 
 Styles
@@ -253,3 +271,6 @@ The `p-<number>`,`px-<number>`,`py-<number>`,`ps-<number>`,`pe-<number>`,`pt-<nu
 ```
 
 Learn more about customizing the spacing scale in the [theme variable documentation](/docs/theme).
+
+---
+*This documentation was automatically generated from Tailwind CSS official documentation.*

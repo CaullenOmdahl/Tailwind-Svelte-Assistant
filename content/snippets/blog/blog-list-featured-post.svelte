@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.766Z -->
 <!--
 @description: A blog section displaying a featured post prominently, followed by a list of other posts. Based on Tailwind UI.
 @props:

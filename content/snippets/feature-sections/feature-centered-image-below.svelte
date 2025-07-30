@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.773Z -->
 <!--
 @description: Feature section with centered text content and a large app screenshot below, followed by a grid of features. Based on Tailwind UI.
 @props:

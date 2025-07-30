@@ -1,3 +1,21 @@
+# Responsive Design
+
+> Last updated: 2025-07-30T11:02:11.162Z
+> Source: https://tailwindcss.com/docs/responsive-design
+
+v4.1
+
+⌘KCtrl K[Docs](/docs)[Blog](/blog)[Showcase](/showcase)[Sponsor](/sponsor)[Plus](/plus?ref=top)
+
+1.  Core concepts
+2.  Responsive design
+
+Core concepts
+
+# Responsive design
+
+Using responsive utility variants to build adaptive user interfaces.
+
 ## [Overview](#overview)
 
 Every utility class in Tailwind can be applied conditionally at different breakpoints, which makes it a piece of cake to build complex responsive interfaces without ever leaving your HTML.
@@ -66,9 +84,9 @@ Here's a simple example of a marketing page component that uses a stacked layout
 
 Here's how the example above works:
 
-*   By default, the outer `div` is `display: block`, but by adding the `md:flex` utility, it becomes `display: flex` on medium screens and larger.
-*   When the parent is a flex container, we want to make sure the image never shrinks, so we've added `md:shrink-0` to prevent shrinking on medium screens and larger. Technically we could have just used `shrink-0` since it would do nothing on smaller screens, but since it only matters on `md` screens, it's a good idea to make that clear in the class name.
-*   On small screens the image is automatically full width by default. On medium screens and up, we've constrained the width to a fixed size and ensured the image is full height using `md:h-full md:w-48`.
+-   By default, the outer `div` is `display: block`, but by adding the `md:flex` utility, it becomes `display: flex` on medium screens and larger.
+-   When the parent is a flex container, we want to make sure the image never shrinks, so we've added `md:shrink-0` to prevent shrinking on medium screens and larger. Technically we could have just used `shrink-0` since it would do nothing on smaller screens, but since it only matters on `md` screens, it's a good idea to make that clear in the class name.
+-   On small screens the image is automatically full width by default. On medium screens and up, we've constrained the width to a fixed size and ensured the image is full height using `md:h-full md:w-48`.
 
 We've only used one breakpoint in this example, but you could easily customize this component at other sizes using the `sm`, `lg`, `xl`, or `2xl` responsive prefixes as well.
 
@@ -383,3 +401,6 @@ CSS
 80rem _(1280px)_
 
 `@container (width >= 80rem) { … }`
+
+---
+*This documentation was automatically generated from Tailwind CSS official documentation.*

@@ -1,112 +1,17 @@
-*   ### Getting started
-    
-    *   [Introduction](/docs/kit/introduction)
-    *   [Creating a project](/docs/kit/creating-a-project)
-    *   [Project types](/docs/kit/project-types)
-    *   [Project structure](/docs/kit/project-structure)
-    *   [Web standards](/docs/kit/web-standards)
-*   ### Core concepts
-    
-    *   [Routing](/docs/kit/routing)
-    *   [Loading data](/docs/kit/load)
-    *   [Form actions](/docs/kit/form-actions)
-    *   [Page options](/docs/kit/page-options)
-    *   [State management](/docs/kit/state-management)
-*   ### Build and deploy
-    
-    *   [Building your app](/docs/kit/building-your-app)
-    *   [Adapters](/docs/kit/adapters)
-    *   [Zero-config deployments](/docs/kit/adapter-auto)
-    *   [Node servers](/docs/kit/adapter-node)
-    *   [Static site generation](/docs/kit/adapter-static)
-    *   [Single-page apps](/docs/kit/single-page-apps)
-    *   [Cloudflare](/docs/kit/adapter-cloudflare)
-    *   [Cloudflare Workers](/docs/kit/adapter-cloudflare-workers)
-    *   [Netlify](/docs/kit/adapter-netlify)
-    *   [Vercel](/docs/kit/adapter-vercel)
-    *   [Writing adapters](/docs/kit/writing-adapters)
-*   ### Advanced
-    
-    *   [Advanced routing](/docs/kit/advanced-routing)
-    *   [Hooks](/docs/kit/hooks)
-    *   [Errors](/docs/kit/errors)
-    *   [Link options](/docs/kit/link-options)
-    *   [Service workers](/docs/kit/service-workers)
-    *   [Server-only modules](/docs/kit/server-only-modules)
-    *   [Snapshots](/docs/kit/snapshots)
-    *   [Shallow routing](/docs/kit/shallow-routing)
-    *   [Packaging](/docs/kit/packaging)
-*   ### Best practices
-    
-    *   [Auth](/docs/kit/auth)
-    *   [Performance](/docs/kit/performance)
-    *   [Icons](/docs/kit/icons)
-    *   [Images](/docs/kit/images)
-    *   [Accessibility](/docs/kit/accessibility)
-    *   [SEO](/docs/kit/seo)
-*   ### Appendix
-    
-    *   [Frequently asked questions](/docs/kit/faq)
-    *   [Integrations](/docs/kit/integrations)
-    *   [Breakpoint Debugging](/docs/kit/debugging)
-    *   [Migrating to SvelteKit v2](/docs/kit/migrating-to-sveltekit-2)
-    *   [Migrating from Sapper](/docs/kit/migrating)
-    *   [Additional resources](/docs/kit/additional-resources)
-    *   [Glossary](/docs/kit/glossary)
-*   ### Reference
-    
-    *   [@sveltejs/kit](/docs/kit/@sveltejs-kit)
-    *   [@sveltejs/kit/hooks](/docs/kit/@sveltejs-kit-hooks)
-    *   [@sveltejs/kit/node/polyfills](/docs/kit/@sveltejs-kit-node-polyfills)
-    *   [@sveltejs/kit/node](/docs/kit/@sveltejs-kit-node)
-    *   [@sveltejs/kit/vite](/docs/kit/@sveltejs-kit-vite)
-    *   [$app/environment](/docs/kit/$app-environment)
-    *   [$app/forms](/docs/kit/$app-forms)
-    *   [$app/navigation](/docs/kit/$app-navigation)
-    *   [$app/paths](/docs/kit/$app-paths)
-    *   [$app/server](/docs/kit/$app-server)
-    *   [$app/state](/docs/kit/$app-state)
-    *   [$app/stores](/docs/kit/$app-stores)
-    *   [$app/types](/docs/kit/$app-types)
-    *   [$env/dynamic/private](/docs/kit/$env-dynamic-private)
-    *   [$env/dynamic/public](/docs/kit/$env-dynamic-public)
-    *   [$env/static/private](/docs/kit/$env-static-private)
-    *   [$env/static/public](/docs/kit/$env-static-public)
-    *   [$lib](/docs/kit/$lib)
-    *   [$service-worker](/docs/kit/$service-worker)
-    *   [Configuration](/docs/kit/configuration)
-    *   [Command Line Interface](/docs/kit/cli)
-    *   [Types](/docs/kit/types)
+# Hooks
+
+> Last updated: 2025-07-30T11:02:10.664Z
+> Source: https://kit.svelte.dev/docs/hooks
 
 SvelteKitAdvanced
 
 # Hooks
 
-### On this page
-
-*   [Hooks](/docs/kit/hooks)
-*   [Server hooks](#Server-hooks)
-*   [Shared hooks](#Shared-hooks)
-*   [Universal hooks](#Universal-hooks)
-*   [Further reading](#Further-reading)
-
-‘Hooks’ are app-wide functions you declare that SvelteKit will call in response to specific events, giving you fine-grained control over the framework’s behaviour.
-
-There are three hooks files, all optional:
-
-*   `src/hooks.server.js` — your app’s server hooks
-*   `src/hooks.client.js` — your app’s client hooks
-*   `src/hooks.js` — your app’s hooks that run on both the client and server
-
-Code in these modules will run when the application starts up, making them useful for initializing database clients and so on.
-
-> You can configure the location of these files with [`config.kit.files.hooks`](configuration#files).
-
-## Server hooks[](#Server-hooks)
+## Server hooks
 
 The following hooks can be added to `src/hooks.server.js`:
 
-### handle[](#Server-hooks-handle)
+### handle
 
 This function runs every time the SvelteKit server receives a [request](web-standards#Fetch-APIs-Request) — whether that happens while the app is running, or during [prerendering](page-options#prerender) — and determines the [response](web-standards#Fetch-APIs-Response). It receives an `event` object representing the request and a function called `resolve`, which renders the route and generates a `Response`. This allows you to modify response headers or bodies, or bypass SvelteKit entirely (for implementing routes programmatically, for example).
 
@@ -169,7 +74,7 @@ If unimplemented, defaults to `({ event, resolve }) => resolve(event)`.
 
 During prerendering, SvelteKit crawls your pages for links and renders each route it finds. Rendering the route invokes the `handle` function (and all other route dependencies, like `load`). If you need to exclude some code from running during this phase, check that the app is not [`building`]($app-environment#building) beforehand.
 
-### locals[](#Server-hooks-locals)
+### locals
 
 To add custom data to the request, which is passed to handlers in `+server.js` and server `load` functions, populate the `event.locals` object, as shown below.
 
@@ -245,9 +150,9 @@ You can define multiple `handle` functions and execute them with [the `sequence`
 
 `resolve` also supports a second, optional parameter that gives you more control over how the response will be rendered. That parameter is an object that can have the following fields:
 
-*   `transformPageChunk(opts: { html: string, done: boolean }): MaybePromise<string | undefined>` — applies custom transforms to HTML. If `done` is true, it’s the final chunk. Chunks are not guaranteed to be well-formed HTML (they could include an element’s opening tag but not its closing tag, for example) but they will always be split at sensible boundaries such as `%sveltekit.head%` or layout/page components.
-*   `filterSerializedResponseHeaders(name: string, value: string): boolean` — determines which headers should be included in serialized responses when a `load` function loads a resource with `fetch`. By default, none will be included.
-*   `preload(input: { type: 'js' | 'css' | 'font' | 'asset', path: string }): boolean` — determines what files should be added to the `<head>` tag to preload it. The method is called with each file that was found at build time while constructing the code chunks — so if you for example have `import './styles.css` in your `+page.svelte`, `preload` will be called with the resolved path to that CSS file when visiting that page. Note that in dev mode `preload` is _not_ called, since it depends on analysis that happens at build time. Preloading can improve performance by downloading assets sooner, but it can also hurt if too much is downloaded unnecessarily. By default, `js` and `css` files will be preloaded. `asset` files are not preloaded at all currently, but we may add this later after evaluating feedback.
+-   `transformPageChunk(opts: { html: string, done: boolean }): MaybePromise<string | undefined>` — applies custom transforms to HTML. If `done` is true, it’s the final chunk. Chunks are not guaranteed to be well-formed HTML (they could include an element’s opening tag but not its closing tag, for example) but they will always be split at sensible boundaries such as `%sveltekit.head%` or layout/page components.
+-   `filterSerializedResponseHeaders(name: string, value: string): boolean` — determines which headers should be included in serialized responses when a `load` function loads a resource with `fetch`. By default, none will be included.
+-   `preload(input: { type: 'js' | 'css' | 'font' | 'asset', path: string }): boolean` — determines what files should be added to the `<head>` tag to preload it. The method is called with each file that was found at build time while constructing the code chunks — so if you for example have `import './styles.css` in your `+page.svelte`, `preload` will be called with the resolved path to that CSS file when visiting that page. Note that in dev mode `preload` is _not_ called, since it depends on analysis that happens at build time. Preloading can improve performance by downloading assets sooner, but it can also hurt if too much is downloaded unnecessarily. By default, `js` and `css` files will be preloaded. `asset` files are not preloaded at all currently, but we may add this later after evaluating feedback.
 
 src/hooks.server
 
@@ -322,7 +227,7 @@ greater than or equal to position; otherwise, returns false.
 
 Note that `resolve(...)` will never throw an error, it will always return a `Promise<Response>` with the appropriate status code. If an error is thrown elsewhere during `handle`, it is treated as fatal, and SvelteKit will respond with a JSON representation of the error or a fallback error page — which can be customised via `src/error.html` — depending on the `Accept` header. You can read more about error handling [here](errors).
 
-### handleFetch[](#Server-hooks-handleFetch)
+### handleFetch
 
 This function allows you to modify (or replace) the result of an [`event.fetch`](load#Making-fetch-requests) call that runs on the server (or during prerendering) inside an endpoint, `load`, `action`, `handle`, `handleError` or `reroute`.
 
@@ -448,16 +353,16 @@ fetch(request: Requestrequest);
 };
 ```
 
-## Shared hooks[](#Shared-hooks)
+## Shared hooks
 
 The following can be added to `src/hooks.server.js` _and_ `src/hooks.client.js`:
 
-### handleError[](#Shared-hooks-handleError)
+### handleError
 
 If an [unexpected error](errors#Unexpected-errors) is thrown during loading, rendering, or from an endpoint, this function will be called with the `error`, `event`, `status` code and `message`. This allows for two things:
 
-*   you can log the error
-*   you can generate a custom representation of the error that is safe to show to users, omitting sensitive details like messages and stack traces. The returned value, which defaults to `{ message }`, becomes the value of `$page.error`.
+-   you can log the error
+-   you can generate a custom representation of the error that is safe to show to users, omitting sensitive details like messages and stack traces. The returned value, which defaults to `{ message }`, becomes the value of `$page.error`.
 
 For errors thrown from your code (or library code called by your code) the status will be 500 and the message will be “Internal Error”. While `error.message` may contain sensitive information that should not be exposed to users, `message` is safe (albeit meaningless to the average user).
 
@@ -645,7 +550,7 @@ During development, if an error occurs because of a syntax error in your Svelte 
 
 > Make sure that `handleError` _never_ throws an error
 
-### init[](#Shared-hooks-init)
+### init
 
 This function runs once, when the server is created or the app starts in the browser, and is a useful place to do asynchronous work such as initializing a database connection.
 
@@ -675,11 +580,11 @@ export const const init: ServerInitinit: type ServerInit = () => MaybePromise<vo
 
 > In the browser, asynchronous work in `init` will delay hydration, so be mindful of what you put in there.
 
-## Universal hooks[](#Universal-hooks)
+## Universal hooks
 
 The following can be added to `src/hooks.js`. Universal hooks run on both server and client (not to be confused with shared hooks, which are environment-specific).
 
-### reroute[](#Universal-hooks-reroute)
+### reroute
 
 This function runs before `handle` and allows you to change how URLs are translated into routes. The returned pathname (which defaults to `url.pathname`) is used to select the route and its parameters.
 
@@ -816,7 +721,7 @@ json());
 
 > `reroute` is considered a pure, idempotent function. As such, it must always return the same output for the same input and not have side effects. Under these assumptions, SvelteKit caches the result of `reroute` on the client so it is only called once per unique URL.
 
-### transport[](#Universal-hooks-transport)
+### transport
 
 This is a collection of _transporters_, which allow you to pass custom types — returned from `load` and form actions — across the server/client boundary. Each transporter contains an `encode` function, which encodes values on the server (or returns a falsy value for anything that isn’t an instance of the type) and a corresponding `decode` function:
 
@@ -891,12 +796,13 @@ export const transport: Transport = {
 };
 ```
 
-## Further reading[](#Further-reading)
+## Further reading
 
-*   [Tutorial: Hooks](/tutorial/kit/handle)
+-   [Tutorial: Hooks](/tutorial/kit/handle)
 
-[Edit this page on GitHub](https://github.com/sveltejs/kit/edit/main/documentation/docs/30-advanced/20-hooks.md) [llms.txt](/docs/kit/hooks/llms.txt)
+(https://github.com/sveltejs/kit/edit/main/documentation/docs/30-advanced/20-hooks.md) [llms.txt](/docs/kit/hooks/llms.txt)
 
-previous next
+(/docs/kit/advanced-routing) [Errors](/docs/kit/errors)
 
-[Advanced routing](/docs/kit/advanced-routing) [Errors](/docs/kit/errors)
+---
+*This documentation was automatically generated from SvelteKit official documentation.*

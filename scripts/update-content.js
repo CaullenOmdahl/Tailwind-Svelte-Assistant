@@ -39,15 +39,24 @@ async function fetchContent(url) {
   try {
     console.log(`Fetching: ${url}`);
     
-    // Use dynamic import for optional dependencies
-    const [{ default: axios }, { default: cheerio }, { default: TurndownService }] = await Promise.all([
-      import('axios').catch(() => ({ default: null })),
-      import('cheerio').catch(() => ({ default: null })),
-      import('turndown').catch(() => ({ default: null }))
-    ]);
-
-    if (!axios || !cheerio || !TurndownService) {
-      console.warn('Optional dependencies not available. Skipping content fetch.');
+    // Try to import optional dependencies
+    let axios, cheerio, TurndownService;
+    
+    try {
+      // Import ESM modules
+      const axiosModule = await import('axios');
+      const cheerioModule = await import('cheerio');
+      const turndownModule = await import('turndown');
+      
+      axios = axiosModule.default;
+      cheerio = cheerioModule; // Use the whole cheerio module
+      TurndownService = turndownModule.default;
+      
+      if (!axios || !cheerio || !TurndownService) {
+        throw new Error('Dependencies not loaded properly');
+      }
+    } catch (error) {
+      console.warn('Optional dependencies not available:', error.message);
       return null;
     }
 
@@ -149,13 +158,27 @@ async function updateDocs(source, config) {
     if (content) {
       const filePath = path.join(config.outputDir, `${topic.name}.md`);
       
+      // Clean up the markdown content
+      let cleanContent = content
+        // Remove unwanted text fragments
+        .replace(/SvelteKitCore concepts/g, '')
+        .replace(/v4\.1\s*⌘KCtrl K\[Docs\][^#]*/g, '') // Remove Tailwind navigation
+        .replace(/Copyright © \d+ Tailwind Labs Inc\.[^#]*/g, '') // Remove copyright
+        .replace(/previous next\s*\[[^\]]+\]/g, '') // Remove navigation links
+        .replace(/\[Edit this page[^\]]+\]/g, '') // Remove edit links
+        .replace(/### On this page[\s\S]*?(?=##|$)/g, '') // Remove table of contents
+        // Clean up excessive newlines
+        .replace(/\n{3,}/g, '\n\n')
+        // Remove leftover fragments at start/end
+        .trim();
+
       // Add metadata header
       const fileContent = `# ${topic.name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
 
 > Last updated: ${new Date().toISOString()}
 > Source: ${url}
 
-${content}
+${cleanContent}
 
 ---
 *This documentation was automatically generated from ${source} official documentation.*

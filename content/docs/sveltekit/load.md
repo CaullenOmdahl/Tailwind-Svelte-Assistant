@@ -1,111 +1,11 @@
-*   ### Getting started
-    
-    *   [Introduction](/docs/kit/introduction)
-    *   [Creating a project](/docs/kit/creating-a-project)
-    *   [Project types](/docs/kit/project-types)
-    *   [Project structure](/docs/kit/project-structure)
-    *   [Web standards](/docs/kit/web-standards)
-*   ### Core concepts
-    
-    *   [Routing](/docs/kit/routing)
-    *   [Loading data](/docs/kit/load)
-    *   [Form actions](/docs/kit/form-actions)
-    *   [Page options](/docs/kit/page-options)
-    *   [State management](/docs/kit/state-management)
-*   ### Build and deploy
-    
-    *   [Building your app](/docs/kit/building-your-app)
-    *   [Adapters](/docs/kit/adapters)
-    *   [Zero-config deployments](/docs/kit/adapter-auto)
-    *   [Node servers](/docs/kit/adapter-node)
-    *   [Static site generation](/docs/kit/adapter-static)
-    *   [Single-page apps](/docs/kit/single-page-apps)
-    *   [Cloudflare](/docs/kit/adapter-cloudflare)
-    *   [Cloudflare Workers](/docs/kit/adapter-cloudflare-workers)
-    *   [Netlify](/docs/kit/adapter-netlify)
-    *   [Vercel](/docs/kit/adapter-vercel)
-    *   [Writing adapters](/docs/kit/writing-adapters)
-*   ### Advanced
-    
-    *   [Advanced routing](/docs/kit/advanced-routing)
-    *   [Hooks](/docs/kit/hooks)
-    *   [Errors](/docs/kit/errors)
-    *   [Link options](/docs/kit/link-options)
-    *   [Service workers](/docs/kit/service-workers)
-    *   [Server-only modules](/docs/kit/server-only-modules)
-    *   [Snapshots](/docs/kit/snapshots)
-    *   [Shallow routing](/docs/kit/shallow-routing)
-    *   [Packaging](/docs/kit/packaging)
-*   ### Best practices
-    
-    *   [Auth](/docs/kit/auth)
-    *   [Performance](/docs/kit/performance)
-    *   [Icons](/docs/kit/icons)
-    *   [Images](/docs/kit/images)
-    *   [Accessibility](/docs/kit/accessibility)
-    *   [SEO](/docs/kit/seo)
-*   ### Appendix
-    
-    *   [Frequently asked questions](/docs/kit/faq)
-    *   [Integrations](/docs/kit/integrations)
-    *   [Breakpoint Debugging](/docs/kit/debugging)
-    *   [Migrating to SvelteKit v2](/docs/kit/migrating-to-sveltekit-2)
-    *   [Migrating from Sapper](/docs/kit/migrating)
-    *   [Additional resources](/docs/kit/additional-resources)
-    *   [Glossary](/docs/kit/glossary)
-*   ### Reference
-    
-    *   [@sveltejs/kit](/docs/kit/@sveltejs-kit)
-    *   [@sveltejs/kit/hooks](/docs/kit/@sveltejs-kit-hooks)
-    *   [@sveltejs/kit/node/polyfills](/docs/kit/@sveltejs-kit-node-polyfills)
-    *   [@sveltejs/kit/node](/docs/kit/@sveltejs-kit-node)
-    *   [@sveltejs/kit/vite](/docs/kit/@sveltejs-kit-vite)
-    *   [$app/environment](/docs/kit/$app-environment)
-    *   [$app/forms](/docs/kit/$app-forms)
-    *   [$app/navigation](/docs/kit/$app-navigation)
-    *   [$app/paths](/docs/kit/$app-paths)
-    *   [$app/server](/docs/kit/$app-server)
-    *   [$app/state](/docs/kit/$app-state)
-    *   [$app/stores](/docs/kit/$app-stores)
-    *   [$app/types](/docs/kit/$app-types)
-    *   [$env/dynamic/private](/docs/kit/$env-dynamic-private)
-    *   [$env/dynamic/public](/docs/kit/$env-dynamic-public)
-    *   [$env/static/private](/docs/kit/$env-static-private)
-    *   [$env/static/public](/docs/kit/$env-static-public)
-    *   [$lib](/docs/kit/$lib)
-    *   [$service-worker](/docs/kit/$service-worker)
-    *   [Configuration](/docs/kit/configuration)
-    *   [Command Line Interface](/docs/kit/cli)
-    *   [Types](/docs/kit/types)
+# Load
 
-SvelteKitCore concepts
+> Last updated: 2025-07-30T11:02:08.578Z
+> Source: https://kit.svelte.dev/docs/load
 
 # Loading data
 
-### On this page
-
-*   [Loading data](/docs/kit/load)
-*   [Page data](#Page-data)
-*   [Layout data](#Layout-data)
-*   [page.data](#page.data)
-*   [Universal vs server](#Universal-vs-server)
-*   [Using URL data](#Using-URL-data)
-*   [Making fetch requests](#Making-fetch-requests)
-*   [Cookies](#Cookies)
-*   [Headers](#Headers)
-*   [Using parent data](#Using-parent-data)
-*   [Errors](#Errors)
-*   [Redirects](#Redirects)
-*   [Streaming with promises](#Streaming-with-promises)
-*   [Parallel loading](#Parallel-loading)
-*   [Rerunning load functions](#Rerunning-load-functions)
-*   [Implications for authentication](#Implications-for-authentication)
-*   [Using getRequestEvent](#Using-getRequestEvent)
-*   [Further reading](#Further-reading)
-
-Before a [`+page.svelte`](routing#page-page.svelte) component (and its containing [`+layout.svelte`](routing#layout-layout.svelte) components) can be rendered, we often need to get some data. This is done by defining `load` functions.
-
-## Page data[](#Page-data)
+## Page data
 
 A `+page.svelte` file can have a sibling `+page.js` that exports a `load` function, the return value of which is available to the page via the `data` prop:
 
@@ -250,7 +150,7 @@ params.slug)
 
 Notice that the type changed from `PageLoad` to `PageServerLoad`, because server `load` functions can access additional arguments. To understand when to use `+page.js` and when to use `+page.server.js`, see [Universal vs server](load#Universal-vs-server).
 
-## Layout data[](#Layout-data)
+## Layout data
 
 Your `+layout.svelte` files can also load data, via `+layout.js` or `+layout.server.js`.
 
@@ -413,7 +313,7 @@ src/routes/blog/\[slug\]/+page
 
 > If multiple `load` functions return data with the same key, the last one ‘wins’ — the result of a layout `load` returning `{ a: 1, b: 2 }` and a page `load` returning `{ b: 3, c: 4 }` would be `{ a: 1, b: 3, c: 4 }`.
 
-## page.data[](#page.data)
+## page.data
 
 The `+page.svelte` component, and each `+layout.svelte` component above it, has access to its own data plus all the data from its parents.
 
@@ -447,16 +347,16 @@ Type information for `page.data` is provided by `App.PageData`.
 > 
 > `$app/state` was added in SvelteKit 2.12. If you’re using an earlier version or are using Svelte 4, use `$app/stores` instead. It provides a `page` store with the same interface that you can subscribe to, e.g. `$page.data.title`.
 
-## Universal vs server[](#Universal-vs-server)
+## Universal vs server
 
 As we’ve seen, there are two types of `load` function:
 
-*   `+page.js` and `+layout.js` files export _universal_ `load` functions that run both on the server and in the browser
-*   `+page.server.js` and `+layout.server.js` files export _server_ `load` functions that only run server-side
+-   `+page.js` and `+layout.js` files export _universal_ `load` functions that run both on the server and in the browser
+-   `+page.server.js` and `+layout.server.js` files export _server_ `load` functions that only run server-side
 
 Conceptually, they’re the same thing, but there are some important differences to be aware of.
 
-### When does which load function run?[](#Universal-vs-server-When-does-which-load-function-run)
+### When does which load function run?
 
 Server `load` functions _always_ run on the server.
 
@@ -466,7 +366,7 @@ If a route contains both universal and server `load` functions, the server `load
 
 A `load` function is invoked at runtime, unless you [prerender](page-options#prerender) the page — in that case, it’s invoked at build time.
 
-### Input[](#Universal-vs-server-Input)
+### Input
 
 Both universal and server `load` functions have access to properties describing the request (`params`, `route` and `url`) and various functions (`fetch`, `setHeaders`, `parent`, `depends` and `untrack`). These are described in the following sections.
 
@@ -474,13 +374,13 @@ Server `load` functions are called with a `ServerLoadEvent`, which inherits `cli
 
 Universal `load` functions are called with a `LoadEvent`, which has a `data` property. If you have `load` functions in both `+page.js` and `+page.server.js` (or `+layout.js` and `+layout.server.js`), the return value of the server `load` function is the `data` property of the universal `load` function’s argument.
 
-### Output[](#Universal-vs-server-Output)
+### Output
 
 A universal `load` function can return an object containing any values, including things like custom classes and component constructors.
 
 A server `load` function must return data that can be serialized with [devalue](https://github.com/rich-harris/devalue) — anything that can be represented as JSON plus things like `BigInt`, `Date`, `Map`, `Set` and `RegExp`, or repeated/cyclical references — so that it can be transported over the network. Your data can include [promises](#Streaming-with-promises), in which case it will be streamed to browsers. If you need to serialize/deserialize custom types, use [transport hooks](https://svelte.dev/docs/kit/hooks#Universal-hooks-transport).
 
-### When to use which[](#Universal-vs-server-When-to-use-which)
+### When to use which
 
 Server `load` functions are convenient when you need to access data directly from a database or filesystem, or need to use private environment variables.
 
@@ -544,17 +444,17 @@ data.serverMessage,
 };
 ```
 
-## Using URL data[](#Using-URL-data)
+## Using URL data
 
 Often the `load` function depends on the URL in one way or another. For this, the `load` function provides you with `url`, `route` and `params`.
 
-### url[](#Using-URL-data-url)
+### url
 
 An instance of [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL), containing properties like the `origin`, `hostname`, `pathname` and `searchParams` (which contains the parsed query string as a [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) object). `url.hash` cannot be accessed during `load`, since it is unavailable on the server.
 
 > In some environments this is derived from request headers during server-side rendering. If you’re using [adapter-node](adapter-node), for example, you may need to configure the adapter in order for the URL to be correct.
 
-### route[](#Using-URL-data-route)
+### route
 
 Contains the name of the current route directory, relative to `src/routes`:
 
@@ -692,7 +592,7 @@ id); // '/a/[b]/[...c]'
 };
 ```
 
-### params[](#Using-URL-data-params)
+### params
 
 `params` is derived from `url.pathname` and `route.id`.
 
@@ -705,15 +605,15 @@ Given a `route.id` of `/a/[b]/[...c]` and a `url.pathname` of `/a/x/y/z`, the `p
 }
 ```
 
-## Making fetch requests[](#Making-fetch-requests)
+## Making fetch requests
 
 To get data from an external API or a `+server.js` handler, you can use the provided `fetch` function, which behaves identically to the [native `fetch` web API](https://developer.mozilla.org/en-US/docs/Web/API/fetch) with a few additional features:
 
-*   It can be used to make credentialed requests on the server, as it inherits the `cookie` and `authorization` headers for the page request.
-*   It can make relative requests on the server (ordinarily, `fetch` requires a URL with an origin when used in a server context).
-*   Internal requests (e.g. for `+server.js` routes) go directly to the handler function when running on the server, without the overhead of an HTTP call.
-*   During server-side rendering, the response will be captured and inlined into the rendered HTML by hooking into the `text`, `json` and `arrayBuffer` methods of the `Response` object. Note that headers will _not_ be serialized, unless explicitly included via [`filterSerializedResponseHeaders`](hooks#Server-hooks-handle).
-*   During hydration, the response will be read from the HTML, guaranteeing consistency and preventing an additional network request - if you received a warning in your browser console when using the browser `fetch` instead of the `load` `fetch`, this is why.
+-   It can be used to make credentialed requests on the server, as it inherits the `cookie` and `authorization` headers for the page request.
+-   It can make relative requests on the server (ordinarily, `fetch` requires a URL with an origin when used in a server context).
+-   Internal requests (e.g. for `+server.js` routes) go directly to the handler function when running on the server, without the overhead of an HTTP call.
+-   During server-side rendering, the response will be captured and inlined into the rendered HTML by hooking into the `text`, `json` and `arrayBuffer` methods of the `Response` object. Note that headers will _not_ be serialized, unless explicitly included via [`filterSerializedResponseHeaders`](hooks#Server-hooks-handle).
+-   During hydration, the response will be read from the HTML, guaranteeing consistency and preventing an additional network request - if you received a warning in your browser console when using the browser `fetch` instead of the `load` `fetch`, this is why.
 
 src/routes/items/\[id\]/+page
 
@@ -761,7 +661,7 @@ json();
 };
 ```
 
-## Cookies[](#Cookies)
+## Cookies
 
 A server `load` function can get and set [`cookies`](@sveltejs-kit#Cookies).
 
@@ -815,14 +715,14 @@ Cookies will only be passed through the provided `fetch` function if the target 
 
 For example, if SvelteKit is serving my.domain.com:
 
-*   domain.com WILL NOT receive cookies
-*   my.domain.com WILL receive cookies
-*   api.domain.com WILL NOT receive cookies
-*   sub.my.domain.com WILL receive cookies
+-   domain.com WILL NOT receive cookies
+-   my.domain.com WILL receive cookies
+-   api.domain.com WILL NOT receive cookies
+-   sub.my.domain.com WILL receive cookies
 
 Other cookies will not be passed when `credentials: 'include'` is set, because SvelteKit does not know which domain which cookie belongs to (the browser does not pass this information along), so it’s not safe to forward any of them. Use the [handleFetch hook](hooks#Server-hooks-handleFetch) to work around it.
 
-## Headers[](#Headers)
+## Headers
 
 Both server and universal `load` functions have access to a `setHeaders` function that, when running on the server, can set headers for the response. (When running in the browser, `setHeaders` has no effect.) This is useful if you want the page to be cached, for example:
 
@@ -915,7 +815,7 @@ json();
 
 Setting the same header multiple times (even in separate `load` functions) is an error. You can only set a given header once using the `setHeaders` function. You cannot add a `set-cookie` header with `setHeaders` — use `cookies.set(name, value, options)` instead.
 
-## Using parent data[](#Using-parent-data)
+## Using parent data
 
 Occasionally it’s useful for a `load` function to access data from a parent `load` function, which can be done with `await parent()`:
 
@@ -1096,7 +996,7 @@ parent();
 };
 ```
 
-## Errors[](#Errors)
+## Errors
 
 If an error is thrown during `load`, the nearest [`+error.svelte`](routing#error) will be rendered. For [_expected_](errors#Expected-errors) errors, use the `error` helper from `@sveltejs/kit` to specify the HTTP status code and an optional message:
 
@@ -1188,7 +1088,7 @@ If an [_unexpected_](errors#Unexpected-errors) error is thrown, SvelteKit will i
 
 > [In SvelteKit 1.x](migrating-to-sveltekit-2#redirect-and-error-are-no-longer-thrown-by-you) you had to `throw` the error yourself
 
-## Redirects[](#Redirects)
+## Redirects
 
 To redirect users, use the `redirect` helper from `@sveltejs/kit` to specify the location to which they should be redirected alongside a `3xx` status code. Like `error(...)`, calling `redirect(...)` will throw an exception, making it easy to stop execution from inside helper functions.
 
@@ -1266,7 +1166,7 @@ In the browser, you can also navigate programmatically outside of a `load` funct
 
 > [In SvelteKit 1.x](migrating-to-sveltekit-2#redirect-and-error-are-no-longer-thrown-by-you) you had to `throw` the `redirect` yourself
 
-## Streaming with promises[](#Streaming-with-promises)
+## Streaming with promises
 
 When using a server `load`, promises will be streamed to the browser as they resolve. This is useful if you have slow, non-essential data, since you can start rendering the page before all the data is available:
 
@@ -1440,11 +1340,11 @@ Promise.PromiseConstructor.reject<never>(reason?: any): Promise<never>Creates a 
 
 > [In SvelteKit 1.x](migrating-to-sveltekit-2#Top-level-promises-are-no-longer-awaited) top-level promises were automatically awaited, only nested promises were streamed.
 
-## Parallel loading[](#Parallel-loading)
+## Parallel loading
 
 When rendering (or navigating to) a page, SvelteKit runs all `load` functions concurrently, avoiding a waterfall of requests. During client-side navigation, the result of calling multiple server `load` functions are grouped into a single response. Once all `load` functions have returned, the page is rendered.
 
-## Rerunning load functions[](#Rerunning-load-functions)
+## Rerunning load functions
 
 SvelteKit tracks the dependencies of each `load` function to avoid rerunning it unnecessarily during navigation.
 
@@ -1534,7 +1434,7 @@ Dependency tracking does not apply _after_ the `load` function has returned — 
 
 Search parameters are tracked independently from the rest of the url. For example, accessing `event.url.searchParams.get("x")` inside a `load` function will make that `load` function re-run when navigating from `?x=1` to `?x=2`, but not when navigating from `?x=1&y=1` to `?x=1&y=2`.
 
-### Untracking dependencies[](#Rerunning-load-functions-Untracking-dependencies)
+### Untracking dependencies
 
 In rare cases, you may wish to exclude something from the dependency tracking mechanism. You can do this with the provided `untrack` function:
 
@@ -1583,7 +1483,7 @@ pathname === '/')) {
 };
 ```
 
-### Manual invalidation[](#Rerunning-load-functions-Manual-invalidation)
+### Manual invalidation
 
 You can also rerun `load` functions that apply to the current page using [`invalidate(url)`]($app-navigation#invalidate), which reruns all `load` functions that depend on `url`, and [`invalidateAll()`]($app-navigation#invalidateAll), which reruns every `load` function. Server load functions will never automatically depend on a fetched `url` to avoid leaking secrets to the client.
 
@@ -1726,39 +1626,39 @@ src/routes/random-number/+page
 <button onclick={rerunLoadFunction}>Update random number</button>
 ```
 
-### When do load functions rerun?[](#Rerunning-load-functions-When-do-load-functions-rerun)
+### When do load functions rerun?
 
 To summarize, a `load` function will rerun in the following situations:
 
-*   It references a property of `params` whose value has changed
-*   It references a property of `url` (such as `url.pathname` or `url.search`) whose value has changed. Properties in `request.url` are _not_ tracked
-*   It calls `url.searchParams.get(...)`, `url.searchParams.getAll(...)` or `url.searchParams.has(...)` and the parameter in question changes. Accessing other properties of `url.searchParams` will have the same effect as accessing `url.search`.
-*   It calls `await parent()` and a parent `load` function reran
-*   A child `load` function calls `await parent()` and is rerunning, and the parent is a server load function
-*   It declared a dependency on a specific URL via [`fetch`](#Making-fetch-requests) (universal load only) or [`depends`](@sveltejs-kit#LoadEvent), and that URL was marked invalid with [`invalidate(url)`]($app-navigation#invalidate)
-*   All active `load` functions were forcibly rerun with [`invalidateAll()`]($app-navigation#invalidateAll)
+-   It references a property of `params` whose value has changed
+-   It references a property of `url` (such as `url.pathname` or `url.search`) whose value has changed. Properties in `request.url` are _not_ tracked
+-   It calls `url.searchParams.get(...)`, `url.searchParams.getAll(...)` or `url.searchParams.has(...)` and the parameter in question changes. Accessing other properties of `url.searchParams` will have the same effect as accessing `url.search`.
+-   It calls `await parent()` and a parent `load` function reran
+-   A child `load` function calls `await parent()` and is rerunning, and the parent is a server load function
+-   It declared a dependency on a specific URL via [`fetch`](#Making-fetch-requests) (universal load only) or [`depends`](@sveltejs-kit#LoadEvent), and that URL was marked invalid with [`invalidate(url)`]($app-navigation#invalidate)
+-   All active `load` functions were forcibly rerun with [`invalidateAll()`]($app-navigation#invalidateAll)
 
 `params` and `url` can change in response to a `<a href="..">` link click, a [`<form>` interaction](form-actions#GET-vs-POST), a [`goto`]($app-navigation#goto) invocation, or a [`redirect`](@sveltejs-kit#redirect).
 
 Note that rerunning a `load` function will update the `data` prop inside the corresponding `+layout.svelte` or `+page.svelte`; it does _not_ cause the component to be recreated. As a result, internal state is preserved. If this isn’t what you want, you can reset whatever you need to reset inside an [`afterNavigate`]($app-navigation#afterNavigate) callback, and/or wrap your component in a [`{#key ...}`](../svelte/key) block.
 
-## Implications for authentication[](#Implications-for-authentication)
+## Implications for authentication
 
 A couple features of loading data have important implications for auth checks:
 
-*   Layout `load` functions do not run on every request, such as during client side navigation between child routes. [(When do load functions rerun?)](load#Rerunning-load-functions-When-do-load-functions-rerun)
-*   Layout and page `load` functions run concurrently unless `await parent()` is called. If a layout `load` throws, the page `load` function runs, but the client will not receive the returned data.
+-   Layout `load` functions do not run on every request, such as during client side navigation between child routes. [(When do load functions rerun?)](load#Rerunning-load-functions-When-do-load-functions-rerun)
+-   Layout and page `load` functions run concurrently unless `await parent()` is called. If a layout `load` throws, the page `load` function runs, but the client will not receive the returned data.
 
 There are a few possible strategies to ensure an auth check occurs before protected code.
 
 To prevent data waterfalls and preserve layout `load` caches:
 
-*   Use [hooks](hooks) to protect multiple routes before any `load` functions run
-*   Use auth guards directly in `+page.server.js` `load` functions for route specific protection
+-   Use [hooks](hooks) to protect multiple routes before any `load` functions run
+-   Use auth guards directly in `+page.server.js` `load` functions for route specific protection
 
 Putting an auth guard in `+layout.server.js` requires all child pages to call `await parent()` before protected code. Unless every child page depends on returned data from `await parent()`, the other options will be more performant.
 
-## Using getRequestEvent[](#Using-getRequestEvent)
+## Using getRequestEvent
 
 When running server `load` functions, the `event` object passed to the function as an argument can also be retrieved with [`getRequestEvent`]($app-server#getRequestEvent). This allows shared logic (such as authentication guards) to access information about the current request without it needing to be passed around.
 
@@ -1838,14 +1738,15 @@ export function function load(): {
 }
 ```
 
-## Further reading[](#Further-reading)
+## Further reading
 
-*   [Tutorial: Loading data](/tutorial/kit/page-data)
-*   [Tutorial: Errors and redirects](/tutorial/kit/error-basics)
-*   [Tutorial: Advanced loading](/tutorial/kit/await-parent)
+-   [Tutorial: Loading data](/tutorial/kit/page-data)
+-   [Tutorial: Errors and redirects](/tutorial/kit/error-basics)
+-   [Tutorial: Advanced loading](/tutorial/kit/await-parent)
 
-[Edit this page on GitHub](https://github.com/sveltejs/kit/edit/main/documentation/docs/20-core-concepts/20-load.md) [llms.txt](/docs/kit/load/llms.txt)
+(https://github.com/sveltejs/kit/edit/main/documentation/docs/20-core-concepts/20-load.md) [llms.txt](/docs/kit/load/llms.txt)
 
-previous next
+(/docs/kit/routing) [Form actions](/docs/kit/form-actions)
 
-[Routing](/docs/kit/routing) [Form actions](/docs/kit/form-actions)
+---
+*This documentation was automatically generated from SvelteKit official documentation.*

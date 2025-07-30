@@ -1,3 +1,21 @@
+# Grid Template Columns
+
+> Last updated: 2025-07-30T11:02:12.763Z
+> Source: https://tailwindcss.com/docs/grid-template-columns
+
+v4.1
+
+⌘KCtrl K[Docs](/docs)[Blog](/blog)[Showcase](/showcase)[Sponsor](/sponsor)[Plus](/plus?ref=top)
+
+1.  Flexbox & Grid
+2.  grid-template-columns
+
+Flexbox & Grid
+
+# grid-template-columns
+
+Utilities for specifying the columns in a grid layout.
+
 Class
 
 Styles
@@ -95,3 +113,6 @@ Prefix a `grid-template-columns` utility with a breakpoint variant like `md:` to
 ```
 
 Learn more about using variants in the [variants documentation](/docs/hover-focus-and-other-states).
+
+---
+*This documentation was automatically generated from Tailwind CSS official documentation.*

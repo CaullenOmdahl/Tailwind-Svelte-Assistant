@@ -1,3 +1,21 @@
+# Flex
+
+> Last updated: 2025-07-30T11:02:12.592Z
+> Source: https://tailwindcss.com/docs/flex
+
+v4.1
+
+⌘KCtrl K[Docs](/docs)[Blog](/blog)[Showcase](/showcase)[Sponsor](/sponsor)[Plus](/plus?ref=top)
+
+1.  Flexbox & Grid
+2.  flex
+
+Flexbox & Grid
+
+# flex
+
+Utilities for controlling how flex items both grow and shrink.
+
 Class
 
 Styles
@@ -113,3 +131,6 @@ Prefix a `flex` utility with a breakpoint variant like `md:` to only apply the u
 ```
 
 Learn more about using variants in the [variants documentation](/docs/hover-focus-and-other-states).
+
+---
+*This documentation was automatically generated from Tailwind CSS official documentation.*

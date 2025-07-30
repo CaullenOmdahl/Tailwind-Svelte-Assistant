@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.772Z -->
 <!--
 @description: An FAQ section with a main column for questions and answers, and an offset supporting column for a title and description. Based on Tailwind UI.
 @props:

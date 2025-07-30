@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.780Z -->
 <!--
 @description: A single-tier pricing section, often used for "lifetime membership" or a single product offering. Based on Tailwind UI.
 @props:

@@ -1,117 +1,13 @@
-*   ### Getting started
-    
-    *   [Introduction](/docs/kit/introduction)
-    *   [Creating a project](/docs/kit/creating-a-project)
-    *   [Project types](/docs/kit/project-types)
-    *   [Project structure](/docs/kit/project-structure)
-    *   [Web standards](/docs/kit/web-standards)
-*   ### Core concepts
-    
-    *   [Routing](/docs/kit/routing)
-    *   [Loading data](/docs/kit/load)
-    *   [Form actions](/docs/kit/form-actions)
-    *   [Page options](/docs/kit/page-options)
-    *   [State management](/docs/kit/state-management)
-*   ### Build and deploy
-    
-    *   [Building your app](/docs/kit/building-your-app)
-    *   [Adapters](/docs/kit/adapters)
-    *   [Zero-config deployments](/docs/kit/adapter-auto)
-    *   [Node servers](/docs/kit/adapter-node)
-    *   [Static site generation](/docs/kit/adapter-static)
-    *   [Single-page apps](/docs/kit/single-page-apps)
-    *   [Cloudflare](/docs/kit/adapter-cloudflare)
-    *   [Cloudflare Workers](/docs/kit/adapter-cloudflare-workers)
-    *   [Netlify](/docs/kit/adapter-netlify)
-    *   [Vercel](/docs/kit/adapter-vercel)
-    *   [Writing adapters](/docs/kit/writing-adapters)
-*   ### Advanced
-    
-    *   [Advanced routing](/docs/kit/advanced-routing)
-    *   [Hooks](/docs/kit/hooks)
-    *   [Errors](/docs/kit/errors)
-    *   [Link options](/docs/kit/link-options)
-    *   [Service workers](/docs/kit/service-workers)
-    *   [Server-only modules](/docs/kit/server-only-modules)
-    *   [Snapshots](/docs/kit/snapshots)
-    *   [Shallow routing](/docs/kit/shallow-routing)
-    *   [Packaging](/docs/kit/packaging)
-*   ### Best practices
-    
-    *   [Auth](/docs/kit/auth)
-    *   [Performance](/docs/kit/performance)
-    *   [Icons](/docs/kit/icons)
-    *   [Images](/docs/kit/images)
-    *   [Accessibility](/docs/kit/accessibility)
-    *   [SEO](/docs/kit/seo)
-*   ### Appendix
-    
-    *   [Frequently asked questions](/docs/kit/faq)
-    *   [Integrations](/docs/kit/integrations)
-    *   [Breakpoint Debugging](/docs/kit/debugging)
-    *   [Migrating to SvelteKit v2](/docs/kit/migrating-to-sveltekit-2)
-    *   [Migrating from Sapper](/docs/kit/migrating)
-    *   [Additional resources](/docs/kit/additional-resources)
-    *   [Glossary](/docs/kit/glossary)
-*   ### Reference
-    
-    *   [@sveltejs/kit](/docs/kit/@sveltejs-kit)
-    *   [@sveltejs/kit/hooks](/docs/kit/@sveltejs-kit-hooks)
-    *   [@sveltejs/kit/node/polyfills](/docs/kit/@sveltejs-kit-node-polyfills)
-    *   [@sveltejs/kit/node](/docs/kit/@sveltejs-kit-node)
-    *   [@sveltejs/kit/vite](/docs/kit/@sveltejs-kit-vite)
-    *   [$app/environment](/docs/kit/$app-environment)
-    *   [$app/forms](/docs/kit/$app-forms)
-    *   [$app/navigation](/docs/kit/$app-navigation)
-    *   [$app/paths](/docs/kit/$app-paths)
-    *   [$app/server](/docs/kit/$app-server)
-    *   [$app/state](/docs/kit/$app-state)
-    *   [$app/stores](/docs/kit/$app-stores)
-    *   [$app/types](/docs/kit/$app-types)
-    *   [$env/dynamic/private](/docs/kit/$env-dynamic-private)
-    *   [$env/dynamic/public](/docs/kit/$env-dynamic-public)
-    *   [$env/static/private](/docs/kit/$env-static-private)
-    *   [$env/static/public](/docs/kit/$env-static-public)
-    *   [$lib](/docs/kit/$lib)
-    *   [$service-worker](/docs/kit/$service-worker)
-    *   [Configuration](/docs/kit/configuration)
-    *   [Command Line Interface](/docs/kit/cli)
-    *   [Types](/docs/kit/types)
+# Routing
 
-SvelteKitCore concepts
+> Last updated: 2025-07-30T11:02:07.041Z
+> Source: https://kit.svelte.dev/docs/routing
 
 # Routing
 
-### On this page
+## +page
 
-*   [Routing](/docs/kit/routing)
-*   [+page](#page)
-*   [+error](#error)
-*   [+layout](#layout)
-*   [+server](#server)
-*   [$types](#$types)
-*   [Other files](#Other-files)
-*   [Further reading](#Further-reading)
-
-At the heart of SvelteKit is a _filesystem-based router_. The routes of your app — i.e. the URL paths that users can access — are defined by the directories in your codebase:
-
-*   `src/routes` is the root route
-*   `src/routes/about` creates an `/about` route
-*   `src/routes/blog/[slug]` creates a route with a _parameter_, `slug`, that can be used to load data dynamically when a user requests a page like `/blog/hello-world`
-
-> You can change `src/routes` to a different directory by editing the [project config](configuration).
-
-Each route directory contains one or more _route files_, which can be identified by their `+` prefix.
-
-We’ll introduce these files in a moment in more detail, but here are a few simple rules to help you remember how SvelteKit’s routing works:
-
-*   All files can run on the server
-*   All files run on the client except `+server` files
-*   `+layout` and `+error` files apply to subdirectories as well as the directory they live in
-
-## +page[](#page)
-
-### +page.svelte[](#page-page.svelte)
+### +page.svelte
 
 A `+page.svelte` component defines a page of your app. By default, pages are rendered both on the server ([SSR](glossary#SSR)) for the initial request and in the browser ([CSR](glossary#CSR)) for subsequent navigation.
 
@@ -163,7 +59,7 @@ src/routes/blog/\[slug\]/+page
 > 
 > In Svelte 4, you’d use `export let data` instead.
 
-### +page.js[](#page-page.js)
+### +page.js
 
 Often, a page will need to load some data before it can be rendered. For this, we add a `+page.js` module that exports a `load` function:
 
@@ -234,13 +130,13 @@ This function runs alongside `+page.svelte`, which means it runs on the server d
 
 As well as `load`, `+page.js` can export values that configure the page’s behaviour:
 
-*   `export const prerender = true` or `false` or `'auto'`
-*   `export const ssr = true` or `false`
-*   `export const csr = true` or `false`
+-   `export const prerender = true` or `false` or `'auto'`
+-   `export const ssr = true` or `false`
+-   `export const csr = true` or `false`
 
 You can find more information about these in [page options](page-options).
 
-### +page.server.js[](#page-page.server.js)
+### +page.server.js
 
 If your `load` function can only run on the server — for example, if it needs to fetch data from a database or you need to access private [environment variables]($env-static-private) like API keys — then you can rename `+page.js` to `+page.server.js` and change the `PageLoad` type to `PageServerLoad`.
 
@@ -330,7 +226,7 @@ Like `+page.js`, `+page.server.js` can export [page options](page-options) — `
 
 A `+page.server.js` file can also export _actions_. If `load` lets you read data from the server, `actions` let you write data _to_ the server using the `<form>` element. To learn how to use them, see the [form actions](form-actions) section.
 
-## +error[](#error)
+## +error
 
 If an error occurs during `load`, SvelteKit will render a default error page. You can customise this error page on a per-route basis by adding an `+error.svelte` file:
 
@@ -366,13 +262,13 @@ If no route can be found (404), `src/routes/+error.svelte` (or the default error
 
 You can read more about error handling [here](errors).
 
-## +layout[](#layout)
+## +layout
 
 So far, we’ve treated pages as entirely standalone components — upon navigation, the existing `+page.svelte` component will be destroyed, and a new one will take its place.
 
 But in many apps, there are elements that should be visible on _every_ page, such as top-level navigation or a footer. Instead of repeating them in every `+page.svelte`, we can put them in _layouts_.
 
-### +layout.svelte[](#layout-layout.svelte)
+### +layout.svelte
 
 To create a layout that applies to every page, make a file called `src/routes/+layout.svelte`. The default layout (the one that SvelteKit uses if you don’t bring your own) looks like this...
 
@@ -487,7 +383,7 @@ You can see how `data` is populated by looking at the `+layout.js` example in th
 
 By default, each layout inherits the layout above it. Sometimes that isn’t what you want - in this case, [advanced layouts](advanced-routing#Advanced-layouts) can help you.
 
-### +layout.js[](#layout-layout.js)
+### +layout.js
 
 Just like `+page.svelte` loading data from `+page.js`, your `+layout.svelte` component can get data from a [`load`](load) function in `+layout.js`.
 
@@ -558,13 +454,13 @@ src/routes/settings/profile/+page
 
 > Often, layout data is unchanged when navigating between pages. SvelteKit will intelligently rerun [`load`](load) functions when necessary.
 
-### +layout.server.js[](#layout-layout.server.js)
+### +layout.server.js
 
 To run your layout’s `load` function on the server, move it to `+layout.server.js`, and change the `LayoutLoad` type to `LayoutServerLoad`.
 
 Like `+layout.js`, `+layout.server.js` can export [page options](page-options) — `prerender`, `ssr` and `csr`.
 
-## +server[](#server)
+## +server
 
 As well as pages, you can define routes with a `+server.js` file (sometimes referred to as an ‘API route’ or an ‘endpoint’), which gives you full control over the response. Your `+server.js` file exports functions corresponding to HTTP verbs like `GET`, `POST`, `PATCH`, `PUT`, `DELETE`, `OPTIONS`, and `HEAD` that take a [`RequestEvent`](@sveltejs-kit#RequestEvent) argument and return a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
 
@@ -677,7 +573,7 @@ If an error is thrown (either `error(...)` or an unexpected error), the response
 
 > `+layout` files have no effect on `+server.js` files. If you want to run some logic before each request, add it to the server [`handle`](hooks#Server-hooks-handle) hook.
 
-### Receiving data[](#server-Receiving-data)
+### Receiving data
 
 By exporting `POST` / `PUT`/`PATCH`/`DELETE`/`OPTIONS`/`HEAD` handlers, `+server.js` files can be used to create a complete API:
 
@@ -772,7 +668,7 @@ json();
 
 > If a `GET` handler is exported, a `HEAD` request will return the `content-length` of the `GET` handler’s response body.
 
-### Fallback method handler[](#server-Fallback-method-handler)
+### Fallback method handler
 
 Exporting the `fallback` handler will match any unhandled request methods, including methods like `MOVE` which have no dedicated export from `+server.js`.
 
@@ -834,15 +730,15 @@ method} request!`);
 
 > For `HEAD` requests, the `GET` handler takes precedence over the `fallback` handler.
 
-### Content negotiation[](#server-Content-negotiation)
+### Content negotiation
 
 `+server.js` files can be placed in the same directory as `+page` files, allowing the same route to be either a page or an API endpoint. To determine which, SvelteKit applies the following rules:
 
-*   `PUT` / `PATCH`/`DELETE`/`OPTIONS` requests are always handled by `+server.js` since they do not apply to pages
-*   `GET` / `POST`/`HEAD` requests are treated as page requests if the `accept` header prioritises `text/html` (in other words, it’s a browser page request), else they are handled by `+server.js`.
-*   Responses to `GET` requests will include a `Vary: Accept` header, so that proxies and browsers cache HTML and JSON responses separately.
+-   `PUT` / `PATCH`/`DELETE`/`OPTIONS` requests are always handled by `+server.js` since they do not apply to pages
+-   `GET` / `POST`/`HEAD` requests are treated as page requests if the `accept` header prioritises `text/html` (in other words, it’s a browser page request), else they are handled by `+server.js`.
+-   Responses to `GET` requests will include a `Vary: Accept` header, so that proxies and browsers cache HTML and JSON responses separately.
 
-## $types[](#$types)
+## $types
 
 Throughout the examples above, we’ve been importing types from a `$types.d.ts` file. This is a file SvelteKit creates for you in a hidden directory if you’re using TypeScript (or JavaScript with JSDoc type annotations) to give you type safety when working with your root files.
 
@@ -913,20 +809,21 @@ If you’re using VS Code or any IDE that supports the language server protocol 
 
 You can read more about omitting `$types` in our [blog post](/blog/zero-config-type-safety) about it.
 
-## Other files[](#Other-files)
+## Other files
 
 Any other files inside a route directory are ignored by SvelteKit. This means you can colocate components and utility modules with the routes that need them.
 
 If components and modules are needed by multiple routes, it’s a good idea to put them in [`$lib`]($lib).
 
-## Further reading[](#Further-reading)
+## Further reading
 
-*   [Tutorial: Routing](/tutorial/kit/pages)
-*   [Tutorial: API routes](/tutorial/kit/get-handlers)
-*   [Docs: Advanced routing](advanced-routing)
+-   [Tutorial: Routing](/tutorial/kit/pages)
+-   [Tutorial: API routes](/tutorial/kit/get-handlers)
+-   [Docs: Advanced routing](advanced-routing)
 
-[Edit this page on GitHub](https://github.com/sveltejs/kit/edit/main/documentation/docs/20-core-concepts/10-routing.md) [llms.txt](/docs/kit/routing/llms.txt)
+(https://github.com/sveltejs/kit/edit/main/documentation/docs/20-core-concepts/10-routing.md) [llms.txt](/docs/kit/routing/llms.txt)
 
-previous next
+(/docs/kit/web-standards) [Loading data](/docs/kit/load)
 
-[Web standards](/docs/kit/web-standards) [Loading data](/docs/kit/load)
+---
+*This documentation was automatically generated from SvelteKit official documentation.*

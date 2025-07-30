@@ -1,3 +1,21 @@
+# Dark Mode
+
+> Last updated: 2025-07-30T11:02:12.160Z
+> Source: https://tailwindcss.com/docs/dark-mode
+
+v4.1
+
+⌘KCtrl K[Docs](/docs)[Blog](/blog)[Showcase](/showcase)[Sponsor](/sponsor)[Plus](/plus?ref=top)
+
+1.  Core concepts
+2.  Dark mode
+
+Core concepts
+
+# Dark mode
+
+Using variants to style your site in dark mode.
+
 ## [Overview](#overview)
 
 Now that dark mode is a first-class feature of many operating systems, it's becoming more and more common to design a dark version of your website to go along with the default design.
@@ -73,3 +91,6 @@ spaghetti.js
 ```
 
 Again you can manage this however you like, even storing the preference server-side in a database and rendering the class on the server — it's totally up to you.
+
+---
+*This documentation was automatically generated from Tailwind CSS official documentation.*

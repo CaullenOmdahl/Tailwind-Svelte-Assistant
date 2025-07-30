@@ -28,8 +28,8 @@
     "typescript": "^5.3.3"
   },
   "optionalDependencies": {
-    "axios": "^1.6.0",
-    "cheerio": "^1.0.0-rc.12",
-    "turndown": "^7.1.0"
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
+    "turndown": "^7.2.0"
   }
 }

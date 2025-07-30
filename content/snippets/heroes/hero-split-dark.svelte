@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.777Z -->
 <!--
 @description: Hero section with a split layout, content on the left, and a screenshot placeholder on the right, on a dark background. Based on Tailwind UI.
 @props:

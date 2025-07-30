@@ -1,104 +1,11 @@
-*   ### Getting started
-    
-    *   [Introduction](/docs/kit/introduction)
-    *   [Creating a project](/docs/kit/creating-a-project)
-    *   [Project types](/docs/kit/project-types)
-    *   [Project structure](/docs/kit/project-structure)
-    *   [Web standards](/docs/kit/web-standards)
-*   ### Core concepts
-    
-    *   [Routing](/docs/kit/routing)
-    *   [Loading data](/docs/kit/load)
-    *   [Form actions](/docs/kit/form-actions)
-    *   [Page options](/docs/kit/page-options)
-    *   [State management](/docs/kit/state-management)
-*   ### Build and deploy
-    
-    *   [Building your app](/docs/kit/building-your-app)
-    *   [Adapters](/docs/kit/adapters)
-    *   [Zero-config deployments](/docs/kit/adapter-auto)
-    *   [Node servers](/docs/kit/adapter-node)
-    *   [Static site generation](/docs/kit/adapter-static)
-    *   [Single-page apps](/docs/kit/single-page-apps)
-    *   [Cloudflare](/docs/kit/adapter-cloudflare)
-    *   [Cloudflare Workers](/docs/kit/adapter-cloudflare-workers)
-    *   [Netlify](/docs/kit/adapter-netlify)
-    *   [Vercel](/docs/kit/adapter-vercel)
-    *   [Writing adapters](/docs/kit/writing-adapters)
-*   ### Advanced
-    
-    *   [Advanced routing](/docs/kit/advanced-routing)
-    *   [Hooks](/docs/kit/hooks)
-    *   [Errors](/docs/kit/errors)
-    *   [Link options](/docs/kit/link-options)
-    *   [Service workers](/docs/kit/service-workers)
-    *   [Server-only modules](/docs/kit/server-only-modules)
-    *   [Snapshots](/docs/kit/snapshots)
-    *   [Shallow routing](/docs/kit/shallow-routing)
-    *   [Packaging](/docs/kit/packaging)
-*   ### Best practices
-    
-    *   [Auth](/docs/kit/auth)
-    *   [Performance](/docs/kit/performance)
-    *   [Icons](/docs/kit/icons)
-    *   [Images](/docs/kit/images)
-    *   [Accessibility](/docs/kit/accessibility)
-    *   [SEO](/docs/kit/seo)
-*   ### Appendix
-    
-    *   [Frequently asked questions](/docs/kit/faq)
-    *   [Integrations](/docs/kit/integrations)
-    *   [Breakpoint Debugging](/docs/kit/debugging)
-    *   [Migrating to SvelteKit v2](/docs/kit/migrating-to-sveltekit-2)
-    *   [Migrating from Sapper](/docs/kit/migrating)
-    *   [Additional resources](/docs/kit/additional-resources)
-    *   [Glossary](/docs/kit/glossary)
-*   ### Reference
-    
-    *   [@sveltejs/kit](/docs/kit/@sveltejs-kit)
-    *   [@sveltejs/kit/hooks](/docs/kit/@sveltejs-kit-hooks)
-    *   [@sveltejs/kit/node/polyfills](/docs/kit/@sveltejs-kit-node-polyfills)
-    *   [@sveltejs/kit/node](/docs/kit/@sveltejs-kit-node)
-    *   [@sveltejs/kit/vite](/docs/kit/@sveltejs-kit-vite)
-    *   [$app/environment](/docs/kit/$app-environment)
-    *   [$app/forms](/docs/kit/$app-forms)
-    *   [$app/navigation](/docs/kit/$app-navigation)
-    *   [$app/paths](/docs/kit/$app-paths)
-    *   [$app/server](/docs/kit/$app-server)
-    *   [$app/state](/docs/kit/$app-state)
-    *   [$app/stores](/docs/kit/$app-stores)
-    *   [$app/types](/docs/kit/$app-types)
-    *   [$env/dynamic/private](/docs/kit/$env-dynamic-private)
-    *   [$env/dynamic/public](/docs/kit/$env-dynamic-public)
-    *   [$env/static/private](/docs/kit/$env-static-private)
-    *   [$env/static/public](/docs/kit/$env-static-public)
-    *   [$lib](/docs/kit/$lib)
-    *   [$service-worker](/docs/kit/$service-worker)
-    *   [Configuration](/docs/kit/configuration)
-    *   [Command Line Interface](/docs/kit/cli)
-    *   [Types](/docs/kit/types)
+# Form Actions
 
-SvelteKitCore concepts
+> Last updated: 2025-07-30T11:02:09.751Z
+> Source: https://kit.svelte.dev/docs/form-actions
 
 # Form actions
 
-### On this page
-
-*   [Form actions](/docs/kit/form-actions)
-*   [Default actions](#Default-actions)
-*   [Named actions](#Named-actions)
-*   [Anatomy of an action](#Anatomy-of-an-action)
-*   [Loading data](#Loading-data)
-*   [Progressive enhancement](#Progressive-enhancement)
-*   [Alternatives](#Alternatives)
-*   [GET vs POST](#GET-vs-POST)
-*   [Further reading](#Further-reading)
-
-A `+page.server.js` file can export _actions_, which allow you to `POST` data to the server using the `<form>` element.
-
-When using `<form>`, client-side JavaScript is optional, but you can easily _progressively enhance_ your form interactions with JavaScript to provide the best user experience.
-
-## Default actions[](#Default-actions)
+## Default actions
 
 In the simplest case, a page declares a `default` action:
 
@@ -169,7 +76,7 @@ src/routes/+layout
 </form>
 ```
 
-## Named actions[](#Named-actions)
+## Named actions
 
 Instead of one `default` action, a page can have as many named actions as it needs:
 
@@ -253,7 +160,7 @@ src/routes/login/+page
 
 > We can’t have default actions next to named actions, because if you POST to a named action without a redirect, the query parameter is persisted in the URL, which means the next default POST would go through the named action from before.
 
-## Anatomy of an action[](#Anatomy-of-an-action)
+## Anatomy of an action
 
 Each action receives a `RequestEvent` object, allowing you to read the data with `request.formData()`. After processing the request (for example, logging the user in by setting a cookie), the action can respond with data that will be available through the `form` property on the corresponding page and through `page.form` app-wide until the next update.
 
@@ -426,7 +333,7 @@ src/routes/login/+page
 > 
 > In Svelte 4, you’d use `export let data` and `export let form` instead to declare properties.
 
-### Validation errors[](#Anatomy-of-an-action-Validation-errors)
+### Validation errors
 
 If the request couldn’t be processed because of invalid data, you can return validation errors — along with the previously submitted form values — back to the user so that they can try again. The `fail` function lets you return an HTTP status code (typically 400 or 422, in the case of validation errors) along with the data. The status code is available through `page.status` and the data through `form`:
 
@@ -635,7 +542,7 @@ src/routes/login/+page
 
 The returned data must be serializable as JSON. Beyond that, the structure is entirely up to you. For example, if you had multiple forms on the page, you could distinguish which `<form>` the returned `form` data referred to with an `id` property or similar.
 
-### Redirects[](#Anatomy-of-an-action-Redirects)
+### Redirects
 
 Redirects (and errors) work exactly the same as in [`load`](load#Redirects):
 
@@ -851,7 +758,7 @@ See all redirect status codes
 }Actions;
 ```
 
-## Loading data[](#Loading-data)
+## Loading data
 
 After an action runs, the page will be re-rendered (unless a redirect or an unexpected error occurs), with the action’s return value available to the page as the `form` prop. This means that your page’s `load` functions will run after the action completes.
 
@@ -989,11 +896,11 @@ locals.App.Locals.user: {
 }Actions;
 ```
 
-## Progressive enhancement[](#Progressive-enhancement)
+## Progressive enhancement
 
 In the preceding sections we built a `/login` action that [works without client-side JavaScript](https://kryogenix.org/code/browser/everyonehasjs.html) — not a `fetch` in sight. That’s great, but when JavaScript _is_ available we can progressively enhance our form interactions to provide a better user experience.
 
-### use:enhance[](#Progressive-enhancement-use:enhance)
+### use:enhance
 
 The easiest way to progressively enhance a form is to add the `use:enhance` action:
 
@@ -1026,14 +933,14 @@ src/routes/login/+page
 
 Without an argument, `use:enhance` will emulate the browser-native behaviour, just without the full-page reloads. It will:
 
-*   update the `form` property, `page.form` and `page.status` on a successful or invalid response, but only if the action is on the same page you’re submitting from. For example, if your form looks like `<form action="/somewhere/else" ..>`, the `form` prop and the `page.form` state will _not_ be updated. This is because in the native form submission case you would be redirected to the page the action is on. If you want to have them updated either way, use [`applyAction`](#Progressive-enhancement-Customising-use:enhance)
-*   reset the `<form>` element
-*   invalidate all data using `invalidateAll` on a successful response
-*   call `goto` on a redirect response
-*   render the nearest `+error` boundary if an error occurs
-*   [reset focus](accessibility#Focus-management) to the appropriate element
+-   update the `form` property, `page.form` and `page.status` on a successful or invalid response, but only if the action is on the same page you’re submitting from. For example, if your form looks like `<form action="/somewhere/else" ..>`, the `form` prop and the `page.form` state will _not_ be updated. This is because in the native form submission case you would be redirected to the page the action is on. If you want to have them updated either way, use [`applyAction`](#Progressive-enhancement-Customising-use:enhance)
+-   reset the `<form>` element
+-   invalidate all data using `invalidateAll` on a successful response
+-   call `goto` on a redirect response
+-   render the nearest `+error` boundary if an error occurs
+-   [reset focus](accessibility#Focus-management) to the appropriate element
 
-### Customising use:enhance[](#Progressive-enhancement-Customising-use:enhance)
+### Customising use:enhance
 
 To customise the behaviour, you can provide a `SubmitFunction` that runs immediately before the form is submitted, and (optionally) returns a callback that runs with the `ActionResult`.
 
@@ -1108,13 +1015,13 @@ src/routes/login/+page
 
 The behaviour of `applyAction(result)` depends on `result.type`:
 
-*   `success`, `failure` — sets `page.status` to `result.status` and updates `form` and `page.form` to `result.data` (regardless of where you are submitting from, in contrast to `update` from `enhance`)
-*   `redirect` — calls `goto(result.location, { invalidateAll: true })`
-*   `error` — renders the nearest `+error` boundary with `result.error`
+-   `success`, `failure` — sets `page.status` to `result.status` and updates `form` and `page.form` to `result.data` (regardless of where you are submitting from, in contrast to `update` from `enhance`)
+-   `redirect` — calls `goto(result.location, { invalidateAll: true })`
+-   `error` — renders the nearest `+error` boundary with `result.error`
 
 In all cases, [focus will be reset](accessibility#Focus-management).
 
-### Custom event listener[](#Progressive-enhancement-Custom-event-listener)
+### Custom event listener
 
 We can also implement progressive enhancement ourselves, without `use:enhance`, with a normal event listener on the `<form>`:
 
@@ -1206,7 +1113,7 @@ headers: {
 });
 ```
 
-## Alternatives[](#Alternatives)
+## Alternatives
 
 Form actions are the preferred way to send data to the server, since they can be progressively enhanced, but you can also use [`+server.js`](routing#server) files to expose (for example) a JSON API. Here’s how such an interaction could look like:
 
@@ -1254,7 +1161,7 @@ type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | nul
 };
 ```
 
-## GET vs POST[](#GET-vs-POST)
+## GET vs POST
 
 As we’ve seen, to invoke a form action you must use `method="POST"`.
 
@@ -1271,12 +1178,13 @@ Some forms don’t need to `POST` data to the server — search inputs, for exam
 
 Submitting this form will navigate to `/search?q=...` and invoke your load function but will not invoke an action. As with `<a>` elements, you can set the [`data-sveltekit-reload`](link-options#data-sveltekit-reload), [`data-sveltekit-replacestate`](link-options#data-sveltekit-replacestate), [`data-sveltekit-keepfocus`](link-options#data-sveltekit-keepfocus) and [`data-sveltekit-noscroll`](link-options#data-sveltekit-noscroll) attributes on the `<form>` to control the router’s behaviour.
 
-## Further reading[](#Further-reading)
+## Further reading
 
-*   [Tutorial: Forms](/tutorial/kit/the-form-element)
+-   [Tutorial: Forms](/tutorial/kit/the-form-element)
 
-[Edit this page on GitHub](https://github.com/sveltejs/kit/edit/main/documentation/docs/20-core-concepts/30-form-actions.md) [llms.txt](/docs/kit/form-actions/llms.txt)
+(https://github.com/sveltejs/kit/edit/main/documentation/docs/20-core-concepts/30-form-actions.md) [llms.txt](/docs/kit/form-actions/llms.txt)
 
-previous next
+(/docs/kit/load) [Page options](/docs/kit/page-options)
 
-[Loading data](/docs/kit/load) [Page options](/docs/kit/page-options)
+---
+*This documentation was automatically generated from SvelteKit official documentation.*

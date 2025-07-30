@@ -1,3 +1,4 @@
+<!-- Last updated: 2025-07-30T11:02:12.776Z -->
 <script lang="ts">
   let mobileMenuOpen = false;
 
