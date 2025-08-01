@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.768Z -->
+<!-- Last updated: 2025-08-01T14:05:02.195Z -->
 <!--
 @description: A basic card component with an image, title, description, and a call-to-action link. Designed to be themeable.
 @props:

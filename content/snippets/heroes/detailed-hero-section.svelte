@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.776Z -->
+<!-- Last updated: 2025-08-01T14:05:02.205Z -->
 <!--
 @description: Hero section with centered content, navigation, optional announcement, and decorative gradient blurs. Based on Tailwind UI "Simple Centered" example.
 @props:
