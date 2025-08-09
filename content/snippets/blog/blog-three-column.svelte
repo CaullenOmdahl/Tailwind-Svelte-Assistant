@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.767Z -->
+<!-- Last updated: 2025-08-09T02:33:30.290Z -->
 <!--
 @description: A blog section displaying posts in a three-column layout. Each post has an image, category, title, description, and author details. Based on Tailwind UI.
 @props:
