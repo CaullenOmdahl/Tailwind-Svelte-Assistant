@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.772Z -->
+<!-- Last updated: 2025-08-16T14:03:11.818Z -->
 <!--
 @description: An FAQ section with questions that expand/collapse (accordion style) to show answers. Based on Tailwind UI.
 @props:

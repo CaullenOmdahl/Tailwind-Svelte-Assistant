@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.779Z -->
+<!-- Last updated: 2025-08-16T14:03:11.826Z -->
 <!--
 @description: A newsletter signup section with a background image, title, description, and an email input field with a submit button. Based on Tailwind UI.
 @props:
