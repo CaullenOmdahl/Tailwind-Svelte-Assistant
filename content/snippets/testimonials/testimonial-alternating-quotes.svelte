@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.782Z -->
+<!-- Last updated: 2025-08-25T14:04:16.620Z -->
 <!--
 @description: A testimonial section with alternating quotes, author details, and a background image. Based on Tailwind UI.
 @props:

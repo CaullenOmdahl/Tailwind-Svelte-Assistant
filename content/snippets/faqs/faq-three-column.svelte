@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.773Z -->
+<!-- Last updated: 2025-08-25T14:04:16.609Z -->
 <!--
 @description: An FAQ section with questions and answers arranged in three columns. Based on Tailwind UI.
 @props:

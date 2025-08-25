@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.779Z -->
+<!-- Last updated: 2025-08-25T14:04:16.617Z -->
 <!--
 @description: A newsletter signup section with centered text, and the email input field and submit button on a new line below. Based on Tailwind UI.
 @props:

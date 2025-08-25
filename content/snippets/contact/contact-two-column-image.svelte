@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.770Z -->
+<!-- Last updated: 2025-08-25T14:04:16.606Z -->
 <!--
 @description: A contact section with a form on one side and contact details with an image on the other. Based on Tailwind UI.
 @props:

@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.783Z -->
+<!-- Last updated: 2025-08-25T14:04:16.621Z -->
 <!--
 @description: A timeline section with alternating cards for historical events. Based on Tailwind UI.
 @props:
