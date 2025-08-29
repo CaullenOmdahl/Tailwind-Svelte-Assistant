@@ -1,9 +1,9 @@
-version: 1
+# Smithery configuration file: https://smithery.ai/docs/build/project-config/smithery-yaml
+runtime: "typescript"
 startCommand:
-  type: stdio
-  commandFunction: |
-    (config) => ({
-      command: "node",
-      args: ["dist/index.js"],
-      env: {}
-    })
+  type: "http"
+  # JSON Schema defining the configuration options for the MCP.
+  configSchema:
+    {}
+  exampleConfig:
+    {}
