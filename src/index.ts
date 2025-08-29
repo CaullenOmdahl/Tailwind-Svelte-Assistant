@@ -1,7 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 
 // Import our existing types and utilities
@@ -16,10 +15,6 @@ import { validateToolInput } from './utils/security.js';
 import { ErrorHandler, createAuditLog } from './utils/errorHandler.js';
 import { SecureFileService } from './services/fileService.js';
 
-// Define __dirname for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // Configuration schema for smithery.yaml
 export const configSchema = z.object({});
 
@@ -28,12 +23,12 @@ export default function createServer({
 }: {
   config: z.infer<typeof configSchema>;
 }) {
-  // Server configuration with secure defaults
+  // Server configuration with secure defaults - using process.cwd() for Smithery compatibility
   const CONFIG: ServerConfig = {
-    contentBasePath: path.join(__dirname, '..', 'content'),
-    svelteKitDocsPath: path.join(__dirname, '..', 'content', 'docs', 'sveltekit'),
-    tailwindDocsPath: path.join(__dirname, '..', 'content', 'docs', 'tailwind'),
-    snippetsPath: path.join(__dirname, '..', 'content', 'snippets'),
+    contentBasePath: path.join(process.cwd(), 'content'),
+    svelteKitDocsPath: path.join(process.cwd(), 'content', 'docs', 'sveltekit'),
+    tailwindDocsPath: path.join(process.cwd(), 'content', 'docs', 'tailwind'),
+    snippetsPath: path.join(process.cwd(), 'content', 'snippets'),
     maxFileSize: 1024 * 1024, // 1MB max file size
     cacheTimeout: 5 * 60 * 1000 // 5 minutes cache timeout
   };
