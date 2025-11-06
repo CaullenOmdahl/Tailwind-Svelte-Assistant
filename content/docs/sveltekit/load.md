@@ -1,7 +1,7 @@
 # Load
 
-> Last updated: 2025-07-30T11:02:08.578Z
-> Source: https://kit.svelte.dev/docs/load
+> Last updated: 2025-11-06T04:56:29.409Z
+> Source: https://svelte.dev/docs/kit/load
 
 # Loading data
 
@@ -360,7 +360,7 @@ Conceptually, they’re the same thing, but there are some important differences
 
 Server `load` functions _always_ run on the server.
 
-By default, universal `load` functions run on the server during SSR when the user first visits your page. They will then run again during hydration, reusing any responses from [fetch requests](#Making-fetch-requests). All subsequent invocations of universal `load` functions happen in the browser. You can customize the behavior through [page options](page-options). If you disable [server side rendering](page-options#ssr), you’ll get an SPA and universal `load` functions _always_ run on the client.
+By default, universal `load` functions run on the server during SSR when the user first visits your page. They will then run again during hydration, reusing any responses from [fetch requests](#Making-fetch-requests). All subsequent invocations of universal `load` functions happen in the browser. You can customize the behavior through [page options](page-options). If you disable [server-side rendering](page-options#ssr), you’ll get an SPA and universal `load` functions _always_ run on the client.
 
 If a route contains both universal and server `load` functions, the server `load` runs first.
 
@@ -378,7 +378,7 @@ Universal `load` functions are called with a `LoadEvent`, which has a `data` pro
 
 A universal `load` function can return an object containing any values, including things like custom classes and component constructors.
 
-A server `load` function must return data that can be serialized with [devalue](https://github.com/rich-harris/devalue) — anything that can be represented as JSON plus things like `BigInt`, `Date`, `Map`, `Set` and `RegExp`, or repeated/cyclical references — so that it can be transported over the network. Your data can include [promises](#Streaming-with-promises), in which case it will be streamed to browsers. If you need to serialize/deserialize custom types, use [transport hooks](https://svelte.dev/docs/kit/hooks#Universal-hooks-transport).
+A server `load` function must return data that can be serialized with [devalue](https://github.com/rich-harris/devalue) — anything that can be represented as JSON plus things like `BigInt`, `Date`, `Map`, `Set` and `RegExp`, or repeated/cyclical references — so that it can be transported over the network. Your data can include [promises](#Streaming-with-promises), in which case it will be streamed to browsers. If you need to serialize/deserialize custom types, use [transport hooks](hooks#Universal-hooks-transport).
 
 ### When to use which
 
@@ -1677,14 +1677,14 @@ Most common status codes:
 
 See all redirect status codes
 @paramstatus The HTTP status code. Must be in the range 300-308.@paramlocation The location to redirect to.@throwsRedirect This error instructs SvelteKit to redirect to the specified location.@throwsError If the provided status is invalid.redirect } from '@sveltejs/kit';
-import { function getRequestEvent(): RequestEvent<Partial<Record<string, string>>, string | null>Returns the current RequestEvent. Can be used inside server hooks, server load functions, actions, and endpoints (and functions called by them).
+import { function getRequestEvent(): RequestEventReturns the current RequestEvent. Can be used inside server hooks, server load functions, actions, and endpoints (and functions called by them).
 In environments without AsyncLocalStorage, this must be called synchronously (i.e. not after an await).
 @since2.20.0getRequestEvent } from '$app/server';
 
 export function function requireLogin(): UserrequireLogin() {
 	const { const locals: App.LocalsContains custom data that was added to the request within the server handle hook.
 locals, const url: URLThe requested URL.
-url } = function getRequestEvent(): RequestEvent<Partial<Record<string, string>>, string | null>Returns the current RequestEvent. Can be used inside server hooks, server load functions, actions, and endpoints (and functions called by them).
+url } = function getRequestEvent(): RequestEventReturns the current RequestEvent. Can be used inside server hooks, server load functions, actions, and endpoints (and functions called by them).
 In environments without AsyncLocalStorage, this must be called synchronously (i.e. not after an await).
 @since2.20.0getRequestEvent();
 

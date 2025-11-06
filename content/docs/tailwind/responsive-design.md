@@ -1,6 +1,6 @@
 # Responsive Design
 
-> Last updated: 2025-07-30T11:02:11.162Z
+> Last updated: 2025-11-06T04:56:30.279Z
 > Source: https://tailwindcss.com/docs/responsive-design
 
 v4.1

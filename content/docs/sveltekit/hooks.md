@@ -1,7 +1,7 @@
 # Hooks
 
-> Last updated: 2025-07-30T11:02:10.664Z
-> Source: https://kit.svelte.dev/docs/hooks
+> Last updated: 2025-11-06T04:56:30.080Z
+> Source: https://svelte.dev/docs/kit/hooks
 
 SvelteKitAdvanced
 
@@ -51,8 +51,8 @@ export const const handle: Handlehandle: type Handle = (input: {
 determines the response.
 It receives an event object representing the request and a function called resolve, which renders the route and generates a Response.
 This allows you to modify response headers or bodies, or bypass SvelteKit entirely (for implementing routes programmatically, for example).
-Handle = async ({ event: RequestEvent<Partial<Record<string, string>>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
-	if (event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.url: URLThe requested URL.
+Handle = async ({ event: RequestEvent<Record<string, string>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
+	if (event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.url: URLThe requested URL.
 url.URL.pathname: stringMDN Reference
 pathname.String.startsWith(searchString: string, position?: number): booleanReturns true if the sequence of elements of searchString converted to a String is the
 same as the corresponding elements of this object (converted to a String) starting at
@@ -63,7 +63,7 @@ MDN Reference
 Response('custom response');
 	}
 
-	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Partial<Record<string, string>>, string | null>event);
+	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Record<string, string>, string | null>event);
 	return const response: Responseresponse;
 };
 ```
@@ -85,13 +85,13 @@ src/hooks.server
 export async function function handle(input: {
     event: RequestEvent;
     resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>;
-}): MaybePromise<...>@type{import('@sveltejs/kit').Handle}handle({ event: RequestEvent<Partial<Record<string, string>>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) {
-	event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
-locals.App.Locals.user: Useruser = await const getUserInformation: (cookie: string | void) => Promise<User>getUserInformation(event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.cookies: CookiesGet or set cookies related to the current request
+}): MaybePromise<...>@type{import('@sveltejs/kit').Handle}handle({ event: RequestEvent<Record<string, string>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) {
+	event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
+locals.App.Locals.user: Useruser = await const getUserInformation: (cookie: string | void) => Promise<User>getUserInformation(event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.cookies: CookiesGet or set cookies related to the current request
 cookies.Cookies.get: (name: string, opts?: CookieParseOptions) => string | undefinedGets a cookie that was previously set with cookies.set, or from the request headers.
 @paramname the name of the cookie@paramopts the options, passed directly to cookie.parse. See documentation hereget('sessionid'));
 
-	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Partial<Record<string, string>>, string | null>event);
+	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Record<string, string>, string | null>event);
 
 	// Note that modifying response headers isn't always safe.
 	// Response objects can have immutable headers
@@ -124,13 +124,13 @@ export const const handle: Handlehandle: type Handle = (input: {
 determines the response.
 It receives an event object representing the request and a function called resolve, which renders the route and generates a Response.
 This allows you to modify response headers or bodies, or bypass SvelteKit entirely (for implementing routes programmatically, for example).
-Handle = async ({ event: RequestEvent<Partial<Record<string, string>>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
-	event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
-locals.App.Locals.user: Useruser = await const getUserInformation: (cookie: string | void) => Promise<User>getUserInformation(event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.cookies: CookiesGet or set cookies related to the current request
+Handle = async ({ event: RequestEvent<Record<string, string>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
+	event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
+locals.App.Locals.user: Useruser = await const getUserInformation: (cookie: string | void) => Promise<User>getUserInformation(event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.cookies: CookiesGet or set cookies related to the current request
 cookies.Cookies.get: (name: string, opts?: CookieParseOptions) => string | undefinedGets a cookie that was previously set with cookies.set, or from the request headers.
 @paramname the name of the cookie@paramopts the options, passed directly to cookie.parse. See documentation hereget('sessionid'));
 
-	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Partial<Record<string, string>>, string | null>event);
+	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Record<string, string>, string | null>event);
 
 	// Note that modifying response headers isn't always safe.
 	// Response objects can have immutable headers
@@ -194,8 +194,8 @@ export const const handle: Handlehandle: type Handle = (input: {
 determines the response.
 It receives an event object representing the request and a function called resolve, which renders the route and generates a Response.
 This allows you to modify response headers or bodies, or bypass SvelteKit entirely (for implementing routes programmatically, for example).
-Handle = async ({ event: RequestEvent<Partial<Record<string, string>>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
-	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Partial<Record<string, string>>, string | null>event, {
+Handle = async ({ event: RequestEvent<Record<string, string>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
+	const const response: Responseresponse = await resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Record<string, string>, string | null>event, {
 		ResolveOptions.transformPageChunk?: ((input: {
     html: string;
     done: boolean;
@@ -328,7 +328,7 @@ export const const handleFetch: HandleFetchhandleFetch: type HandleFetch = (inpu
     request: Request;
     fetch: typeof fetch;
 }) => MaybePromise<Response>The handleFetch hook allows you to modify (or replace) the result of an event.fetch call that runs on the server (or during prerendering) inside an endpoint, load, action, handle, handleError or reroute.
-HandleFetch = async ({ event: RequestEvent<Partial<Record<string, string>>, string | null>event, request: Requestrequest, fetch: {
+HandleFetch = async ({ event: RequestEvent<Record<string, string>, string | null>event, request: Requestrequest, fetch: {
     (input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
     (input: string | URL | globalThis.Request, init?: RequestInit): Promise<Response>;
 }fetch }) => {
@@ -341,7 +341,7 @@ startsWith('https://api.my-domain.com/')) {
 		request: Requestrequest.Request.headers: HeadersReturns a Headers object consisting of the headers associated with request. Note that headers added in the network layer by the user agent will not be accounted for in this object, e.g., the “Host” header.
 MDN Reference
 headers.Headers.set(name: string, value: string): voidMDN Reference
-set('cookie', event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.request: RequestThe original request object.
+set('cookie', event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.request: RequestThe original request object.
 request.Request.headers: HeadersReturns a Headers object consisting of the headers associated with request. Note that headers added in the network layer by the user agent will not be accounted for in this object, e.g., the “Host” header.
 MDN Reference
 headers.Headers.get(name: string): string | nullMDN Reference
@@ -352,6 +352,70 @@ get('cookie'));
 fetch(request: Requestrequest);
 };
 ```
+
+### handleValidationError
+
+This hook is called when a remote function is called with an argument that does not match the provided [Standard Schema](https://standardschema.dev/). It must return an object matching the shape of [`App.Error`](types#Error).
+
+Say you have a remote function that expects a string as its argument ...
+
+todos.remote
+
+```
+import * as import vv from 'valibot';
+import { function query<Output>(fn: () => MaybePromise<Output>): RemoteQueryFunction<void, Output> (+2 overloads)Creates a remote query. When called from the browser, the function will be invoked on the server via a fetch call.
+See Remote functions for full documentation.
+@since2.27query } from '$app/server';
+
+export const const getTodo: RemoteQueryFunction<string, void>getTodo = query<v.StringSchema<undefined>, void>(schema: v.StringSchema<undefined>, fn: (arg: string) => MaybePromise<void>): RemoteQueryFunction<string, void> (+2 overloads)Creates a remote query. When called from the browser, the function will be invoked on the server via a fetch call.
+See Remote functions for full documentation.
+@since2.27query(import vv.function string(): v.StringSchema<undefined> (+1 overload)
+export stringCreates a string schema.
+@returnsA string schema.string(), (id: stringid) => {
+	// implementation...
+});
+```
+
+...but it is called with something that doesn’t match the schema — such as a number (e.g `await getTodos(1)`) — then validation will fail, the server will respond with a [400 status code](https://http.dog/400), and the function will throw with the message ‘Bad Request’.
+
+To customise this message and add additional properties to the error object, implement `handleValidationError`:
+
+src/hooks.server
+
+```
+/** @type {import('@sveltejs/kit').HandleValidationError} */
+export function function handleValidationError({ issues }: {
+    issues: any;
+}): {
+    message: string;
+}@type{import('@sveltejs/kit').HandleValidationError}handleValidationError({ issues: anyissues }) {
+	return {
+		message: stringmessage: 'No thank you'
+	};
+}
+```
+
+```
+import type { type HandleValidationError<Issue extends StandardSchemaV1.Issue = StandardSchemaV1.Issue> = (input: {
+    issues: Issue[];
+    event: RequestEvent;
+}) => MaybePromise<App.Error>The handleValidationError hook runs when the argument to a remote function fails validation.
+It will be called with the validation issues and the event, and must return an object shape that matches App.Error.
+HandleValidationError } from '@sveltejs/kit';
+
+export const const handleValidationError: HandleValidationErrorhandleValidationError: type HandleValidationError<Issue extends StandardSchemaV1.Issue = StandardSchemaV1.Issue> = (input: {
+    issues: Issue[];
+    event: RequestEvent;
+}) => MaybePromise<App.Error>The handleValidationError hook runs when the argument to a remote function fails validation.
+It will be called with the validation issues and the event, and must return an object shape that matches App.Error.
+HandleValidationError = ({ issues: StandardSchemaV1.Issue[]issues }) => {
+	return {
+		App.Error.message: stringmessage: 'No thank you'
+	};
+};
+```
+
+Be thoughtful about what information you expose here, as the most likely reason for validation to fail is that someone is sending malicious requests to your server.
 
 ## Shared hooks
 
@@ -397,7 +461,7 @@ export async function function handleError(input: {
     event: RequestEvent;
     status: number;
     message: string;
-}): MaybePromise<void | App.Error>@type{import('@sveltejs/kit').HandleServerError}handleError({ error: unknownerror, event: RequestEvent<Partial<Record<string, string>>, string | null>event, status: numberstatus, message: stringmessage }) {
+}): MaybePromise<void | App.Error>@type{import('@sveltejs/kit').HandleServerError}handleError({ error: unknownerror, event: RequestEvent<Record<string, string>, string | null>event, status: numberstatus, message: stringmessage }) {
 	const const errorId: `${string}-${string}-${string}-${string}-${string}`errorId = var crypto: CryptoMDN Reference
 crypto.Crypto.randomUUID(): `${string}-${string}-${string}-${string}-${string}`Available only in secure contexts.
 MDN Reference
@@ -406,10 +470,10 @@ randomUUID();
 	// example integration with https://sentry.io/
 	module "@sentry/sveltekit"Sentry.const captureException: (error: any, opts: any) => voidcaptureException(error: unknownerror, {
 		extra: {
-    event: RequestEvent<Partial<Record<string, string>>, string | null>;
+    event: RequestEvent<Record<string, string>, string | null>;
     errorId: `${string}-${string}-${string}-${string}-${string}`;
     status: number;
-}extra: { event: RequestEvent<Partial<Record<string, string>>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
+}extra: { event: RequestEvent<Record<string, string>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
 	});
 
 	return {
@@ -441,7 +505,7 @@ export const const handleError: HandleServerErrorhandleError: type HandleServerE
 }) => MaybePromise<void | App.Error>The server-side handleError hook runs when an unexpected error is thrown while responding to a request.
 If an unexpected error is thrown during loading or rendering, this function will be called with the error and the event.
 Make sure that this function never throws an error.
-HandleServerError = async ({ error: unknownerror, event: RequestEvent<Partial<Record<string, string>>, string | null>event, status: numberstatus, message: stringmessage }) => {
+HandleServerError = async ({ error: unknownerror, event: RequestEvent<Record<string, string>, string | null>event, status: numberstatus, message: stringmessage }) => {
 	const const errorId: `${string}-${string}-${string}-${string}-${string}`errorId = var crypto: CryptoMDN Reference
 crypto.Crypto.randomUUID(): `${string}-${string}-${string}-${string}-${string}`Available only in secure contexts.
 MDN Reference
@@ -450,10 +514,10 @@ randomUUID();
 	// example integration with https://sentry.io/
 	module "@sentry/sveltekit"Sentry.const captureException: (error: any, opts: any) => voidcaptureException(error: unknownerror, {
 		extra: {
-    event: RequestEvent<Partial<Record<string, string>>, string | null>;
+    event: RequestEvent<Record<string, string>, string | null>;
     errorId: `${string}-${string}-${string}-${string}-${string}`;
     status: number;
-}extra: { event: RequestEvent<Partial<Record<string, string>>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
+}extra: { event: RequestEvent<Record<string, string>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
 	});
 
 	return {
@@ -476,7 +540,7 @@ export async function function handleError(input: {
     event: NavigationEvent;
     status: number;
     message: string;
-}): MaybePromise<void | App.Error>@type{import('@sveltejs/kit').HandleClientError}handleError({ error: unknownerror, event: NavigationEvent<Partial<Record<string, string>>, string | null>event, status: numberstatus, message: stringmessage }) {
+}): MaybePromise<void | App.Error>@type{import('@sveltejs/kit').HandleClientError}handleError({ error: unknownerror, event: NavigationEvent<Record<string, string>, string | null>event, status: numberstatus, message: stringmessage }) {
 	const const errorId: `${string}-${string}-${string}-${string}-${string}`errorId = var crypto: CryptoMDN Reference
 crypto.Crypto.randomUUID(): `${string}-${string}-${string}-${string}-${string}`Available only in secure contexts.
 MDN Reference
@@ -485,10 +549,10 @@ randomUUID();
 	// example integration with https://sentry.io/
 	module "@sentry/sveltekit"Sentry.const captureException: (error: any, opts: any) => voidcaptureException(error: unknownerror, {
 		extra: {
-    event: NavigationEvent<Partial<Record<string, string>>, string | null>;
+    event: NavigationEvent<Record<string, string>, string | null>;
     errorId: `${string}-${string}-${string}-${string}-${string}`;
     status: number;
-}extra: { event: NavigationEvent<Partial<Record<string, string>>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
+}extra: { event: NavigationEvent<Record<string, string>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
 	});
 
 	return {
@@ -520,7 +584,7 @@ export const const handleError: HandleClientErrorhandleError: type HandleClientE
 }) => MaybePromise<void | App.Error>The client-side handleError hook runs when an unexpected error is thrown while navigating.
 If an unexpected error is thrown during loading or the following render, this function will be called with the error and the event.
 Make sure that this function never throws an error.
-HandleClientError = async ({ error: unknownerror, event: NavigationEvent<Partial<Record<string, string>>, string | null>event, status: numberstatus, message: stringmessage }) => {
+HandleClientError = async ({ error: unknownerror, event: NavigationEvent<Record<string, string>, string | null>event, status: numberstatus, message: stringmessage }) => {
 	const const errorId: `${string}-${string}-${string}-${string}-${string}`errorId = var crypto: CryptoMDN Reference
 crypto.Crypto.randomUUID(): `${string}-${string}-${string}-${string}-${string}`Available only in secure contexts.
 MDN Reference
@@ -529,10 +593,10 @@ randomUUID();
 	// example integration with https://sentry.io/
 	module "@sentry/sveltekit"Sentry.const captureException: (error: any, opts: any) => voidcaptureException(error: unknownerror, {
 		extra: {
-    event: NavigationEvent<Partial<Record<string, string>>, string | null>;
+    event: NavigationEvent<Record<string, string>, string | null>;
     errorId: `${string}-${string}-${string}-${string}-${string}`;
     status: number;
-}extra: { event: NavigationEvent<Partial<Record<string, string>>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
+}extra: { event: NavigationEvent<Record<string, string>, string | null>event, errorId: `${string}-${string}-${string}-${string}-${string}`errorId, status: numberstatus }
 	});
 
 	return {

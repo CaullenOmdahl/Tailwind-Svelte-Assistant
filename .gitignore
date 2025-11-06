@@ -1,4 +1,27 @@
 node_modules/
 build/
+dist/
 *.log
 .env*
+
+# Claude Code files
+.claude/
+CLAUDE.md
+
+# Review and testing files
+MCP_SERVER_REVIEW.md
+test-server.mjs
+
+# Smithery build artifacts
+.smithery/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

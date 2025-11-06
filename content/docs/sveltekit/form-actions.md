@@ -1,7 +1,7 @@
 # Form Actions
 
-> Last updated: 2025-07-30T11:02:09.751Z
-> Source: https://kit.svelte.dev/docs/form-actions
+> Last updated: 2025-11-06T04:56:29.742Z
+> Source: https://svelte.dev/docs/kit/form-actions
 
 # Form actions
 
@@ -771,16 +771,16 @@ src/hooks.server
 export async function function handle(input: {
     event: RequestEvent;
     resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>;
-}): MaybePromise<...>@type{import('@sveltejs/kit').Handle}handle({ event: RequestEvent<Partial<Record<string, string>>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) {
-	event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
+}): MaybePromise<...>@type{import('@sveltejs/kit').Handle}handle({ event: RequestEvent<Record<string, string>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) {
+	event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
 locals.App.Locals.user: {
     name: string;
 } | nulluser = await function getUser(sessionid: string | undefined): {
     name: string;
-}getUser(event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.cookies: CookiesGet or set cookies related to the current request
+}getUser(event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.cookies: CookiesGet or set cookies related to the current request
 cookies.Cookies.get: (name: string, opts?: CookieParseOptions) => string | undefinedGets a cookie that was previously set with cookies.set, or from the request headers.
 @paramname the name of the cookie@paramopts the options, passed directly to cookie.parse. See documentation hereget('sessionid'));
-	return resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Partial<Record<string, string>>, string | null>event);
+	return resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Record<string, string>, string | null>event);
 }
 ```
 
@@ -801,16 +801,16 @@ export const const handle: Handlehandle: type Handle = (input: {
 determines the response.
 It receives an event object representing the request and a function called resolve, which renders the route and generates a Response.
 This allows you to modify response headers or bodies, or bypass SvelteKit entirely (for implementing routes programmatically, for example).
-Handle = async ({ event: RequestEvent<Partial<Record<string, string>>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
-	event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
+Handle = async ({ event: RequestEvent<Record<string, string>, string | null>event, resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve }) => {
+	event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
 locals.App.Locals.user: {
     name: string;
 } | nulluser = await function getUser(sessionid: string | undefined): {
     name: string;
-}getUser(event: RequestEvent<Partial<Record<string, string>>, string | null>event.RequestEvent<Partial<Record<string, string>>, string | null>.cookies: CookiesGet or set cookies related to the current request
+}getUser(event: RequestEvent<Record<string, string>, string | null>event.RequestEvent<Record<string, string>, string | null>.cookies: CookiesGet or set cookies related to the current request
 cookies.Cookies.get: (name: string, opts?: CookieParseOptions) => string | undefinedGets a cookie that was previously set with cookies.set, or from the request headers.
 @paramname the name of the cookie@paramopts the options, passed directly to cookie.parse. See documentation hereget('sessionid'));
-	return resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Partial<Record<string, string>>, string | null>event);
+	return resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>resolve(event: RequestEvent<Record<string, string>, string | null>event);
 };
 ```
 
@@ -846,7 +846,7 @@ https://tools.ietf.org/html/rfc6265#section-5.2.4 Path Set-Cookie attribute
 .
 By default, the path is considered the “default path”.
 path: '/' });
-		event: RequestEvent<Record<string, any>, string | null>event.RequestEvent<Params extends Partial<Record<string, string>> = Partial<Record<string, string>>, RouteId extends string | null = string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
+		event: RequestEvent<Record<string, any>, string | null>event.RequestEvent<Params extends LayoutParams<"/"> = Record<string, string>, RouteId extends RouteId | null = string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
 locals.App.Locals.user: {
     name: string;
 } | nulluser = null;
@@ -886,7 +886,7 @@ https://tools.ietf.org/html/rfc6265#section-5.2.4 Path Set-Cookie attribute
 .
 By default, the path is considered the “default path”.
 path: '/' });
-		event: RequestEvent<Record<string, any>, string | null>event.RequestEvent<Params extends Partial<Record<string, string>> = Partial<Record<string, string>>, RouteId extends string | null = string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
+		event: RequestEvent<Record<string, any>, string | null>event.RequestEvent<Params extends LayoutParams<"/"> = Record<string, string>, RouteId extends RouteId | null = string | null>.locals: App.LocalsContains custom data that was added to the request within the server handle hook.
 locals.App.Locals.user: {
     name: string;
 } | nulluser = null;
@@ -1038,7 +1038,7 @@ src/routes/login/+page
 	/** @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event */
 	async function handleSubmit(event) {
 		event.preventDefault();
-		const data = new FormData(event.currentTarget);
+		const data = new FormData(event.currentTarget, event.submitter);
 
 		const response = await fetch(event.currentTarget.action, {
 			method: 'POST',
@@ -1072,7 +1072,7 @@ src/routes/login/+page
 
 	async function handleSubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}) {
 		event.preventDefault();
-		const data = new FormData(event.currentTarget);
+		const data = new FormData(event.currentTarget, event.submitter);
 
 		const response = await fetch(event.currentTarget.action, {
 			method: 'POST',

@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-07-30T11:02:12.780Z -->
+<!-- Last updated: 2025-11-06T05:40:53.470Z -->
 <!--
 @description: A three-tier pricing section with a feature comparison table. Includes a "most popular" highlight. Based on Tailwind UI.
 @props:

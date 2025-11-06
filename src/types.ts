@@ -47,6 +47,13 @@ export interface ServerConfig {
   svelteKitDocsPath: string;
   tailwindDocsPath: string;
   snippetsPath: string;
+  svelteFullDocsPath: string;
+  tailwindFullDocsPath: string;
   maxFileSize: number;
   cacheTimeout: number;
+}
+
+export interface SearchDocsArgs {
+  query: string;
+  limit?: number;
 }

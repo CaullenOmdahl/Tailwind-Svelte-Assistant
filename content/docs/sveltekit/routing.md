@@ -1,7 +1,7 @@
 # Routing
 
-> Last updated: 2025-07-30T11:02:07.041Z
-> Source: https://kit.svelte.dev/docs/routing
+> Last updated: 2025-11-06T04:56:28.964Z
+> Source: https://svelte.dev/docs/kit/routing
 
 # Routing
 
@@ -634,7 +634,7 @@ src/routes/add/+page
 src/routes/api/add/+server
 
 ```
-import { function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
+import { function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
 @paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
@@ -642,13 +642,13 @@ export async function function POST({ request }: {
     request: any;
 }): Promise<Response>@type{import('./$types').RequestHandler}POST({ request: anyrequest }) {
 	const { const a: anya, const b: anyb } = await request: anyrequest.json();
-	return function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
+	return function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
 @paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json(const a: anya + const b: anyb);
 }
 ```
 
 ```
-import { function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
+import { function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
 @paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json } from '@sveltejs/kit';
 import type { type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>
 type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>RequestHandler } from './$types';
@@ -659,7 +659,7 @@ request }) => {
 	const { const a: anya, const b: anyb } = await request: RequestThe original request object.
 request.Body.json(): Promise<any>MDN Reference
 json();
-	return function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
+	return function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
 @paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json(const a: anya + const b: anyb);
 };
 ```
@@ -675,8 +675,8 @@ Exporting the `fallback` handler will match any unhandled request methods, inclu
 src/routes/api/add/+server
 
 ```
-import { function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
-@paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json, function text(body: string, init?: ResponseInit | undefined): ResponseCreate a Response object from the supplied body.
+import { function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
+@paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json, function text(body: string, init?: ResponseInit): ResponseCreate a Response object from the supplied body.
 @parambody The value that will be used as-is.@paraminit Options such as status and headers that will be added to the response. A Content-Length header will be added automatically.text } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
@@ -684,7 +684,7 @@ export async function function POST({ request }: {
     request: any;
 }): Promise<Response>@type{import('./$types').RequestHandler}POST({ request: anyrequest }) {
 	const { const a: anya, const b: anyb } = await request: anyrequest.json();
-	return function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
+	return function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
 @paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json(const a: anya + const b: anyb);
 }
 
@@ -693,14 +693,14 @@ export async function function POST({ request }: {
 export async function function fallback({ request }: {
     request: any;
 }): Promise<Response>@type{import('./$types').RequestHandler}fallback({ request: anyrequest }) {
-	return function text(body: string, init?: ResponseInit | undefined): ResponseCreate a Response object from the supplied body.
+	return function text(body: string, init?: ResponseInit): ResponseCreate a Response object from the supplied body.
 @parambody The value that will be used as-is.@paraminit Options such as status and headers that will be added to the response. A Content-Length header will be added automatically.text(`I caught your ${request: anyrequest.method} request!`);
 }
 ```
 
 ```
-import { function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
-@paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json, function text(body: string, init?: ResponseInit | undefined): ResponseCreate a Response object from the supplied body.
+import { function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
+@paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json, function text(body: string, init?: ResponseInit): ResponseCreate a Response object from the supplied body.
 @parambody The value that will be used as-is.@paraminit Options such as status and headers that will be added to the response. A Content-Length header will be added automatically.text } from '@sveltejs/kit';
 import type { type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>
 type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>RequestHandler } from './$types';
@@ -711,7 +711,7 @@ request }) => {
 	const { const a: anya, const b: anyb } = await request: RequestThe original request object.
 request.Body.json(): Promise<any>MDN Reference
 json();
-	return function json(data: any, init?: ResponseInit | undefined): ResponseCreate a JSON Response object from the supplied data.
+	return function json(data: any, init?: ResponseInit): ResponseCreate a JSON Response object from the supplied data.
 @paramdata The value that will be serialized as JSON.@paraminit Options such as status and headers that will be added to the response. Content-Type: application/json and Content-Length headers will be added automatically.json(const a: anya + const b: anyb);
 };
 
@@ -720,7 +720,7 @@ json();
 export const const fallback: RequestHandlerfallback: type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>
 type RequestHandler = (event: Kit.RequestEvent<Record<string, any>, string | null>) => MaybePromise<Response>RequestHandler = async ({ request: RequestThe original request object.
 request }) => {
-	return function text(body: string, init?: ResponseInit | undefined): ResponseCreate a Response object from the supplied body.
+	return function text(body: string, init?: ResponseInit): ResponseCreate a Response object from the supplied body.
 @parambody The value that will be used as-is.@paraminit Options such as status and headers that will be added to the response. A Content-Length header will be added automatically.text(`I caught your ${request: RequestThe original request object.
 request.Request.method: stringReturns request’s HTTP method, which is “GET” by default.
 MDN Reference

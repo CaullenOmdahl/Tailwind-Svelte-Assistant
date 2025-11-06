@@ -1,6 +1,6 @@
 # Dark Mode
 
-> Last updated: 2025-07-30T11:02:12.160Z
+> Last updated: 2025-11-06T04:56:30.701Z
 > Source: https://tailwindcss.com/docs/dark-mode
 
 v4.1

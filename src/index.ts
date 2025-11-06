@@ -9,6 +9,7 @@ import {
   TailwindInfoArgs,
   ComponentSnippetArgs,
   ListSnippetsArgs,
+  SearchDocsArgs,
   ServerConfig
 } from './types.js';
 import { validateToolInput } from './utils/security.js';
@@ -29,7 +30,9 @@ export default function createServer({
     svelteKitDocsPath: path.join(process.cwd(), 'content', 'docs', 'sveltekit'),
     tailwindDocsPath: path.join(process.cwd(), 'content', 'docs', 'tailwind'),
     snippetsPath: path.join(process.cwd(), 'content', 'snippets'),
-    maxFileSize: 1024 * 1024, // 1MB max file size
+    svelteFullDocsPath: path.join(process.cwd(), 'content', 'docs', 'svelte-sveltekit-full.txt'),
+    tailwindFullDocsPath: path.join(process.cwd(), 'content', 'docs', 'tailwind-docs-full.txt'),
+    maxFileSize: 3 * 1024 * 1024, // 3MB max file size (increased for full docs)
     cacheTimeout: 5 * 60 * 1000 // 5 minutes cache timeout
   };
 
@@ -46,7 +49,7 @@ export default function createServer({
     "get_sveltekit_doc",
     {
       title: "Get SvelteKit Doc",
-      description: "Get SvelteKit documentation for a specific topic.",
+      description: "[LEGACY] Get SvelteKit documentation for a specific topic. NOTE: This tool only covers ~8% of SvelteKit docs. Use 'get_svelte_full_docs' for complete documentation coverage.",
       inputSchema: {
         topic: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
@@ -101,7 +104,7 @@ export default function createServer({
     "get_tailwind_info",
     {
       title: "Get Tailwind Info",
-      description: "Get Tailwind CSS information for a specific query.",
+      description: "[LEGACY] Get Tailwind CSS information for a specific query. NOTE: This tool only covers ~4% of Tailwind docs. Use 'get_tailwind_full_docs' for complete documentation coverage.",
       inputSchema: {
         query: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
@@ -354,7 +357,7 @@ export default function createServer({
         validateToolInput('list_snippets_in_category', request);
         const categoryPath = path.join(CONFIG.snippetsPath, request.category);
         const result = await fileService.listDirectoryContents(categoryPath, '.svelte');
-        
+
         createAuditLog('info', 'snippets_in_category_listed', { category: request.category });
         return result;
       } catch (error: any) {
@@ -367,10 +370,226 @@ export default function createServer({
         if (error instanceof McpError) {
           throw error;
         }
-        
+
         throw new McpError(
           ErrorCode.InternalError,
           ErrorHandler.formatSafeErrorMessage(error, 'list_snippets_in_category')
+        );
+      }
+    }
+  );
+
+  // Register tool: get_svelte_full_docs
+  server.registerTool(
+    "get_svelte_full_docs",
+    {
+      title: "Get Complete Svelte Documentation",
+      description: "Get the complete Svelte and SvelteKit documentation (1MB, 100% coverage). This is the recommended way to access Svelte docs, as it includes all topics in a single LLM-optimized file.",
+      inputSchema: {}
+    },
+    async (request) => {
+      try {
+        createAuditLog('info', 'tool_request', {
+          tool: 'get_svelte_full_docs',
+          timestamp: new Date().toISOString(),
+          argsProvided: false
+        });
+
+        const content = await fileService.readFullDocsFile(CONFIG.svelteFullDocsPath);
+
+        createAuditLog('info', 'svelte_full_docs_served', { size: content.length });
+        return {
+          content: [{
+            type: "text" as const,
+            text: content
+          }]
+        };
+      } catch (error: any) {
+        createAuditLog('error', 'tool_request_failed', {
+          tool: 'get_svelte_full_docs',
+          error: error.message,
+          code: error.code
+        });
+
+        if (error instanceof McpError) {
+          throw error;
+        }
+
+        throw new McpError(
+          ErrorCode.InternalError,
+          ErrorHandler.formatSafeErrorMessage(error, 'get_svelte_full_docs')
+        );
+      }
+    }
+  );
+
+  // Register tool: get_tailwind_full_docs
+  server.registerTool(
+    "get_tailwind_full_docs",
+    {
+      title: "Get Complete Tailwind Documentation",
+      description: "Get the complete Tailwind CSS documentation (2.1MB, 249 files, 100% coverage). This is the recommended way to access Tailwind docs, as it includes all utility classes and concepts in a single LLM-optimized file.",
+      inputSchema: {}
+    },
+    async (request) => {
+      try {
+        createAuditLog('info', 'tool_request', {
+          tool: 'get_tailwind_full_docs',
+          timestamp: new Date().toISOString(),
+          argsProvided: false
+        });
+
+        const content = await fileService.readFullDocsFile(CONFIG.tailwindFullDocsPath);
+
+        createAuditLog('info', 'tailwind_full_docs_served', { size: content.length });
+        return {
+          content: [{
+            type: "text" as const,
+            text: content
+          }]
+        };
+      } catch (error: any) {
+        createAuditLog('error', 'tool_request_failed', {
+          tool: 'get_tailwind_full_docs',
+          error: error.message,
+          code: error.code
+        });
+
+        if (error instanceof McpError) {
+          throw error;
+        }
+
+        throw new McpError(
+          ErrorCode.InternalError,
+          ErrorHandler.formatSafeErrorMessage(error, 'get_tailwind_full_docs')
+        );
+      }
+    }
+  );
+
+  // Register tool: search_svelte_docs
+  server.registerTool(
+    "search_svelte_docs",
+    {
+      title: "Search Svelte Documentation",
+      description: "Search within the complete Svelte and SvelteKit documentation for specific topics or keywords.",
+      inputSchema: {
+        query: z.string()
+          .min(2)
+          .max(100)
+          .describe("The search query (e.g., 'routing', 'load function', 'hooks')"),
+        limit: z.number()
+          .int()
+          .min(1)
+          .max(20)
+          .optional()
+          .describe("Maximum number of results to return (default: 5)")
+      }
+    },
+    async (request) => {
+      try {
+        createAuditLog('info', 'tool_request', {
+          tool: 'search_svelte_docs',
+          timestamp: new Date().toISOString(),
+          argsProvided: true
+        });
+
+        const content = await fileService.readFullDocsFile(CONFIG.svelteFullDocsPath);
+        const results = fileService.searchDocsContent(
+          content,
+          request.query,
+          request.limit || 5
+        );
+
+        createAuditLog('info', 'svelte_docs_searched', {
+          query: request.query,
+          resultsCount: results.length
+        });
+
+        return {
+          content: [{
+            type: "text" as const,
+            text: results.join('\n\n')
+          }]
+        };
+      } catch (error: any) {
+        createAuditLog('error', 'tool_request_failed', {
+          tool: 'search_svelte_docs',
+          error: error.message,
+          code: error.code
+        });
+
+        if (error instanceof McpError) {
+          throw error;
+        }
+
+        throw new McpError(
+          ErrorCode.InternalError,
+          ErrorHandler.formatSafeErrorMessage(error, 'search_svelte_docs')
+        );
+      }
+    }
+  );
+
+  // Register tool: search_tailwind_docs
+  server.registerTool(
+    "search_tailwind_docs",
+    {
+      title: "Search Tailwind Documentation",
+      description: "Search within the complete Tailwind CSS documentation for specific utility classes or concepts.",
+      inputSchema: {
+        query: z.string()
+          .min(2)
+          .max(100)
+          .describe("The search query (e.g., 'padding', 'flex', 'dark mode')"),
+        limit: z.number()
+          .int()
+          .min(1)
+          .max(20)
+          .optional()
+          .describe("Maximum number of results to return (default: 5)")
+      }
+    },
+    async (request) => {
+      try {
+        createAuditLog('info', 'tool_request', {
+          tool: 'search_tailwind_docs',
+          timestamp: new Date().toISOString(),
+          argsProvided: true
+        });
+
+        const content = await fileService.readFullDocsFile(CONFIG.tailwindFullDocsPath);
+        const results = fileService.searchDocsContent(
+          content,
+          request.query,
+          request.limit || 5
+        );
+
+        createAuditLog('info', 'tailwind_docs_searched', {
+          query: request.query,
+          resultsCount: results.length
+        });
+
+        return {
+          content: [{
+            type: "text" as const,
+            text: results.join('\n\n')
+          }]
+        };
+      } catch (error: any) {
+        createAuditLog('error', 'tool_request_failed', {
+          tool: 'search_tailwind_docs',
+          error: error.message,
+          code: error.code
+        });
+
+        if (error instanceof McpError) {
+          throw error;
+        }
+
+        throw new McpError(
+          ErrorCode.InternalError,
+          ErrorHandler.formatSafeErrorMessage(error, 'search_tailwind_docs')
         );
       }
     }

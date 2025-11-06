@@ -137,4 +137,65 @@ export class SecureFileService {
       }
     }
   }
+
+  /**
+   * Reads a complete documentation file (for full docs that are single files)
+   * @param filePath - Full path to the documentation file
+   * @returns Promise resolving to file content
+   */
+  async readFullDocsFile(filePath: string): Promise<string> {
+    // Check cache first
+    const cached = this.getCachedContent(filePath);
+    if (cached) {
+      return cached;
+    }
+
+    try {
+      // Check if file exists and get stats
+      const stats = await fs.stat(filePath);
+
+      // Validate file size
+      ErrorHandler.validateFileSize(filePath, stats, this.maxFileSize);
+
+      // Read file content
+      const content = await fs.readFile(filePath, 'utf-8');
+
+      // Cache the content
+      this.setCacheContent(filePath, content, stats.mtime.getTime());
+
+      return content;
+    } catch (error) {
+      ErrorHandler.handleFileSystemError(error, 'readFullDocsFile', 'full documentation file reading');
+    }
+  }
+
+  /**
+   * Searches within documentation content
+   * @param content - The documentation content to search
+   * @param query - The search query
+   * @param limit - Maximum number of results to return
+   * @returns Array of matching context snippets
+   */
+  searchDocsContent(content: string, query: string, limit: number = 5): string[] {
+    const lines = content.split('\n');
+    const results: string[] = [];
+    const searchLower = query.toLowerCase();
+
+    for (let i = 0; i < lines.length && results.length < limit; i++) {
+      const line = lines[i];
+      if (line.toLowerCase().includes(searchLower)) {
+        // Get context: 2 lines before and 2 lines after
+        const contextStart = Math.max(0, i - 2);
+        const contextEnd = Math.min(lines.length, i + 3);
+        const context = lines.slice(contextStart, contextEnd).join('\n');
+        results.push(`--- Match ${results.length + 1} (line ${i + 1}) ---\n${context}\n`);
+      }
+    }
+
+    if (results.length === 0) {
+      return [`No matches found for "${query}"`];
+    }
+
+    return results;
+  }
 }

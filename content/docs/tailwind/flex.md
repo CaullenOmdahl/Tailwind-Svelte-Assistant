@@ -1,6 +1,6 @@
 # Flex
 
-> Last updated: 2025-07-30T11:02:12.592Z
+> Last updated: 2025-11-06T04:56:30.875Z
 > Source: https://tailwindcss.com/docs/flex
 
 v4.1
@@ -30,11 +30,11 @@ Styles
 
 `flex-auto`
 
-`flex: 1 1 auto;`
+`flex: auto;`
 
 `flex-initial`
 
-`flex: 0 1 auto;`
+`flex: 0 auto;`
 
 `flex-none`
 

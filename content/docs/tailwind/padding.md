@@ -1,6 +1,6 @@
 # Padding
 
-> Last updated: 2025-07-30T11:02:12.392Z
+> Last updated: 2025-11-06T04:56:30.790Z
 > Source: https://tailwindcss.com/docs/padding
 
 v4.1

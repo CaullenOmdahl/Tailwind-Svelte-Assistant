@@ -1,25 +1,17 @@
 {
-  "lastUpdated": "2025-07-30T11:02:12.783Z",
-  "sveltekit": {
-    "topics": 4,
+  "lastUpdated": "2025-11-06T05:40:53.472Z",
+  "svelte": {
+    "type": "llm-txt",
+    "format": "Complete Svelte + SvelteKit documentation",
     "files": [
-      "form-actions.md",
-      "hooks.md",
-      "load.md",
-      "placeholder.md",
-      "routing.md"
+      "svelte-sveltekit-full.txt"
     ]
   },
   "tailwind": {
-    "topics": 6,
+    "type": "repomix",
+    "format": "Tailwind CSS documentation",
     "files": [
-      "dark-mode.md",
-      "flex.md",
-      "grid-template-columns.md",
-      "hover-focus-and-other-states.md",
-      "padding.md",
-      "placeholder.md",
-      "responsive-design.md"
+      "tailwind-docs-full.txt"
     ]
   },
   "snippets": {

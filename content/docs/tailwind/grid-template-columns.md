@@ -1,6 +1,6 @@
 # Grid Template Columns
 
-> Last updated: 2025-07-30T11:02:12.763Z
+> Last updated: 2025-11-06T04:56:30.958Z
 > Source: https://tailwindcss.com/docs/grid-template-columns
 
 v4.1

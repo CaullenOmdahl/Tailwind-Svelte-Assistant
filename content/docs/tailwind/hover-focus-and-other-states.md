@@ -1,6 +1,6 @@
 # Hover Focus And Other States
 
-> Last updated: 2025-07-30T11:02:11.948Z
+> Last updated: 2025-11-06T04:56:30.623Z
 > Source: https://tailwindcss.com/docs/hover-focus-and-other-states
 
 v4.1
