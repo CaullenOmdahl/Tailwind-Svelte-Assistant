@@ -95,16 +95,35 @@ File naming: Use kebab-case with alphanumeric characters, hyphens, underscores, 
 
 ## MCP Tools Available
 
-The server exposes 7 tools:
-- `get_sveltekit_doc` - Read SvelteKit documentation by topic
-- `get_tailwind_info` - Read Tailwind CSS documentation by query
+The server exposes 11 tools with full parameter descriptions and annotations:
+
+**Legacy Documentation Tools** (limited coverage):
+- `get_sveltekit_doc` - Read SvelteKit documentation by topic (~8% coverage)
+- `get_tailwind_info` - Read Tailwind CSS documentation by query (~4% coverage)
+
+**Full Documentation Tools** (complete coverage, large context):
+- `get_svelte_full_docs` - Complete Svelte/SvelteKit docs (~320k tokens, 100% coverage)
+- `get_tailwind_full_docs` - Complete Tailwind CSS docs (~730k tokens, 100% coverage)
+  - **WARNING**: These return very large responses. Use search tools for smaller contexts.
+
+**Search Tools** (recommended for most use cases):
+- `search_svelte_docs` - Search within complete Svelte documentation
+- `search_tailwind_docs` - Search within complete Tailwind documentation
+
+**Component Snippet Tools**:
 - `get_component_snippet` - Read Svelte component snippet by category/name
+- `list_snippet_categories` - List available component categories (17 categories)
+- `list_snippets_in_category` - List snippets within a specific category
+
+**List Tools**:
 - `list_sveltekit_topics` - List available SvelteKit doc files
 - `list_tailwind_info_topics` - List available Tailwind doc files
-- `list_snippet_categories` - List snippet category directories
-- `list_snippets_in_category` - List snippets within a category
 
-All tools have audit logging and structured error handling.
+All tools include:
+- Comprehensive parameter descriptions
+- Read-only, non-destructive, idempotent annotations
+- Audit logging and structured error handling
+- Input validation and security checks
 
 ## Code Patterns and Conventions
 

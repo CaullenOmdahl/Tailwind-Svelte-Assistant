@@ -37,7 +37,7 @@ export default function createServer() {
 
   const server = new McpServer({
     name: "tailwind-svelte-assistant-mcp-server",
-    version: "0.1.6",
+    version: "0.1.7",
   });
 
   // Register resources for documentation
@@ -535,7 +535,7 @@ export default function createServer() {
     "get_svelte_full_docs",
     {
       title: "Get Complete Svelte Documentation",
-      description: "Get the complete Svelte and SvelteKit documentation (1MB, 100% coverage). This is the recommended way to access Svelte docs, as it includes all topics in a single LLM-optimized file.",
+      description: "Get the complete Svelte and SvelteKit documentation (~1MB, 100% coverage). WARNING: This returns ~320,000 tokens. Only use with LLMs that support large context windows (100k+ tokens). For smaller contexts, use 'search_svelte_docs' or 'get_sveltekit_doc' instead.",
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
@@ -584,7 +584,7 @@ export default function createServer() {
     "get_tailwind_full_docs",
     {
       title: "Get Complete Tailwind Documentation",
-      description: "Get the complete Tailwind CSS documentation (2.1MB, 249 files, 100% coverage). This is the recommended way to access Tailwind docs, as it includes all utility classes and concepts in a single LLM-optimized file.",
+      description: "Get the complete Tailwind CSS documentation (~2.1MB, 249 files, 100% coverage). WARNING: This returns ~730,000 tokens. Only use with LLMs that support very large context windows (200k+ tokens). For smaller contexts, use 'search_tailwind_docs' or 'get_tailwind_info' instead.",
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
