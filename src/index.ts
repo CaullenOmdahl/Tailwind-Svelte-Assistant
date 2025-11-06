@@ -17,7 +17,8 @@ import { ErrorHandler, createAuditLog } from './utils/errorHandler.js';
 import { SecureFileService } from './services/fileService.js';
 
 // Configuration schema for smithery.yaml
-export const configSchema = z.object({});
+// Using passthrough() to allow OAuth and other Smithery-provided configuration
+export const configSchema = z.object({}).passthrough();
 
 export default function createServer({
   config,
