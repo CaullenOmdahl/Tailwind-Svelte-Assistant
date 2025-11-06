@@ -44,6 +44,65 @@ export default function createServer({
     version: "0.1.1",
   });
 
+  // Register resources for documentation
+  server.registerResource(
+    "svelte-docs",
+    {
+      name: "Complete Svelte and SvelteKit Documentation",
+      description: "Full Svelte and SvelteKit documentation in LLM-optimized format (1MB)",
+      mimeType: "text/plain",
+      uri: "docs://svelte-sveltekit-full"
+    },
+    async () => {
+      const content = await fileService.readFullDocsFile(CONFIG.svelteFullDocsPath);
+      return {
+        text: content
+      };
+    }
+  );
+
+  server.registerResource(
+    "tailwind-docs",
+    {
+      name: "Complete Tailwind CSS Documentation",
+      description: "Full Tailwind CSS documentation extracted from GitHub (2.1MB, 249 files)",
+      mimeType: "text/plain",
+      uri: "docs://tailwind-docs-full"
+    },
+    async () => {
+      const content = await fileService.readFullDocsFile(CONFIG.tailwindFullDocsPath);
+      return {
+        text: content
+      };
+    }
+  );
+
+  server.registerResource(
+    "content-summary",
+    {
+      name: "Content Summary",
+      description: "Summary of available documentation and snippets",
+      mimeType: "application/json",
+      uri: "docs://content-summary"
+    },
+    async () => {
+      const summaryPath = path.join(CONFIG.contentBasePath, 'content-summary.json');
+      try {
+        const content = await fileService.readFullDocsFile(summaryPath);
+        return {
+          text: content
+        };
+      } catch (error) {
+        return {
+          text: JSON.stringify({
+            error: "Content summary not available",
+            message: "Run 'npm run update-content' to generate summary"
+          }, null, 2)
+        };
+      }
+    }
+  );
+
   // Register prompts for common use cases
   server.registerPrompt(
     "search-svelte-routing",

@@ -1,8 +1,11 @@
 # Smithery configuration file: https://smithery.ai/docs/build/project-config/smithery-yaml
 runtime: "typescript"
+homepage: "https://github.com/CaullenOmdahl/Tailwind-Svelte-Assistant"
+repository: "https://github.com/CaullenOmdahl/Tailwind-Svelte-Assistant"
 startCommand:
   type: "http"
   # JSON Schema defining the configuration options for the MCP.
+  # Config is optional - no configuration required to use this server
   configSchema:
     {}
   exampleConfig:
