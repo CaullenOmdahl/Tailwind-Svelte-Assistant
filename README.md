@@ -1,5 +1,7 @@
 # Tailwind Svelte Assistant MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@CaullenOmdahl/tailwind-svelte-assistant)](https://smithery.ai/server/@CaullenOmdahl/tailwind-svelte-assistant)
+
 A secure, high-performance Model Context Protocol (MCP) server that provides **complete** SvelteKit and Tailwind CSS documentation (100% coverage) and code snippets with enhanced security, proper TypeScript implementation, and comprehensive error handling.
 
 ## ✨ What's New (v0.1.1)
