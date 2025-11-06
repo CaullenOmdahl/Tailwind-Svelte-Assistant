@@ -175,13 +175,13 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({
+      inputSchema: {
         topic: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
           .min(1)
           .max(50)
-          .describe("The documentation topic (e.g., 'routing', 'hooks'). Only alphanumeric characters, hyphens, underscores, and dots allowed."),
-      })
+          .describe("The documentation topic (e.g., 'routing', 'hooks'). Only alphanumeric characters, hyphens, underscores, and dots allowed"),
+      }
     },
     async (request) => {
       try {
@@ -235,13 +235,13 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({
+      inputSchema: {
         query: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
           .min(1)
           .max(50)
-          .describe("The Tailwind CSS class or concept. Only alphanumeric characters, hyphens, underscores, and dots allowed."),
-      })
+          .describe("The Tailwind CSS class or concept. Only alphanumeric characters, hyphens, underscores, and dots allowed"),
+      }
     },
     async (request) => {
       try {
@@ -295,18 +295,18 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({
+      inputSchema: {
         component_category: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
           .min(1)
           .max(30)
-          .describe("The category of the component. Only alphanumeric characters, hyphens, underscores, and dots allowed."),
+          .describe("The category of the component. Only alphanumeric characters, hyphens, underscores, and dots allowed"),
         snippet_name: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
           .min(1)
           .max(50)
-          .describe("The name of the specific snippet. Only alphanumeric characters, hyphens, underscores, and dots allowed."),
-      })
+          .describe("The name of the specific snippet. Only alphanumeric characters, hyphens, underscores, and dots allowed"),
+      }
     },
     async (request) => {
       try {
@@ -364,7 +364,7 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({})
+      inputSchema: {}
     },
     async (request) => {
       try {
@@ -407,7 +407,7 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({})
+      inputSchema: {}
     },
     async (request) => {
       try {
@@ -450,7 +450,7 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({})
+      inputSchema: {}
     },
     async (request) => {
       try {
@@ -493,13 +493,13 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({
+      inputSchema: {
         category: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
           .min(1)
           .max(30)
-          .describe("The category name to list snippets for. Only alphanumeric characters, hyphens, underscores, and dots allowed."),
-      })
+          .describe("The category name to list snippets for. Only alphanumeric characters, hyphens, underscores, and dots allowed"),
+      }
     },
     async (request) => {
       try {
@@ -545,7 +545,7 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({})
+      inputSchema: {}
     },
     async (request) => {
       try {
@@ -594,7 +594,7 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({})
+      inputSchema: {}
     },
     async (request) => {
       try {
@@ -643,7 +643,7 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({
+      inputSchema: {
         query: z.string()
           .min(2)
           .max(100)
@@ -654,7 +654,7 @@ export default function createServer({
           .max(20)
           .optional()
           .describe("Maximum number of results to return (default: 5)")
-      })
+      }
     },
     async (request) => {
       try {
@@ -712,7 +712,7 @@ export default function createServer({
         destructiveHint: false,
         idempotentHint: true
       },
-      inputSchema: z.object({
+      inputSchema: {
         query: z.string()
           .min(2)
           .max(100)
@@ -723,7 +723,7 @@ export default function createServer({
           .max(20)
           .optional()
           .describe("Maximum number of results to return (default: 5)")
-      })
+      }
     },
     async (request) => {
       try {
