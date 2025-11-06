@@ -44,12 +44,78 @@ export default function createServer({
     version: "0.1.1",
   });
 
+  // Register prompts for common use cases
+  server.registerPrompt(
+    "search-svelte-routing",
+    {
+      title: "Search Svelte Routing Documentation",
+      description: "Search the complete Svelte documentation for routing information",
+      arguments: []
+    },
+    async () => ({
+      messages: [{
+        role: "user",
+        content: {
+          type: "text",
+          text: "Search the Svelte documentation for information about routing and navigation. Use search_svelte_docs with query 'routing'."
+        }
+      }]
+    })
+  );
+
+  server.registerPrompt(
+    "get-tailwind-utilities",
+    {
+      title: "Get Tailwind CSS Utilities",
+      description: "Get complete Tailwind CSS utility documentation",
+      arguments: []
+    },
+    async () => ({
+      messages: [{
+        role: "user",
+        content: {
+          type: "text",
+          text: "Get the complete Tailwind CSS documentation to explore all available utility classes. Use get_tailwind_full_docs."
+        }
+      }]
+    })
+  );
+
+  server.registerPrompt(
+    "find-component-snippet",
+    {
+      title: "Find Component Snippet",
+      description: "Browse and find Svelte component code snippets",
+      arguments: [{
+        name: "category",
+        description: "Component category (e.g., 'headers', 'heroes', 'forms')",
+        required: false
+      }]
+    },
+    async (args) => ({
+      messages: [{
+        role: "user",
+        content: {
+          type: "text",
+          text: args.category
+            ? `List available snippets in the '${args.category}' category using list_snippets_in_category.`
+            : "List all available component categories using list_snippet_categories, then choose one to explore."
+        }
+      }]
+    })
+  );
+
   // Register tool: get_sveltekit_doc
   server.registerTool(
     "get_sveltekit_doc",
     {
       title: "Get SvelteKit Doc",
       description: "[LEGACY] Get SvelteKit documentation for a specific topic. NOTE: This tool only covers ~8% of SvelteKit docs. Use 'get_svelte_full_docs' for complete documentation coverage.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {
         topic: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
@@ -105,6 +171,11 @@ export default function createServer({
     {
       title: "Get Tailwind Info",
       description: "[LEGACY] Get Tailwind CSS information for a specific query. NOTE: This tool only covers ~4% of Tailwind docs. Use 'get_tailwind_full_docs' for complete documentation coverage.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {
         query: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
@@ -160,6 +231,11 @@ export default function createServer({
     {
       title: "Get Component Snippet",
       description: "Get a Svelte component code snippet for a specific UI element.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {
         component_category: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
@@ -224,6 +300,11 @@ export default function createServer({
     {
       title: "List SvelteKit Topics",
       description: "Lists available SvelteKit documentation topics.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {}
     },
     async (request) => {
@@ -262,6 +343,11 @@ export default function createServer({
     {
       title: "List Tailwind Info Topics",
       description: "Lists available Tailwind CSS documentation topics.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {}
     },
     async (request) => {
@@ -300,6 +386,11 @@ export default function createServer({
     {
       title: "List Snippet Categories",
       description: "Lists available component snippet categories.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {}
     },
     async (request) => {
@@ -338,6 +429,11 @@ export default function createServer({
     {
       title: "List Snippets In Category",
       description: "Lists available snippets within a specified category.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {
         category: z.string()
           .regex(/^[a-zA-Z0-9\-_.]+$/, "Only alphanumeric characters, hyphens, underscores, and dots allowed")
@@ -385,6 +481,11 @@ export default function createServer({
     {
       title: "Get Complete Svelte Documentation",
       description: "Get the complete Svelte and SvelteKit documentation (1MB, 100% coverage). This is the recommended way to access Svelte docs, as it includes all topics in a single LLM-optimized file.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {}
     },
     async (request) => {
@@ -429,6 +530,11 @@ export default function createServer({
     {
       title: "Get Complete Tailwind Documentation",
       description: "Get the complete Tailwind CSS documentation (2.1MB, 249 files, 100% coverage). This is the recommended way to access Tailwind docs, as it includes all utility classes and concepts in a single LLM-optimized file.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {}
     },
     async (request) => {
@@ -473,6 +579,11 @@ export default function createServer({
     {
       title: "Search Svelte Documentation",
       description: "Search within the complete Svelte and SvelteKit documentation for specific topics or keywords.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {
         query: z.string()
           .min(2)
@@ -537,6 +648,11 @@ export default function createServer({
     {
       title: "Search Tailwind Documentation",
       description: "Search within the complete Tailwind CSS documentation for specific utility classes or concepts.",
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true
+      },
       inputSchema: {
         query: z.string()
           .min(2)

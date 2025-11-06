@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient (Svelte orange to Tailwind teal) -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF3E00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#grad1)"/>
+
+  <!-- Book/Documentation icon in white -->
+  <g fill="white">
+    <!-- Left page -->
+    <path d="M 160 140 L 160 390 L 240 370 L 240 120 Z" opacity="0.9"/>
+    <!-- Right page -->
+    <path d="M 272 120 L 272 370 L 352 390 L 352 140 Z" opacity="0.9"/>
+    <!-- Spine -->
+    <rect x="240" y="120" width="32" height="250" opacity="0.95"/>
+
+    <!-- Code brackets -->
+    <path d="M 190 200 L 170 220 L 190 240" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M 322 200 L 342 220 L 322 240" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+    <!-- Lines representing text -->
+    <line x1="180" y1="180" x2="230" y2="180" stroke="white" stroke-width="4" opacity="0.7"/>
+    <line x1="180" y1="200" x2="220" y2="200" stroke="white" stroke-width="4" opacity="0.7"/>
+
+    <line x1="282" y1="180" x2="332" y2="180" stroke="white" stroke-width="4" opacity="0.7"/>
+    <line x1="282" y1="200" x2="322" y2="200" stroke="white" stroke-width="4" opacity="0.7"/>
+
+    <!-- Svelte "S" hint -->
+    <circle cx="256" cy="340" r="20" fill="white" opacity="0.3"/>
+    <path d="M 246 335 Q 256 330 266 335 Q 266 340 256 345 Q 246 345 246 350" stroke="white" stroke-width="3" fill="none"/>
+  </g>
+</svg>
