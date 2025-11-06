@@ -47,11 +47,11 @@ export default function createServer({
   // Register resources for documentation
   server.registerResource(
     "svelte-docs",
+    "docs://svelte-sveltekit-full",
     {
       name: "Complete Svelte and SvelteKit Documentation",
       description: "Full Svelte and SvelteKit documentation in LLM-optimized format (1MB)",
-      mimeType: "text/plain",
-      uri: "docs://svelte-sveltekit-full"
+      mimeType: "text/plain"
     },
     async () => {
       const content = await fileService.readFullDocsFile(CONFIG.svelteFullDocsPath);
@@ -63,11 +63,11 @@ export default function createServer({
 
   server.registerResource(
     "tailwind-docs",
+    "docs://tailwind-docs-full",
     {
       name: "Complete Tailwind CSS Documentation",
       description: "Full Tailwind CSS documentation extracted from GitHub (2.1MB, 249 files)",
-      mimeType: "text/plain",
-      uri: "docs://tailwind-docs-full"
+      mimeType: "text/plain"
     },
     async () => {
       const content = await fileService.readFullDocsFile(CONFIG.tailwindFullDocsPath);
@@ -79,11 +79,11 @@ export default function createServer({
 
   server.registerResource(
     "content-summary",
+    "docs://content-summary",
     {
       name: "Content Summary",
       description: "Summary of available documentation and snippets",
-      mimeType: "application/json",
-      uri: "docs://content-summary"
+      mimeType: "application/json"
     },
     async () => {
       const summaryPath = path.join(CONFIG.contentBasePath, 'content-summary.json');
