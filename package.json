@@ -17,8 +17,7 @@
     "dist",
     "content",
     "icon.png",
-    "icon.svg",
-    "smithery.yaml"
+    "icon.svg"
   ],
   "scripts": {
     "build": "npx @smithery/cli build",
