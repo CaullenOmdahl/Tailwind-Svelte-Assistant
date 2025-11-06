@@ -16,15 +16,10 @@ import { validateToolInput } from './utils/security.js';
 import { ErrorHandler, createAuditLog } from './utils/errorHandler.js';
 import { SecureFileService } from './services/fileService.js';
 
-// Configuration schema for smithery.yaml
-// Using passthrough() to allow OAuth and other Smithery-provided configuration
-export const configSchema = z.object({}).passthrough();
+// No configSchema export - this server doesn't require user configuration
+// Per Smithery docs: "If your server doesn't require configuration, simply omit the configSchema export entirely"
 
-export default function createServer({
-  config,
-}: {
-  config: z.infer<typeof configSchema>;
-}) {
+export default function createServer() {
   // Server configuration with secure defaults - using process.cwd() for Smithery compatibility
   const CONFIG: ServerConfig = {
     contentBasePath: path.join(process.cwd(), 'content'),
@@ -42,7 +37,7 @@ export default function createServer({
 
   const server = new McpServer({
     name: "tailwind-svelte-assistant-mcp-server",
-    version: "0.1.5",
+    version: "0.1.6",
   });
 
   // Register resources for documentation

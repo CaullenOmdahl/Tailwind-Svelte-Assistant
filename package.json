@@ -1,6 +1,6 @@
 {
   "name": "tailwind-svelte-assistant-mcp-server",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Provides SvelteKit and Tailwind CSS documentation and code snippets.",
   "homepage": "https://github.com/CaullenOmdahl/Tailwind-Svelte-Assistant",
   "repository": {
