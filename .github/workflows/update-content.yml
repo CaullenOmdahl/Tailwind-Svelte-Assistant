@@ -2,9 +2,8 @@ name: Update Content
 
 on:
   schedule:
-    # Run every 3.5 days (approximately 84 hours) - alternating 3 and 4 day intervals
-    - cron: '0 2 */4 * *'  # Every 4 days at 2 AM UTC
-    - cron: '0 14 */3 * *' # Every 3 days at 2 PM UTC (offset by 12 hours for better distribution)
+    # Run weekly on Mondays at 2:00 AM UTC
+    - cron: '0 2 * * 1'
   workflow_dispatch:  # Allow manual triggering
 
 env:
@@ -56,35 +55,40 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: |
-            feat: Update documentation and snippet content
-            
-            - Updated SvelteKit documentation
-            - Updated Tailwind CSS documentation  
-            - Updated component snippets
-            - Automated content refresh
-            
-            🤖 Generated with automated content update workflow
-          title: 'feat: Automated content update'
+            docs: Weekly documentation update
+
+            - Updated complete Svelte/SvelteKit documentation (1.04 MB)
+            - Updated complete Tailwind CSS documentation (2.1 MB, 249 files)
+            - Updated component snippet timestamps
+            - Refreshed content summary
+
+            🤖 Generated with automated weekly content update workflow
+          title: 'docs: Weekly documentation update'
           body: |
-            ## 📚 Automated Content Update
-            
-            This PR contains the latest updates to documentation and snippets:
-            
-            ### Changes
-            - 🔄 SvelteKit documentation refresh
-            - 🎨 Tailwind CSS documentation update
-            - 🧩 Component snippets update
-            - 📋 Content structure improvements
-            
-            ### Verification
-            - [ ] Review updated documentation for accuracy
-            - [ ] Test MCP server with new content
-            - [ ] Verify snippet functionality
-            
+            ## 📚 Weekly Documentation Update
+
+            This PR contains the latest documentation from official sources:
+
+            ### 📖 Documentation Updates
+            - ✅ **Svelte/SvelteKit**: Downloaded from svelte.dev/llms-full.txt (~1 MB)
+            - ✅ **Tailwind CSS**: Extracted via Repomix from GitHub (~2.1 MB, 249 MDX files)
+            - ✅ **Component Snippets**: Updated timestamps (43 snippets)
+
+            ### 🔄 Update Method
+            - **Svelte**: Official LLM-optimized text file (100% coverage)
+            - **Tailwind**: Repomix CLI extraction from tailwindlabs/tailwindcss.com
+            - **Automation**: Runs weekly via `npm run update-content`
+
+            ### ✅ Verification
+            - [ ] Review documentation file sizes (should be ~1 MB and ~2.1 MB)
+            - [ ] Check content summary JSON for accuracy
+            - [ ] Test MCP server with new documentation
+
             ---
-            *This PR was automatically created by the content update workflow.*
-            
-            🤖 Generated with automated content update workflow
+            *This PR was automatically created by the weekly content update workflow.*
+            *Schedule: Every Monday at 2:00 AM UTC*
+
+            🤖 Generated with automated weekly content update workflow
           branch: automated-content-update
           delete-branch: true
           draft: false
