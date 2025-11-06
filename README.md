@@ -1,5 +1,7 @@
 # Tailwind Svelte Assistant MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@CaullenOmdahl/tailwind-svelte-assistant)](https://smithery.ai/server/@CaullenOmdahl/tailwind-svelte-assistant)
+
 A secure, high-performance Model Context Protocol (MCP) server that provides **complete** SvelteKit and Tailwind CSS documentation (100% coverage) and code snippets with enhanced security, proper TypeScript implementation, and comprehensive error handling.
 
 ## ✨ What's New (v0.1.1)
@@ -43,7 +45,42 @@ src/
     └── errorHandler.ts      # Comprehensive error handling
 ```
 
-## 🛠️ Installation & Setup
+## 🚀 Quick Start
+
+### Install via Smithery (Recommended)
+
+The easiest way to install this MCP server is through [Smithery](https://smithery.ai/server/@CaullenOmdahl/tailwind-svelte-assistant):
+
+```bash
+npx -y @smithery/cli install @CaullenOmdahl/tailwind-svelte-assistant --client claude
+```
+
+This will automatically:
+- Install the server
+- Configure it for Claude Desktop
+- Set up all required dependencies
+
+### Install via Direct URL
+
+For other MCP clients, use the direct server URL:
+
+```
+https://server.smithery.ai/@CaullenOmdahl/tailwind-svelte-assistant/mcp
+```
+
+Add this to your MCP client configuration:
+```json
+{
+  "mcpServers": {
+    "tailwind-svelte-assistant": {
+      "url": "https://server.smithery.ai/@CaullenOmdahl/tailwind-svelte-assistant/mcp",
+      "transport": "http"
+    }
+  }
+}
+```
+
+## 🛠️ Manual Installation & Setup
 
 ### Prerequisites
 - **Node.js 20+** (required for ES modules support and dependencies)
@@ -183,6 +220,20 @@ All tools include:
 ## 📝 Usage Examples
 
 ### MCP Client Configuration
+
+**Option 1: Smithery Hosted (Recommended)**
+```json
+{
+  "mcpServers": {
+    "tailwind-svelte-assistant": {
+      "url": "https://server.smithery.ai/@CaullenOmdahl/tailwind-svelte-assistant/mcp",
+      "transport": "http"
+    }
+  }
+}
+```
+
+**Option 2: Local Installation**
 ```json
 {
   "mcpServers": {
