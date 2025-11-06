@@ -7,6 +7,8 @@ startCommand:
   # JSON Schema defining the configuration options for the MCP.
   # Config is optional - no configuration required to use this server
   configSchema:
-    {}
+    type: object
+    properties: {}
+    additionalProperties: false
   exampleConfig:
     {}
