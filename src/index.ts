@@ -42,7 +42,7 @@ export default function createServer({
 
   const server = new McpServer({
     name: "tailwind-svelte-assistant-mcp-server",
-    version: "0.1.1",
+    version: "0.1.2",
   });
 
   // Register resources for documentation
