@@ -6,7 +6,6 @@ dist/
 
 # Claude Code files
 .claude/
-CLAUDE.md
 
 # Review and testing files
 MCP_SERVER_REVIEW.md
