@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.464Z -->
+<!-- Last updated: 2025-11-10T02:35:06.490Z -->
 <script lang="ts">
   export let question: string;
   export let answer: string;
