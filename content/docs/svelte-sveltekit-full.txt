@@ -1,9 +1,9 @@
 # Svelte and SvelteKit Documentation (LLM-Optimized)
 
-> Last updated: 2025-11-06T05:40:39.543Z
+> Last updated: 2025-11-17T02:34:15.266Z
 > Source: https://svelte.dev/llms-full.txt
 > Format: Official LLM-optimized text file from Svelte team
-> Size: 1,065,921 bytes
+> Size: 1,066,135 bytes
 
 ---
 
@@ -16897,9 +16897,9 @@ By exporting `POST`/`PUT`/`PATCH`/`DELETE`/`OPTIONS`/`HEAD` handlers, `+server.j
 ```svelte
 <!--- file: src/routes/add/+page.svelte --->
 <script>
-	let a = 0;
-	let b = 0;
-	let total = 0;
+	let a = $state(0);
+	let b = $state(0);
+	let total = $state(0);
 
 	async function add() {
 		const response = await fetch('/api/add', {
@@ -23185,7 +23185,7 @@ You can also use [Vite's `import.meta.glob`](https://vitejs.dev/guide/features.h
 ```svelte
 <script>
 	const imageModules = import.meta.glob(
-		'/path/to/assets/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
+		'/path/to/assets/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp}',
 		{
 			eager: true,
 			query: {
@@ -23199,6 +23199,8 @@ You can also use [Vite's `import.meta.glob`](https://vitejs.dev/guide/features.h
 	<enhanced:img src={module.default} alt="some alt text" />
 {/each}
 ```
+
+> [!NOTE] svg images are currently only supported statically
 
 ### Intrinsic Dimensions
 
@@ -23389,12 +23391,12 @@ export async function GET() {
 		`
 		<?xml version="1.0" encoding="UTF-8" ?>
 		<urlset
-			xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
-			xmlns:xhtml="https://www.w3.org/1999/xhtml"
-			xmlns:mobile="https://www.google.com/schemas/sitemap-mobile/1.0"
-			xmlns:news="https://www.google.com/schemas/sitemap-news/0.9"
-			xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
-			xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
+			xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+			xmlns:xhtml="http://www.w3.org/1999/xhtml"
+			xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+			xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+			xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+			xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
 		>
 			<!-- <url> elements go here -->
 		</urlset>`.trim(),
@@ -32760,7 +32762,9 @@ The setup varies based on the version of the MCP you prefer — remote or local 
 
 ## Usage
 
-To get the most out of the MCP server we recommend including the following prompt in your [`AGENTS.md`](https://agents.md) (or [`CLAUDE.md`](https://docs.claude.com/en/docs/claude-code/memory#claude-md-imports), if using Claude Code). This will tell the LLM which tools are available and when it's appropriate to use them.
+To get the most out of the MCP server we recommend including the following prompt in your [`AGENTS.md`](https://agents.md) (or [`CLAUDE.md`](https://docs.claude.com/en/docs/claude-code/memory#claude-md-imports), if using Claude Code. Or [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/), if using GEMINI). This will tell the LLM which tools are available and when it's appropriate to use them.
+
+> [!NOTE] This is already setup for you when using `npx sv add mcp`
 
 ```md
 You are able to use the Svelte MCP server, where you have access to comprehensive Svelte 5 and SvelteKit documentation. Here's how to use the available tools effectively:
@@ -32971,7 +32975,7 @@ To use the remote MCP server with Gemini CLI, simply run the following command:
 gemini mcp add -t http -s [scope] svelte https://mcp.svelte.dev/mcp
 ```
 
-The `[scope]` must be `user`, `project` or `local`.
+The `[scope]` must be `user` or `project`.
 
 ## OpenCode
 

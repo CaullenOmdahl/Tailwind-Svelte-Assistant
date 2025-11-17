@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.461Z -->
+<!-- Last updated: 2025-11-17T02:34:28.194Z -->
 <!--
 @description: A blog section displaying a list of posts, each with a category, title, description, and author details. Based on Tailwind UI.
 @props:

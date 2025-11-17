@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.467Z -->
+<!-- Last updated: 2025-11-17T02:34:28.203Z -->
 <footer class="bg-gray-700 text-gray-300 p-8 text-center">
   <div class="container mx-auto">
     <p>&copy; {new Date().getFullYear()} Your Company Name. All rights reserved.</p>
