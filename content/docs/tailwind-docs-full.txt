@@ -1,10 +1,10 @@
 # Tailwind CSS Documentation (via Repomix)
 
-> Last updated: 2025-11-06T05:40:53.450Z
+> Last updated: 2025-12-01T02:47:34.635Z
 > Source: https://github.com/tailwindlabs/tailwindcss.com
 > Method: Repomix CLI extraction
 > Pattern: src/**/*.mdx
-> Size: 2,194,625 bytes
+> Size: 2,198,770 bytes
 
 ---
 
@@ -22872,7 +22872,7 @@ export const description = "Using and customizing the color palette in Tailwind 
 
 Tailwind CSS includes a vast, beautiful color palette out of the box, carefully crafted by expert designers and suitable for a wide range of different design styles.
 
-<div className="my-10 relative">
+<div className="relative my-10">
   {/* <TipInfo>{<>Click to copy OKLCH, shift+click to copy nearest hex</>}</TipInfo> */}
   {/* <div className="mt-6"> */}
   <ColorPalette />
@@ -25045,7 +25045,7 @@ export const description = "Utilities for controlling the display box type of an
         padding: 0;
         margin: -1px;
         overflow: hidden;
-        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
         white-space: nowrap;
         border-width: 0;
       `,
@@ -43893,7 +43893,7 @@ This prevents them from overflowing their containers and makes them responsive b
 
 ```css
 /* [!code filename:CSS] */
-[hidden]:where(:not([hidden='until-found'])) {
+[hidden]:where(:not([hidden="until-found"])) {
   display: none !important;
 }
 ```
@@ -48659,6 +48659,36 @@ Use the `text-justify` utility to justify the text of an element:
 
 </Figure>
 
+### Using logical properties
+
+Use the `text-start` and `text-end` utilities, which use [logical properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties/Basic_concepts) to map to either the left or right side based on the text direction:
+
+<Figure>
+
+<Example padding={false}>
+  {
+    <div className="px-4 sm:px-0" dir="rtl" lang="ar">
+      <div className="mx-auto max-w-lg p-8 text-sm/6 text-gray-900 dark:text-gray-200">
+        <p className="text-end">
+          بدأتُ أسير نحو الماء. لن أكذب عليكم يا رفاق، كنتُ مرعوبًا. لكنني واصلتُ المسير، وبينما كنتُ أشق طريقي عبر
+          الأمواج، غمرني هدوءٌ غريب. لا أعلم إن كان ذلك تدخّلًا إلهيًا أم صلة قرابة بين جميع الكائنات الحية، لكنني أقول
+          لك يا جيري، في تلك اللحظة، كنتُ عالم أحياء بحرية.
+        </p>
+      </div>
+    </div>
+  }
+</Example>
+
+```html
+<!-- [!code word:dir="rtl"] -->
+<!-- [!code classes:text-end] -->
+<div dir="rtl" lang="ar">
+  <p class="text-end">فبدأت بالسير نحو الماء...</p>
+</div>
+```
+
+</Figure>
+
 ### Responsive design
 
 <ResponsiveDesign element="p" property="text-align" defaultClass="text-left" featuredClass="text-center" />
@@ -50852,12 +50882,9 @@ For reference, here's a complete list of the theme variables included by default
 
   --text-shadow-2xs: 0px 1px 0px rgb(0 0 0 / 0.15);
   --text-shadow-xs: 0px 1px 1px rgb(0 0 0 / 0.2);
-  --text-shadow-sm:
-    0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075);
-  --text-shadow-md:
-    0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1), 0px 2px 4px rgb(0 0 0 / 0.1);
-  --text-shadow-lg:
-    0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0 0 0 / 0.1);
+  --text-shadow-sm: 0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075);
+  --text-shadow-md: 0px 1px 1px rgb(0 0 0 / 0.1), 0px 1px 2px rgb(0 0 0 / 0.1), 0px 2px 4px rgb(0 0 0 / 0.1);
+  --text-shadow-lg: 0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0 0 0 / 0.1);
 
   --blur-xs: 4px;
   --blur-sm: 8px;
@@ -51729,6 +51756,17 @@ Use utilities like `delay-150` and `delay-700` to set the transition delay of an
 
 </Figure>
 
+### Supporting reduced motion
+
+For situations where the user has specified that they prefer reduced motion, you can conditionally apply animations and transitions using the `motion-safe` and `motion-reduce` variants:
+
+```html
+<!-- [!code classes:motion-reduce:delay-0] -->
+<button type="button" class="delay-300 motion-reduce:delay-0 ...">
+  <!-- ... -->
+</button>
+```
+
 ### Using a custom value
 
 <UsingACustomValue element="button" utility="delay" value="1s,250ms" name="transition delay" />
@@ -51797,6 +51835,17 @@ Use utilities like `duration-150` and `duration-700` to set the transition durat
 ```
 
 </Figure>
+
+### Supporting reduced motion
+
+For situations where the user has specified that they prefer reduced motion, you can conditionally apply animations and transitions using the `motion-safe` and `motion-reduce` variants:
+
+```html
+<!-- [!code classes:motion-reduce:duration-0] -->
+<button type="button" class="duration-300 motion-reduce:duration-0 ...">
+  <!-- ... -->
+</button>
+```
 
 ### Using a custom value
 
@@ -52949,6 +52998,25 @@ If this change causes any issues in your project, we recommend migrating to a fl
 </div>
 ```
 
+### Divide selector
+
+We've changed the selector used by the [`divide-x-*` and `divide-y-*` utilities](/docs/border-width#between-children) to address serious performance issues on large pages:
+
+```css
+/* [!code filename:CSS] */
+/* Before */
+.divide-y-4 > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: 4px;
+}
+
+/* Now */
+.divide-y-4 > :not(:last-child) {
+  border-bottom-width: 4px;
+}
+```
+
+You might see changes in your project if you were ever using these utilities with inline elements, if you were adding other margins/padding to child elements to tweak their spacing, or adjusting the borders of specific child elements.
+
 ### Using variants with gradients
 
 In v3, overriding part of a gradient with a variant would "reset" the entire gradient, so in this example the `to-*` color would be transparent in dark mode instead of yellow:
@@ -53150,6 +53218,19 @@ The generated CSS variables _will_ include a prefix to avoid conflicts with any 
 }
 ```
 
+### The important modifier
+
+In v3 you could mark a utility as important by placing an `!` at the beginning of the utility name (but after any variants). In v4 you should place the `!` at the very end of the class name instead:
+
+```html
+<!-- [!code classes:bg-red-500!,flex!,hover:bg-red-600/50!] -->
+<div class="flex! bg-red-500! hover:bg-red-600/50!">
+  <!-- ... -->
+</div>
+```
+
+The old way is still supported for compatibility but is deprecated.
+
 ### Adding custom utilities
 
 In v3, any custom classes you defined within `@layer utilities` or `@layer components` would get picked up by Tailwind as a true utility class and would automatically work with variants like `hover`, `focus`, or `lg` with the difference being that `@layer components` would always come first in the generated stylesheet.
@@ -53275,6 +53356,34 @@ This means if you were adding an outline with a custom color on focus, you will 
 <button class="transition hover:outline-2 hover:outline-cyan-500"></button>
 <!-- [!code ++:2] -->
 <button class="outline-cyan-500 transition hover:outline-2"></button>
+```
+
+### Individual transform properties
+
+The `rotate-*`, `scale-*`, and `translate-*` utilities are now based on the individual `rotate`, `scale`, and `translate` properties in CSS. Normally this shouldn't affect the behavior but there's a couple of cases to look out for:
+
+#### Resetting Transforms
+
+You previously would've been able to "reset" your rotate, scale, and translate utilities via `transform-none`. This no longer works and you will need to reset the individual properties instead:
+
+```html
+<!-- [!code filename:HTML] -->
+<!-- [!code --:2] -->
+<button class="scale-150 focus:transform-none"></button>
+<!-- [!code ++:2] -->
+<button class="scale-150 focus:scale-none"></button>
+```
+
+#### Transitions
+
+If you customize the list of transitioned properties and include `transform` (e.g. by writing `transition-[opacity,transform]`) then these utilities will no longer transition. To fix this, include the individual properties in the list. For example, if you want to transition changes when using `opacity-*` and `scale-*` utilities you should use `transition-[opacity,scale]` instead.
+
+```html
+<!-- [!code filename:HTML] -->
+<!-- [!code --:2] -->
+<button class="hover:scale-150 transition-[opacity,transform]"></button>
+<!-- [!code ++:2] -->
+<button class="hover:scale-150 transition-[opacity,scale]"></button>
 ```
 
 ### Disabling core plugins

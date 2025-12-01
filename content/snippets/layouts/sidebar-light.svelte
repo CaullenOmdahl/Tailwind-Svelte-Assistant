@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.469Z -->
+<!-- Last updated: 2025-12-01T02:47:34.660Z -->
 <!--
 @description: A light-themed sidebar layout, often used for settings pages. Includes a mobile off-canvas menu and a fixed desktop sidebar. Based on Tailwind UI.
 @props:

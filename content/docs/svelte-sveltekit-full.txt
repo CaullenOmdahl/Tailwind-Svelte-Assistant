@@ -1,9 +1,9 @@
 # Svelte and SvelteKit Documentation (LLM-Optimized)
 
-> Last updated: 2025-11-06T05:40:39.543Z
+> Last updated: 2025-12-01T02:47:21.170Z
 > Source: https://svelte.dev/llms-full.txt
 > Format: Official LLM-optimized text file from Svelte team
-> Size: 1,065,921 bytes
+> Size: 1,074,941 bytes
 
 ---
 
@@ -4495,7 +4495,7 @@ Svelte 4 contained hooks that ran before and after the component as a whole was 
 </script>
 ```
 
-Instead of `beforeUpdate` use `$effect.pre` and instead of `afterUpdate` use `$effect` instead - these runes offer more granular control and only react to the changes you're actually interested in.
+Instead of `beforeUpdate` use `$effect.pre` and instead of `afterUpdate` use `$effect` instead — these runes offer more granular control and only react to the changes you're actually interested in.
 
 ### Chat window example
 
@@ -4646,6 +4646,70 @@ const app = hydrate(App, {
 ```
 
 As with `mount`, effects will not run during `hydrate` — use `flushSync()` immediately afterwards if you need them to.
+
+# Hydratable data
+
+In Svelte, when you want to render asynchronous content data on the server, you can simply `await` it. This is great! However, it comes with a pitfall: when hydrating that content on the client, Svelte has to redo the asynchronous work, which blocks hydration for however long it takes:
+
+```svelte
+<script>
+  import { getUser } from 'my-database-library';
+
+  // This will get the user on the server, render the user's name into the h1,
+  // and then, during hydration on the client, it will get the user _again_,
+  // blocking hydration until it's done.
+  const user = await getUser();
+</script>
+
+<h1>{user.name}</h1>
+```
+
+That's silly, though. If we've already done the hard work of getting the data on the server, we don't want to get it again during hydration on the client. `hydratable` is a low-level API built to solve this problem. You probably won't need this very often — it will be used behind the scenes by whatever datafetching library you use. For example, it powers [remote functions in SvelteKit](/docs/kit/remote-functions).
+
+To fix the example above:
+
+```svelte
+<script>
+  import { hydratable } from 'svelte';
+  import { getUser } from 'my-database-library';
+
+  // During server rendering, this will serialize and stash the result of `getUser`, associating
+  // it with the provided key and baking it into the `head` content. During hydration, it will
+  // look for the serialized version, returning it instead of running `getUser`. After hydration
+  // is done, if it's called again, it'll simply invoke `getUser`.
+  const user = await hydratable('user', () => getUser());
+</script>
+
+<h1>{user.name}</h1>
+```
+
+This API can also be used to provide access to random or time-based values that are stable between server rendering and hydration. For example, to get a random number that doesn't update on hydration:
+
+```ts
+import { hydratable } from 'svelte';
+const rand = hydratable('random', () => Math.random());
+```
+
+If you're a library author, be sure to prefix the keys of your `hydratable` values with the name of your library so that your keys don't conflict with other libraries.
+
+## Serialization
+
+All data returned from a `hydratable` function must be serializable. But this doesn't mean you're limited to JSON — Svelte uses [`devalue`](https://npmjs.com/package/devalue), which can serialize all sorts of things including `Map`, `Set`, `URL`, and `BigInt`. Check the documentation page for a full list. In addition to these, thanks to some Svelte magic, you can also fearlessly use promises:
+
+```svelte
+<script>
+  import { hydratable } from 'svelte';
+  const promises = hydratable('random', () => {
+    return {
+      one: Promise.resolve(1),
+      two: Promise.resolve(2)
+    }
+  });
+</script>
+
+{await promises.one}
+{await promises.two}
+```
 
 # Testing
 
@@ -4941,7 +5005,7 @@ E2E (short for 'end to end') tests allow you to test your full application throu
 
 You can use the Svelte CLI to [setup Playwright](/docs/cli/playwright) either during project creation or later on. You can also [set it up with `npm init playwright`](https://playwright.dev/docs/intro). Additionally, you may also want to install an IDE plugin such as [the VS Code extension](https://playwright.dev/docs/getting-started-vscode) to be able to execute tests from inside your IDE.
 
-If you've run `npm init playwright` or are not using Vite, you may need to adjust the Playwright config to tell Playwright what to do before running the tests - mainly starting your application at a certain port. For example:
+If you've run `npm init playwright` or are not using Vite, you may need to adjust the Playwright config to tell Playwright what to do before running the tests — mainly starting your application at a certain port. For example:
 
 ```js
 /// file: playwright.config.js
@@ -5518,7 +5582,7 @@ Transitions are now local by default to prevent confusion around page navigation
 {/if}
 ```
 
-To make transitions global, add the `|global` modifier - then they will play when _any_ control flow block above is created/destroyed. The migration script will do this automatically for you. ([#6686](https://github.com/sveltejs/svelte/issues/6686))
+To make transitions global, add the `|global` modifier — then they will play when _any_ control flow block above is created/destroyed. The migration script will do this automatically for you. ([#6686](https://github.com/sveltejs/svelte/issues/6686))
 
 ## Default slot bindings
 
@@ -5531,10 +5595,10 @@ Default slot bindings are no longer exposed to named slots and vice versa:
 
 <Nested let:count>
 	<p>
-		count in default slot - is available: {count}
+		count in default slot — is available: {count}
 	</p>
 	<p slot="bar">
-		count in bar slot - is not available: {count}
+		count in bar slot — is not available: {count}
 	</p>
 </Nested>
 ```
@@ -5630,7 +5694,7 @@ Each preprocessor must also have a name. ([#8618](https://github.com/sveltejs/sv
 
 Version 5 comes with an overhauled syntax and reactivity system. While it may look different at first, you'll soon notice many similarities. This guide goes over the changes in detail and shows you how to upgrade. Along with it, we also provide information on _why_ we did these changes.
 
-You don't have to migrate to the new syntax right away - Svelte 5 still supports the old Svelte 4 syntax, and you can mix and match components using the new syntax with components using the old and vice versa. We expect many people to be able to upgrade with only a few lines of code changed initially. There's also a [migration script](#Migration-script) that helps you with many of these steps automatically.
+You don't have to migrate to the new syntax right away — Svelte 5 still supports the old Svelte 4 syntax, and you can mix and match components using the new syntax with components using the old and vice versa. We expect many people to be able to upgrade with only a few lines of code changed initially. There's also a [migration script](#Migration-script) that helps you with many of these steps automatically.
 
 ## Reactivity syntax changes
 
@@ -5649,7 +5713,7 @@ In Svelte 4, a `let` declaration at the top level of a component was implicitly 
 Nothing else changes. `count` is still the number itself, and you read and write directly to it, without a wrapper like `.value` or `getCount()`.
 
 > [!DETAILS] Why we did this
-> `let` being implicitly reactive at the top level worked great, but it meant that reactivity was constrained - a `let` declaration anywhere else was not reactive. This forced you to resort to using stores when refactoring code out of the top level of components for reuse. This meant you had to learn an entirely separate reactivity model, and the result often wasn't as nice to work with. Because reactivity is more explicit in Svelte 5, you can keep using the same API outside the top level of components. Head to [the tutorial](/tutorial) to learn more.
+> `let` being implicitly reactive at the top level worked great, but it meant that reactivity was constrained — a `let` declaration anywhere else was not reactive. This forced you to resort to using stores when refactoring code out of the top level of components for reuse. This meant you had to learn an entirely separate reactivity model, and the result often wasn't as nice to work with. Because reactivity is more explicit in Svelte 5, you can keep using the same API outside the top level of components. Head to [the tutorial](/tutorial) to learn more.
 
 ### $: → $derived/$effect
 
@@ -5746,7 +5810,7 @@ In Svelte 5, the `$props` rune makes this straightforward without any additional
 
 ## Event changes
 
-Event handlers have been given a facelift in Svelte 5. Whereas in Svelte 4 we use the `on:` directive to attach an event listener to an element, in Svelte 5 they are properties like any other (in other words - remove the colon):
+Event handlers have been given a facelift in Svelte 5. Whereas in Svelte 4 we use the `on:` directive to attach an event listener to an element, in Svelte 5 they are properties like any other (in other words — remove the colon):
 
 ```svelte
 <script>
@@ -5780,7 +5844,7 @@ Since they're just properties, you can use the normal shorthand syntax...
 
 In Svelte 4, components could emit events by creating a dispatcher with `createEventDispatcher`.
 
-This function is deprecated in Svelte 5. Instead, components should accept _callback props_ - which means you then pass functions as properties to these components:
+This function is deprecated in Svelte 5. Instead, components should accept _callback props_ — which means you then pass functions as properties to these components:
 
 ```svelte
 <!--- file: App.svelte --->
@@ -6088,7 +6152,7 @@ In Svelte 4, you would pass data to a `<slot />` and then retrieve it with `let:
 
 ## Migration script
 
-By now you should have a pretty good understanding of the before/after and how the old syntax relates to the new syntax. It probably also became clear that a lot of these migrations are rather technical and repetitive - something you don't want to do by hand.
+By now you should have a pretty good understanding of the before/after and how the old syntax relates to the new syntax. It probably also became clear that a lot of these migrations are rather technical and repetitive — something you don't want to do by hand.
 
 We thought the same, which is why we provide a migration script to do most of the migration automatically. You can upgrade your project by using `npx sv migrate svelte-5`. This will do the following things:
 
@@ -6671,7 +6735,7 @@ There are several [UI component libraries](/packages#component-libraries) as wel
 
 ## How do I test Svelte apps?
 
-How your application is structured and where logic is defined will determine the best way to ensure it is properly tested. It is important to note that not all logic belongs within a component - this includes concerns such as data transformation, cross-component state management, and logging, among others. Remember that the Svelte library has its own test suite, so you do not need to write tests to validate implementation details provided by Svelte.
+How your application is structured and where logic is defined will determine the best way to ensure it is properly tested. It is important to note that not all logic belongs within a component — this includes concerns such as data transformation, cross-component state management, and logging, among others. Remember that the Svelte library has its own test suite, so you do not need to write tests to validate implementation details provided by Svelte.
 
 A Svelte application will typically have three different types of tests: Unit, Component, and End-to-End (E2E).
 
@@ -6742,6 +6806,7 @@ import {
 	getAllContexts,
 	getContext,
 	hasContext,
+	hydratable,
 	hydrate,
 	mount,
 	onDestroy,
@@ -7148,6 +7213,18 @@ Must be called during component initialisation.
 
 ```dts
 function hasContext(key: any): boolean;
+```
+
+</div>
+
+
+
+## hydratable
+
+<div class="ts-block">
+
+```dts
+function hydratable<T>(key: string, fn: () => T): T;
 ```
 
 </div>
@@ -8165,6 +8242,7 @@ import {
 	migrate,
 	parse,
 	preprocess,
+	print,
 	walk
 } from 'svelte/compiler';
 ```
@@ -8303,6 +8381,31 @@ function preprocess(
 		  }
 		| undefined
 ): Promise<Processed>;
+```
+
+</div>
+
+
+
+## print
+
+`print` converts a Svelte AST node back into Svelte source code.
+It is primarily intended for tools that parse and transform components using the compiler’s modern AST representation.
+
+`print(ast)` requires an AST node produced by parse with modern: true, or any sub-node within that modern AST.
+The result contains the generated source and a corresponding source map.
+The output is valid Svelte, but formatting details such as whitespace or quoting may differ from the original.
+
+<div class="ts-block">
+
+```dts
+function print(
+	ast: AST.SvelteNode,
+	options?: Options | undefined
+): {
+	code: string;
+	map: any;
+};
 ```
 
 </div>
@@ -8466,7 +8569,7 @@ namespace AST {
 	}
 
 	/** An `animate:` directive */
-	export interface AnimateDirective extends BaseNode {
+	export interface AnimateDirective extends BaseAttribute {
 		type: 'AnimateDirective';
 		/** The 'x' in `animate:x` */
 		name: string;
@@ -8475,7 +8578,7 @@ namespace AST {
 	}
 
 	/** A `bind:` directive */
-	export interface BindDirective extends BaseNode {
+	export interface BindDirective extends BaseAttribute {
 		type: 'BindDirective';
 		/** The 'x' in `bind:x` */
 		name: string;
@@ -8487,7 +8590,7 @@ namespace AST {
 	}
 
 	/** A `class:` directive */
-	export interface ClassDirective extends BaseNode {
+	export interface ClassDirective extends BaseAttribute {
 		type: 'ClassDirective';
 		/** The 'x' in `class:x` */
 		name: 'class';
@@ -8496,7 +8599,7 @@ namespace AST {
 	}
 
 	/** A `let:` directive */
-	export interface LetDirective extends BaseNode {
+	export interface LetDirective extends BaseAttribute {
 		type: 'LetDirective';
 		/** The 'x' in `let:x` */
 		name: string;
@@ -8509,7 +8612,7 @@ namespace AST {
 	}
 
 	/** An `on:` directive */
-	export interface OnDirective extends BaseNode {
+	export interface OnDirective extends BaseAttribute {
 		type: 'OnDirective';
 		/** The 'x' in `on:x` */
 		name: string;
@@ -8529,7 +8632,7 @@ namespace AST {
 	}
 
 	/** A `style:` directive */
-	export interface StyleDirective extends BaseNode {
+	export interface StyleDirective extends BaseAttribute {
 		type: 'StyleDirective';
 		/** The 'x' in `style:x` */
 		name: string;
@@ -8543,7 +8646,8 @@ namespace AST {
 
 	// TODO have separate in/out/transition directives
 	/** A `transition:`, `in:` or `out:` directive */
-	export interface TransitionDirective extends BaseNode {
+	export interface TransitionDirective
+		extends BaseAttribute {
 		type: 'TransitionDirective';
 		/** The 'x' in `transition:x` */
 		name: string;
@@ -8557,7 +8661,7 @@ namespace AST {
 	}
 
 	/** A `use:` directive */
-	export interface UseDirective extends BaseNode {
+	export interface UseDirective extends BaseAttribute {
 		type: 'UseDirective';
 		/** The 'x' in `use:x` */
 		name: string;
@@ -8565,8 +8669,9 @@ namespace AST {
 		expression: null | Expression;
 	}
 
-	interface BaseElement extends BaseNode {
+	export interface BaseElement extends BaseNode {
 		name: string;
+		name_loc: SourceLocation;
 		attributes: Array<
 			Attribute | SpreadAttribute | Directive | AttachTag
 		>;
@@ -8693,9 +8798,13 @@ namespace AST {
 		body: Fragment;
 	}
 
-	export interface Attribute extends BaseNode {
-		type: 'Attribute';
+	export interface BaseAttribute extends BaseNode {
 		name: string;
+		name_loc: SourceLocation | null;
+	}
+
+	export interface Attribute extends BaseAttribute {
+		type: 'Attribute';
 		/**
 		 * Quoted/string values are represented by an array, even if they contain a single expression like `"{x}"`
 		 */
@@ -12936,6 +13045,12 @@ Expected an identifier
 Expected identifier or destructure pattern
 ```
 
+### expected_tag
+
+```
+Expected 'html', 'render', 'attach', 'const', or 'debug'
+```
+
 ### expected_token
 
 ```
@@ -12970,6 +13085,12 @@ Cannot use `await` in deriveds and template expressions, or at the top level of 
 
 ```
 `$host()` can only be used inside custom element component instances
+```
+
+### illegal_await_expression
+
+```
+`use:`, `transition:` and `animate:` directives, attachments and bindings do not support await expressions
 ```
 
 ### illegal_element_attribute
@@ -14764,12 +14885,6 @@ $effect(() => {
 
 Often when encountering this issue, the value in question shouldn't be state (for example, if you are pushing to a `logs` array in an effect, make `logs` a normal array rather than `$state([])`). In the rare cases where you really _do_ need to write to state in an effect — [which you should avoid]($effect#When-not-to-use-$effect) — you can read the state with [untrack](svelte#untrack) to avoid adding it as a dependency.
 
-### experimental_async_fork
-
-```
-Cannot use `fork(...)` unless the `experimental.async` compiler option is `true`
-```
-
 ### flush_sync_in_effect
 
 ```
@@ -14796,6 +14911,25 @@ Cannot create a fork inside an effect or when state changes are pending
 
 ```
 `getAbortSignal()` can only be called inside an effect or derived
+```
+
+### hydratable_missing_but_required
+
+```
+Expected to find a hydratable with key `%key%` during hydration, but did not.
+```
+
+This can happen if you render a hydratable on the client that was not rendered on the server, and means that it was forced to fall back to running its function blockingly during hydration. This is bad for performance, as it blocks hydration until the asynchronous work completes.
+
+```svelte
+<script>
+  import { hydratable } from 'svelte';
+
+	if (BROWSER) {
+		// bad! nothing can become interactive until this asynchronous work is done
+		await hydratable('foo', get_slow_random_number);
+	}
+</script>
 ```
 
 ### hydration_failed
@@ -14916,6 +15050,14 @@ If it's possible to resolve the error inside the `onerror` callback, you must at
 
 <!-- This file is generated by scripts/process-messages/index.js. Do not edit! -->
 
+### async_local_storage_unavailable
+
+```
+The node API `AsyncLocalStorage` is not available, but is required to use async server rendering.
+```
+
+Some platforms require configuration flags to enable this API. Consult your platform's documentation.
+
 ### await_invalid
 
 ```
@@ -14930,6 +15072,39 @@ You (or the framework you're using) called [`render(...)`](svelte-server#render)
 The `html` property of server render results has been deprecated. Use `body` instead.
 ```
 
+### hydratable_clobbering
+
+```
+Attempted to set `hydratable` with key `%key%` twice with different values.
+
+%stack%
+```
+
+This error occurs when using `hydratable` multiple times with the same key. To avoid this, you can:
+- Ensure all invocations with the same key result in the same value
+- Update the keys to make both instances unique
+
+```svelte
+<script>
+  import { hydratable } from 'svelte';
+
+  // which one should "win" and be serialized in the rendered response?
+  const one = hydratable('not-unique', () => 1);
+  const two = hydratable('not-unique', () => 2);
+</script>
+```
+
+### hydratable_serialization_failed
+
+```
+Failed to serialize `hydratable` data for key `%key%`.
+
+`hydratable` can serialize anything [`uneval` from `devalue`](https://npmjs.com/package/uneval) can, plus Promises.
+
+Cause:
+%stack%
+```
+
 ### lifecycle_function_unavailable
 
 ```
@@ -14938,10 +15113,24 @@ The `html` property of server render results has been deprecated. Use `body` ins
 
 Certain methods such as `mount` cannot be invoked while running in a server context. Avoid calling them eagerly, i.e. not during render.
 
+### server_context_required
+
+```
+Could not resolve `render` context.
+```
+
+Certain functions such as `hydratable` cannot be invoked outside of a `render(...)` call, such as at the top level of a module.
+
 
 ## Shared errors
 
 <!-- This file is generated by scripts/process-messages/index.js. Do not edit! -->
+
+### experimental_async_required
+
+```
+Cannot use `%name%(...)` unless the `experimental.async` compiler option is `true`
+```
 
 ### invalid_default_snippet
 
@@ -15206,6 +15395,25 @@ The easiest way to log a value as it changes over time is to use the [`$inspect`
 %handler% should be a function. Did you mean to %suggestion%?
 ```
 
+### hydratable_missing_but_expected
+
+```
+Expected to find a hydratable with key `%key%` during hydration, but did not.
+```
+
+This can happen if you render a hydratable on the client that was not rendered on the server, and means that it was forced to fall back to running its function blockingly during hydration. This is bad for performance, as it blocks hydration until the asynchronous work completes.
+
+```svelte
+<script>
+  import { hydratable } from 'svelte';
+
+	if (BROWSER) {
+		// bad! nothing can become interactive until this asynchronous work is done
+		await hydratable('foo', get_slow_random_number);
+	}
+</script>
+```
+
 ### hydration_attribute_changed
 
 ```
@@ -15284,7 +15492,7 @@ Hydration failed because the initial UI does not match what was rendered on the 
 
 This warning is thrown when Svelte encounters an error while hydrating the HTML from the server. During hydration, Svelte walks the DOM, expecting a certain structure. If that structure is different (for example because the HTML was repaired by the DOM because of invalid HTML), then Svelte will run into issues, resulting in this warning.
 
-During development, this error is often preceeded by a `console.error` detailing the offending HTML, which needs fixing.
+During development, this error is often preceded by a `console.error` detailing the offending HTML, which needs fixing.
 
 ### invalid_raw_snippet_render
 
@@ -15744,7 +15952,7 @@ The following modifiers are available:
 
 - `preventDefault` — calls `event.preventDefault()` before running the handler
 - `stopPropagation` — calls `event.stopPropagation()`, preventing the event reaching the next element
-- `stopImmediatePropagation` - calls `event.stopImmediatePropagation()`, preventing other listeners of the same event from being fired.
+- `stopImmediatePropagation` — calls `event.stopImmediatePropagation()`, preventing other listeners of the same event from being fired.
 - `passive` — improves scrolling performance on touch/wheel events (Svelte will add it automatically where it's safe to do so)
 - `nonpassive` — explicitly set `passive: false`
 - `capture` — fires the handler during the _capture_ phase instead of the _bubbling_ phase
@@ -16435,7 +16643,7 @@ The `src` directory contains the meat of your project. Everything except `src/ro
 - `hooks.server.js` contains your server [hooks](hooks)
 - `service-worker.js` contains your [service worker](service-workers)
 - `instrumentation.server.js` contains your [observability](observability) setup and instrumentation code
-  - Requires adapter support. If your adapter supports it, it is guarnteed to run prior to loading and running your application code.
+  - Requires adapter support. If your adapter supports it, it is guaranteed to run prior to loading and running your application code.
 
 (Whether the project contains `.js` or `.ts` files depends on whether you opt to use TypeScript when you create your project.)
 
@@ -16897,9 +17105,9 @@ By exporting `POST`/`PUT`/`PATCH`/`DELETE`/`OPTIONS`/`HEAD` handlers, `+server.j
 ```svelte
 <!--- file: src/routes/add/+page.svelte --->
 <script>
-	let a = 0;
-	let b = 0;
-	let total = 0;
+	let a = $state(0);
+	let b = $state(0);
+	let total = $state(0);
 
 	async function add() {
 		const response = await fetch('/api/add', {
@@ -19185,11 +19393,12 @@ Alternatively, you could use `select` and `select multiple`:
 
 ### Programmatic validation
 
-In addition to declarative schema validation, you can programmatically mark fields as invalid inside the form handler using the `invalid` function. This is useful for cases where you can't know if something is valid until you try to perform some action:
+In addition to declarative schema validation, you can programmatically mark fields as invalid inside the form handler using the `invalid` function. This is useful for cases where you can't know if something is valid until you try to perform some action. Just like `redirect` or `error`, `invalid` throws. It expects a list of strings (for issues relating to the form as a whole) or standard-schema-compliant issues (for those relating to a specific field). Use the `issue` parameter for type-safe creation of such issues:
 
 ```js
 /// file: src/routes/shop/data.remote.js
 import * as v from 'valibot';
+import { invalid } from '@sveltejs/kit';
 import { form } from '$app/server';
 import * as db from '$lib/server/database';
 
@@ -19200,13 +19409,13 @@ export const buyHotcakes = form(
 			v.minValue(1, 'you must buy at least one hotcake')
 		)
 	}),
-	async (data, invalid) => {
+	async (data, issue) => {
 		try {
 			await db.buy(data.qty);
 		} catch (e) {
 			if (e.code === 'OUT_OF_STOCK') {
 				invalid(
-					invalid.qty(`we don't have enough hotcakes`)
+					issue.qty(`we don't have enough hotcakes`)
 				);
 			}
 		}
@@ -23185,7 +23394,7 @@ You can also use [Vite's `import.meta.glob`](https://vitejs.dev/guide/features.h
 ```svelte
 <script>
 	const imageModules = import.meta.glob(
-		'/path/to/assets/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}',
+		'/path/to/assets/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp}',
 		{
 			eager: true,
 			query: {
@@ -23199,6 +23408,8 @@ You can also use [Vite's `import.meta.glob`](https://vitejs.dev/guide/features.h
 	<enhanced:img src={module.default} alt="some alt text" />
 {/each}
 ```
+
+> [!NOTE] svg images are currently only supported statically
 
 ### Intrinsic Dimensions
 
@@ -23389,12 +23600,12 @@ export async function GET() {
 		`
 		<?xml version="1.0" encoding="UTF-8" ?>
 		<urlset
-			xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
-			xmlns:xhtml="https://www.w3.org/1999/xhtml"
-			xmlns:mobile="https://www.google.com/schemas/sitemap-mobile/1.0"
-			xmlns:news="https://www.google.com/schemas/sitemap-news/0.9"
-			xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
-			xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
+			xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+			xmlns:xhtml="http://www.w3.org/1999/xhtml"
+			xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+			xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+			xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+			xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
 		>
 			<!-- <url> elements go here -->
 		</urlset>`.trim(),
@@ -24325,9 +24536,11 @@ import {
 	VERSION,
 	error,
 	fail,
+	invalid,
 	isActionFailure,
 	isHttpError,
 	isRedirect,
+	isValidationError,
 	json,
 	normalizeUrl,
 	redirect,
@@ -24441,6 +24654,48 @@ function fail<T = undefined>(
 
 
 
+## invalid
+
+<blockquote class="since note">
+
+Available since 2.47.3
+
+</blockquote>
+
+Use this to throw a validation error to imperatively fail form validation.
+Can be used in combination with `issue` passed to form actions to create field-specific issues.
+
+```ts
+import { invalid } from '@sveltejs/kit';
+import { form } from '$app/server';
+import { tryLogin } from '$lib/server/auth';
+import * as v from 'valibot';
+
+export const login = form(
+	v.object({ name: v.string(), _password: v.string() }),
+	async ({ name, _password }) => {
+		const success = tryLogin(name, _password);
+		if (!success) {
+			invalid('Incorrect username or password');
+		}
+
+		// ...
+	}
+);
+```
+
+<div class="ts-block">
+
+```dts
+function invalid(
+	...issues: (StandardSchemaV1.Issue | string)[]
+): never;
+```
+
+</div>
+
+
+
 ## isActionFailure
 
 Checks whether this is an action failure thrown by `fail`.
@@ -24482,6 +24737,26 @@ Checks whether this is a redirect thrown by `redirect`.
 
 ```dts
 function isRedirect(e: unknown): e is Redirect_1;
+```
+
+</div>
+
+
+
+## isValidationError
+
+<blockquote class="since note">
+
+Available since 2.47.3
+
+</blockquote>
+
+Checks whether this is an validation error thrown by `invalid`.
+
+<div class="ts-block">
+
+```dts
+function isValidationError(e: unknown): e is ActionFailure;
 ```
 
 </div>
@@ -25566,22 +25841,37 @@ The content of the error.
 </div>
 </div></div>
 
-## Invalid
+## InvalidField
 
 A function and proxy object used to imperatively create validation errors in form handlers.
 
-Call `invalid(issue1, issue2, ...issueN)` to throw a validation error.
-If an issue is a `string`, it applies to the form as a whole (and will show up in `fields.allIssues()`)
-Access properties to create field-specific issues: `invalid.fieldName('message')`.
+Access properties to create field-specific issues: `issue.fieldName('message')`.
 The type structure mirrors the input data structure for type-safe field access.
+Call `invalid(issue.foo(...), issue.nested.bar(...))` to throw a validation error.
 
 <div class="ts-block">
 
 ```dts
-type Invalid<Input = any> = ((
-	...issues: Array<string | StandardSchemaV1.Issue>
-) => never) &
-	InvalidField<Input>;
+type InvalidField<T> =
+	WillRecurseIndefinitely<T> extends true
+		? Record<string | number, any>
+		: NonNullable<T> extends
+					| string
+					| number
+					| boolean
+					| File
+			? (message: string) => StandardSchemaV1.Issue
+			: NonNullable<T> extends Array<infer U>
+				? {
+						[K in number]: InvalidField<U>;
+					} & ((message: string) => StandardSchemaV1.Issue)
+				: NonNullable<T> extends RemoteFormInput
+					? {
+							[K in keyof T]-?: InvalidField<T[K]>;
+						} & ((
+							message: string
+						) => StandardSchemaV1.Issue)
+					: Record<string, never>;
 ```
 
 </div>
@@ -26674,17 +26964,13 @@ type RemoteForm<
 		includeUntouched?: boolean;
 		/** Set this to `true` to only run the `preflight` validation. */
 		preflightOnly?: boolean;
-		/** Perform validation as if the form was submitted by the given button. */
-		submitter?: HTMLButtonElement | HTMLInputElement;
 	}): Promise<void>;
 	/** The result of the form submission */
 	get result(): Output | undefined;
 	/** The number of pending submissions */
 	get pending(): number;
 	/** Access form fields using object notation */
-	fields: Input extends void
-		? never
-		: RemoteFormFields<Input>;
+	fields: RemoteFormFields<Input>;
 	/** Spread this onto a `<button>` or `<input type="submit">` */
 	buttonProps: {
 		type: 'submit';
@@ -27954,6 +28240,29 @@ decode: (data: U) => T;
 ```
 
 <div class="ts-block-property-details"></div>
+</div></div>
+
+## ValidationError
+
+A validation error thrown by `invalid`.
+
+<div class="ts-block">
+
+```dts
+interface ValidationError {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+issues: StandardSchemaV1.Issue[];
+```
+
+<div class="ts-block-property-details">
+
+The validation issues
+
+</div>
 </div></div>
 
 
@@ -29646,9 +29955,7 @@ See [Remote functions](/docs/kit/remote-functions#form) for full documentation.
 
 ```dts
 function form<Output>(
-	fn: (
-		invalid: import('@sveltejs/kit').Invalid<void>
-	) => MaybePromise<Output>
+	fn: () => MaybePromise<Output>
 ): RemoteForm<void, Output>;
 ```
 
@@ -29661,7 +29968,7 @@ function form<Input extends RemoteFormInput, Output>(
 	validate: 'unchecked',
 	fn: (
 		data: Input,
-		invalid: import('@sveltejs/kit').Invalid<Input>
+		issue: InvalidField<Input>
 	) => MaybePromise<Output>
 ): RemoteForm<Input, Output>;
 ```
@@ -29681,9 +29988,7 @@ function form<
 	validate: Schema,
 	fn: (
 		data: StandardSchemaV1.InferOutput<Schema>,
-		invalid: import('@sveltejs/kit').Invalid<
-			StandardSchemaV1.InferInput<Schema>
-		>
+		issue: InvalidField<StandardSchemaV1.InferInput<Schema>>
 	) => MaybePromise<Output>
 ): RemoteForm<StandardSchemaV1.InferInput<Schema>, Output>;
 ```
@@ -32124,6 +32429,16 @@ Whether and how to add typechecking to the project:
 
 Prevent typechecking from being added. Not recommended!
 
+### `--add [add-ons...]`
+
+Add add-ons to the project in the `create` command. Following the same format as [sv add](sv-add#Usage).
+
+Example:
+
+```sh
+npx sv create --add eslint prettier [path]
+```
+
 ### `--no-add-ons`
 
 Run the command without the interactive add-ons prompt
@@ -32141,6 +32456,10 @@ Installs dependencies with a specified package manager:
 ### `--no-install`
 
 Prevents installing dependencies.
+
+### `--no-dir-check`
+
+Skip checking whether the target directory is empty.
 
 <!-- ## Programmatic interface
 
@@ -32174,10 +32493,27 @@ You can select multiple space-separated add-ons from [the list below](#Official-
 
 ## Options
 
-- `-C`, `--cwd` — path to the root of your Svelte(Kit) project
-- `--no-git-check` — even if some files are dirty, no prompt will be shown
-- `--install` — installs dependencies with a specified package manager
-- `--no-install` — prevents installing dependencies
+### `-C`, `--cwd`
+
+Path to the root of your Svelte(Kit) project.
+
+### `--no-git-check`
+
+Even if some files are dirty, no prompt will be shown
+
+### `--install <package-manager>`
+
+Installs dependencies with a specified package manager:
+
+- `npm`
+- `pnpm`
+- `yarn`
+- `bun`
+- `deno`
+
+### `--no-install`
+
+Prevents installing dependencies
 
 ## Official add-ons
 
@@ -32470,7 +32806,7 @@ Which database variant to use:
 - `sqlite` — file-based database not requiring a database server
 
 ```sh
-npx sv add drizzle=database:postgresql
+npx sv add drizzle="database:postgresql"
 ```
 
 ### client
@@ -32482,7 +32818,7 @@ The SQL client to use, depends on `database`:
 - For `sqlite`: `better-sqlite3`, `libsql`, `turso`
 
 ```sh
-npx sv add drizzle=database:postgresql+client:postgres.js
+npx sv add drizzle="database:postgresql+client:postgres.js"
 ```
 
 Drizzle is compatible with well over a dozen database drivers. We just offer a few of the most common ones here for simplicity, but if you'd like to use another one you can choose one as a placeholder and swap it out for another after setup by choosing from [Drizzle's full list of compatible drivers](https://orm.drizzle.team/docs/connect-overview#next-steps).
@@ -32492,7 +32828,7 @@ Drizzle is compatible with well over a dozen database drivers. We just offer a f
 Whether to add Docker Compose configuration. Only available for [`database`](#Options-database) `postgresql` or `mysql`
 
 ```sh
-npx sv add drizzle=database:postgresql+client:postgres.js+docker:yes
+npx sv add drizzle="database:postgresql+client:postgres.js+docker:yes"
 ```
 
 # eslint
@@ -32534,7 +32870,7 @@ npx sv add lucia
 Whether to include demo registration and login pages.
 
 ```sh
-npx sv add lucia=demo:yes
+npx sv add lucia="demo:yes"
 ```
 
 # mcp
@@ -32549,7 +32885,8 @@ npx sv add mcp
 
 ## What you get
 
-- A good mcp configuration for your project depending on your IDE
+- An MCP configuration for [local](https://svelte.dev/docs/mcp/local-setup) or [remote](https://svelte.dev/docs/mcp/remote-setup) setup
+- A [README for agents](https://agents.md/) to help you use the MCP server effectively
 
 ## Options
 
@@ -32558,7 +32895,7 @@ npx sv add mcp
 The IDE you want to use like `'claude-code'`, `'cursor'`, `'gemini'`, `'opencode'`, `'vscode'`, `'other'`.
 
 ```sh
-npx sv add mcp=ide:cursor,vscode
+npx sv add mcp="ide:cursor,vscode"
 ```
 
 ### setup
@@ -32566,7 +32903,7 @@ npx sv add mcp=ide:cursor,vscode
 The setup you want to use.
 
 ```sh
-npx sv add mcp=setup:local
+npx sv add mcp="setup:local"
 ```
 
 # mdsvex
@@ -32696,7 +33033,7 @@ Which SvelteKit adapter to use:
 - `netlify` — [`@sveltejs/adapter-netlify`](/docs/kit/adapter-netlify) allows you to deploy to Netlify
 
 ```sh
-npx sv add sveltekit-adapter=adapter:node
+npx sv add sveltekit-adapter="adapter:node"
 ```
 
 # tailwindcss
@@ -32713,7 +33050,7 @@ npx sv add tailwindcss
 
 - Tailwind setup following the [Tailwind for SvelteKit guide](https://tailwindcss.com/docs/installation/framework-guides/sveltekit)
 - Tailwind Vite plugin
-- updated `app.css` and `+layout.svelte` (for SvelteKit) or `App.svelte` (for non-SvelteKit Vite apps)
+- updated `layout.css` and `+layout.svelte` (for SvelteKit) or `app.css` and `App.svelte` (for non-SvelteKit Vite apps)
 - integration with `prettier` if using that package
 
 ## Options
@@ -32760,7 +33097,9 @@ The setup varies based on the version of the MCP you prefer — remote or local 
 
 ## Usage
 
-To get the most out of the MCP server we recommend including the following prompt in your [`AGENTS.md`](https://agents.md) (or [`CLAUDE.md`](https://docs.claude.com/en/docs/claude-code/memory#claude-md-imports), if using Claude Code). This will tell the LLM which tools are available and when it's appropriate to use them.
+To get the most out of the MCP server we recommend including the following prompt in your [`AGENTS.md`](https://agents.md) (or [`CLAUDE.md`](https://docs.claude.com/en/docs/claude-code/memory#claude-md-imports), if using Claude Code. Or [`GEMINI.md`](https://geminicli.com/docs/cli/gemini-md/), if using GEMINI). This will tell the LLM which tools are available and when it's appropriate to use them.
+
+> [!NOTE] This is already setup for you when using `npx sv add mcp`
 
 ```md
 You are able to use the Svelte MCP server, where you have access to comprehensive Svelte 5 and SvelteKit documentation. Here's how to use the available tools effectively:
@@ -32971,7 +33310,7 @@ To use the remote MCP server with Gemini CLI, simply run the following command:
 gemini mcp add -t http -s [scope] svelte https://mcp.svelte.dev/mcp
 ```
 
-The `[scope]` must be `user`, `project` or `local`.
+The `[scope]` must be `user` or `project`.
 
 ## OpenCode
 

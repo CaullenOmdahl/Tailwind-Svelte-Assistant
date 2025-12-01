@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.470Z -->
+<!-- Last updated: 2025-12-01T02:47:34.663Z -->
 <!--
 @description: A three-tier pricing section where each tier has a description and a separate feature list. One tier is highlighted. Based on Tailwind UI.
 @props:
