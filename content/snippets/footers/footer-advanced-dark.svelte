@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.466Z -->
+<!-- Last updated: 2026-08-31T07:59:26.937Z -->
 <!--
 @description: An advanced dark-themed footer with multiple columns for site links, social media icons, and a copyright notice. Based on Tailwind UI.
 @props:
