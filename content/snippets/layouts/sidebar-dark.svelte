@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.469Z -->
+<!-- Last updated: 2026-11-02T08:44:13.064Z -->
 <!--
 @description: A dark-themed sidebar layout with a mobile off-canvas menu and a fixed desktop sidebar. Based on Tailwind UI.
 @props:
