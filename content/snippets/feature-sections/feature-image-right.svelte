@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.466Z -->
+<!-- Last updated: 2026-11-23T10:08:37.250Z -->
 <!--
 @description: Feature section with a large screenshot on the right and text content with a list of features on the left. Based on Tailwind UI.
 @props:

@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.464Z -->
+<!-- Last updated: 2026-11-23T10:08:37.246Z -->
 <!--
 @description: A simple, centered 404 error page. Based on Tailwind UI.
 @props:

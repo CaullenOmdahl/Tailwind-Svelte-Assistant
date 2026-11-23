@@ -1,4 +1,4 @@
-<!-- Last updated: 2025-11-06T05:40:53.468Z -->
+<!-- Last updated: 2026-11-23T10:08:37.253Z -->
 <!--
 @description: Hero section with a split layout, text content on the left, and a stylized code example block on the right. Based on Tailwind UI.
 @props:
